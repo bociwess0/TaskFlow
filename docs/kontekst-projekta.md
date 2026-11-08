@@ -19,10 +19,9 @@ Cilj je da napravimo modernu aplikaciju u SaaS stilu, sa profesionalnim UI/UX-om
 Projekat će koristiti sledeće tehnologije:
 
 ### Frontend
-- Vite (React + TypeScript, SPA)
+- Next.js (App Router)
 - React
 - TypeScript
-- React Router za rutiranje
 - Tailwind CSS
 - shadcn/ui
 - TanStack Query za upravljanje serverskim stanjem
@@ -84,7 +83,7 @@ Redis će se u početku koristiti za keširanje, a po potrebi može da podrži i
 
 Aplikacija će se sastojati od tri glavna aplikativna sloja:
 
-1. React (Vite) – frontend aplikacija (SPA).
+1. Next.js – frontend aplikacija.
 2. NestJS – glavni backend API i poslovna logika.
 3. ASP.NET Core – servis za upravljanje resursima i analitiku.
 
@@ -92,11 +91,11 @@ PostgreSQL će biti primarna relaciona baza podataka.
 
 Tok komunikacije:
 
-React (Vite) → NestJS → PostgreSQL
+Next.js → NestJS → PostgreSQL
 
 Za analitiku resursa:
 
-React (Vite) → NestJS → ASP.NET Core → analitički rezultati → NestJS → React (Vite)
+Next.js → NestJS → ASP.NET Core → analitički rezultati → NestJS → Next.js
 
 Frontend nikada ne sme direktno da komunicira sa PostgreSQL-om ili Prismom.
 
@@ -120,7 +119,7 @@ Kontrola pristupa se radi kroz NestJS guard-ove (sekcija 7).
 ```
 taskflow/
 ├── apps/
-│   ├── web/          # React + Vite frontend
+│   ├── web/          # Next.js frontend
 │   ├── api/          # NestJS backend (src/modules, prisma/)
 │   └── analytics/    # ASP.NET Core servis (Resource Management & Analytics)
 ├── packages/
@@ -546,13 +545,13 @@ Desktop i mobilno iskustvo treba da budu osmišljeni kao delovi istog proizvoda.
 
 ## 10. Očekivanja od arhitekture frontenda
 
-Frontend je SPA aplikacija napravljena sa Vite-om (React + TypeScript), sa React Router-om za rutiranje. Nema server-side renderinga: zaštita ruta radi se na klijentu (route guard za prijavljenog korisnika i ulogu), a stvarna provera prava uvek je na backendu.
+Koristićemo Next.js App Router.
 
 Frontend treba da bude organizovan po funkcionalnostima (features) i odgovornostima.
 
-Moguća struktura (unutar `src/`):
+Moguća struktura:
 
-- routes/ (definicija ruta i stranice)
+- app/
 - components/
 - features/
 - hooks/
@@ -590,7 +589,7 @@ Izbegavati nepotrebnu složenost i preuranjene apstrakcije.
 - Seed skripta sa demo podacima za prezentaciju.
 
 ### Pokretanje
-- `docker-compose.yml` sa servisima: web (Vite build, statički serviran npr. preko nginx-a), api (NestJS), analytics (ASP.NET Core), db (PostgreSQL) i redis.
+- `docker-compose.yml` sa servisima: web (Next.js), api (NestJS), analytics (ASP.NET Core), db (PostgreSQL) i redis.
 - Prisma migracije se automatski primenjuju pri pokretanju api servisa.
 - Ceo sistem se pokreće komandom `docker compose up`, bez ručne instalacije zavisnosti.
 
