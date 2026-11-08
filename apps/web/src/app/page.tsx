@@ -1,18 +1,18 @@
-import { Plus } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Plus } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
+} from "@/components/ui/card";
 
 // Temporary page to verify the theme. Replaced by the app layout and Dashboard in the next step.
-export function ThemePreviewPage() {
+export default function ThemePreviewPage() {
   return (
-    <main className="mx-auto flex min-h-svh max-w-3xl flex-col gap-6 p-6 sm:p-10">
+    <main className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-6 sm:p-10">
       <header>
         <h1 className="text-3xl font-bold tracking-tight">TaskFlow</h1>
         <p className="text-muted-foreground">Theme preview</p>
@@ -71,5 +71,5 @@ export function ThemePreviewPage() {
         <span className="text-sm">Tasks</span>
       </div>
     </main>
-  )
+  );
 }

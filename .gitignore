@@ -3,19 +3,23 @@ node_modules/
 
 # Build output
 dist/
-dist-ssr/
 build/
+out/
 coverage/
 *.tsbuildinfo
 
-# Vite
-.vite/
-*.local
+# Next.js
+.next/
+next-env.d.ts
+.vercel/
 
 # Environment variables (never commit)
 .env
 .env.*
 !.env.example
+
+# Keys and certificates
+*.pem
 
 # Logs
 logs/
@@ -27,6 +31,9 @@ npm-debug.log*
 !.vscode/extensions.json
 .idea/
 *.swp
+
+# Claude Code (local settings)
+.claude/settings.local.json
 
 # OS
 .DS_Store

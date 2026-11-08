@@ -8,7 +8,7 @@ Built as a bachelor's thesis project.
 
 | Part | Technologies |
 |---|---|
-| Frontend (`apps/web`) | Vite, React, TypeScript, React Router, Tailwind CSS, shadcn/ui |
+| Frontend (`apps/web`) | Next.js (App Router), React, TypeScript, Tailwind CSS, shadcn/ui |
 | Main API (`apps/api`, planned) | NestJS, Prisma, PostgreSQL, Socket.IO, JWT |
 | Analytics service (`apps/analytics`, planned) | ASP.NET Core Web API (C#) |
 | Infrastructure (planned) | Docker Compose, Redis |
@@ -17,17 +17,17 @@ Built as a bachelor's thesis project.
 
 ```
 apps/
-  web/        React + Vite frontend
+  web/        Next.js frontend
 docs/         Project specification and UI design
 ```
 
 ## Getting started
 
-Requirements: Node.js 22.12+ and npm.
+Requirements: Node.js 20.9+ and npm.
 
 ```bash
 npm install      # install all workspace dependencies
-npm run dev      # start the frontend dev server (http://localhost:5173)
+npm run dev      # start the frontend dev server (http://localhost:3000)
 npm run lint     # lint the frontend
-npm run build    # type-check and build the frontend
+npm run build    # build the frontend
 ```
