@@ -104,12 +104,12 @@
   --highlight: #7c3aed;
   --highlight-foreground: #ffffff;
 
-  /* Charts (Kanban order: To Do, In Progress, Review, Done) */
+  /* Charts */
   --chart-1: #1d5eee;
   --chart-2: #15a872;
   --chart-3: #f59e0b;
   --chart-4: #7c3aed;
-  --chart-5: #dd314c;
+  --chart-5: #8fb2f7; /* light primary, e.g. To Do next to In Progress */
 
   /* Sidebar (dark) */
   --sidebar: #152231;
