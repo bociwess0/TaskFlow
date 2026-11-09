@@ -69,9 +69,11 @@ Svetla radna površina, tamni sidebar, kartice sa zaobljenim ivicama i suptilnim
 - Pre commit-a pokreni lint i build za `apps/web`.
 - Ne push-uj, ne merge-uj i ne briši grane bez moje potvrde.
 - Repo je javan: nikada ne commit-uj `.env` fajlove, ključeve ni lozinke.
+- U commit poruke i PR-ove ne dodaj `Co-Authored-By` ni bilo kakve druge oznake o AI-ju. Autor je samo vlasnik repoa.
 
 ## Način rada
 - Radimo korak po korak. Uradi samo ono što je traženo u koraku, bez dodatnih funkcionalnosti na svoju ruku.
+- Jedan korak = jedna komponenta (ili jedna mala celina) = jedan commit. Ako prompt traži više komponenti, napravi prvu, pokaži mi je i sačekaj potvrdu pre sledeće.
 - Pre većih odluka (nova biblioteka, promena strukture, promena arhitekture) pitaj me.
 - Na kraju koraka napiši kratak rezime: šta je urađeno, koji fajlovi su bitni i kako da proverim.
 
