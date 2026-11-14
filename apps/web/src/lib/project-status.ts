@@ -25,3 +25,12 @@ export const PROJECT_STATUS_TONE: Record<ProjectStatus, StatusTone> = {
   COMPLETED: "success",
   ARCHIVED: "neutral",
 };
+
+/** Progress bar fill color of each project status. */
+export const PROJECT_STATUS_PROGRESS_CLASS: Record<ProjectStatus, string> = {
+  PLANNING: "bg-primary",
+  IN_PROGRESS: "bg-primary",
+  ON_HOLD: "bg-danger",
+  COMPLETED: "bg-success",
+  ARCHIVED: "bg-primary",
+};
