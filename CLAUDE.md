@@ -4,6 +4,7 @@ Full-stack web aplikacija za upravljanje projektima i resursima (diplomski rad).
 
 - Kompletna specifikacija: `docs/kontekst-projekta.md`. Pre rada na nekom modulu pročitaj njegovu sekciju.
 - UI dizajn: `docs/design/` (`00-overview.png` i `screens/01-login.png` … `screens/09-settings.png`). Pre izrade ekrana pogledaj njegovu sliku. Dizajn je glavna referenca za izgled.
+- Plan rada i status koraka: `docs/roadmap.md`. Pre koraka proveri gde smo stali.
 
 ## Jezik
 - Sa mnom komuniciraj na srpskom (latinica). Tehnički termini mogu na engleskom.
@@ -76,6 +77,7 @@ Svetla radna površina, tamni sidebar, kartice sa zaobljenim ivicama i suptilnim
 - Jedan korak = jedna komponenta (ili jedna mala celina) = jedan commit. Ako prompt traži više komponenti, napravi prvu, pokaži mi je i sačekaj potvrdu pre sledeće.
 - Pre većih odluka (nova biblioteka, promena strukture, promena arhitekture) pitaj me.
 - Na kraju koraka napiši kratak rezime: šta je urađeno, koji fajlovi su bitni i kako da proverim.
+- Kad je korak gotov, u `docs/roadmap.md` ga označi kao urađen (✓) i upiši commit poruku, u istom commit-u kao i sam korak. Ono što primetiš za kasnije dodaj u odeljak „Za kasnije“.
 
 ## Komande
 Iz root-a repoa (npm workspaces):
