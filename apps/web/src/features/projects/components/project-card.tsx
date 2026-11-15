@@ -1,16 +1,4 @@
-import {
-  Archive,
-  Briefcase,
-  Contact,
-  Eye,
-  Globe,
-  type LucideIcon,
-  MoreVertical,
-  Pencil,
-  ShoppingCart,
-  Smartphone,
-  Wrench,
-} from "lucide-react";
+import { Archive, Eye, MoreVertical, Pencil } from "lucide-react";
 import { AvatarGroup } from "@/components/shared/avatar-group";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { Button } from "@/components/ui/button";
@@ -22,48 +10,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Progress } from "@/components/ui/progress";
+import { ProjectIcon } from "@/features/projects/components/project-icon";
 import { formatDate } from "@/lib/format";
 import { PROJECT_STATUS_PROGRESS_CLASS } from "@/lib/project-status";
-import { cn } from "@/lib/utils";
-import type { Project, ProjectColor, ProjectIcon } from "@/types/project";
-
-const PROJECT_ICON: Record<ProjectIcon, LucideIcon> = {
-  "shopping-cart": ShoppingCart,
-  smartphone: Smartphone,
-  wrench: Wrench,
-  globe: Globe,
-  contact: Contact,
-  briefcase: Briefcase,
-};
-
-const PROJECT_COLOR_CLASS: Record<ProjectColor, string> = {
-  primary: "bg-primary/10 text-primary-strong",
-  success: "bg-success/10 text-success-strong",
-  warning: "bg-warning/15 text-warning-strong",
-  danger: "bg-danger/10 text-danger-strong",
-  highlight: "bg-highlight/10 text-highlight-strong",
-  neutral: "bg-muted text-muted-foreground",
-};
+import type { Project } from "@/types/project";
 
 interface ProjectCardProps {
   project: Project;
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const Icon = PROJECT_ICON[project.icon];
-
   return (
     <Card className="px-5 [--card-spacing:--spacing(5)]">
       <div className="flex flex-col gap-4">
         <div className="flex items-start justify-between gap-2">
-          <div
-            className={cn(
-              "flex size-9 items-center justify-center rounded-lg",
-              PROJECT_COLOR_CLASS[project.color],
-            )}
-          >
-            <Icon className="size-5" aria-hidden />
-          </div>
+          <ProjectIcon icon={project.icon} color={project.color} />
           <ProjectCardMenu projectName={project.name} />
         </div>
 

@@ -56,8 +56,8 @@ Grana `feature/project-details` · dizajn `05-project-detail.png` · ruta `/proj
 | # | Korak | Status | Commit |
 |---|---|---|---|
 | 1 | Podaci: `getProject(id)`, milestone-ovi, brzi linkovi, tehnologije; `useProject` | ✓ | `feat(projects): add project details data` |
-| 2 | Layout projekta: breadcrumb, ikonica, naziv, opis, dugme Edit Project, tabovi | ▶ | |
-| 3 | `ProjectSummaryCard`: progres, članovi, period trajanja | ☐ | |
+| 2 | Layout projekta: breadcrumb, ikonica, naziv, opis, dugme Edit Project, tabovi | ✓ | `feat(projects): add project layout with tabs` |
+| 3 | `ProjectSummaryCard`: progres, članovi, period trajanja | ▶ | |
 | 4 | `ProjectDescriptionCard`: opis i tehnologije kao tagovi | ☐ | |
 | 5 | `MilestonesCard`: lista sa statusom i rokom | ☐ | |
 | 6 | `QuickLinksCard`: GitHub, Figma, API dokumentacija, Live Preview | ☐ | |
@@ -194,3 +194,5 @@ Razbija se na korake kad dođemo do nje.
 - Filtriranje i sortiranje projekata trenutno radi mock servis. API treba da podrži iste parametre (`q`, `status`, `sort`), a bez `status` da ne vraća arhivirane projekte.
 - `dateFromToday` je dupliran u `projects-service` i `dashboard-service`. Treba ga premestiti u zajednički mock helper (uz korak 1.5/1).
 - `ApiError` (status + poruka) je zajednički oblik greške servisnog sloja. Pravi `api-client` (faza 4) treba svaki neuspešan HTTP odgovor da pretvori u `ApiError` sa statusom odgovora.
+- Nepostojeći projekat (`/projects/xyz`) prikazuje „Project not found“, ali HTTP status je 200, jer se projekat učitava u browseru. Pravi 404 status traži učitavanje na serveru (kad stigne API).
+- Sadržaj taba projekta se prikazuje tek kad se učita projekat (zaglavlje). Ako tab bude imao svoje podatke (npr. zadaci za Board), oni počinju da se učitavaju posle projekta; po potrebi ih učitavati paralelno.
