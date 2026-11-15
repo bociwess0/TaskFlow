@@ -8,8 +8,7 @@ import { useUnreadNotificationCount } from "@/hooks/use-unread-notification-coun
 
 export function NotificationsButton() {
   const { data: unreadCount = 0 } = useUnreadNotificationCount();
-  const label =
-    unreadCount > 0 ? `Notifications, ${unreadCount} unread` : "Notifications";
+  const label = unreadCount > 0 ? `Notifications, ${unreadCount} unread` : "Notifications";
 
   return (
     <Button variant="outline" size="icon-lg" className="relative rounded-full" asChild>

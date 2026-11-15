@@ -83,7 +83,8 @@ Svetla radna površina, tamni sidebar, kartice sa zaobljenim ivicama i suptilnim
 Iz root-a repoa (npm workspaces):
 - `npm install` – instalira zavisnosti svih workspace-ova
 - `npm run dev` – Next.js dev server za `apps/web` (http://localhost:3000)
-- `npm run lint` – ESLint za `apps/web`
+- `npm run lint` – ESLint i Prettier provera za `apps/web`
+- `npm run format` – formatira kod Prettier-om (i sortira Tailwind klase)
 - `npm run build` – production build za `apps/web` (uključuje type-check)
 - `npm run start -w @taskflow/web` – pokreće production build lokalno
 - `npm i <paket> -w @taskflow/web` – dodavanje zavisnosti u frontend

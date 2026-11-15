@@ -39,7 +39,10 @@ export function ProjectProgressCard() {
         ) : data.length === 0 ? (
           <EmptyState message="No project data yet." />
         ) : (
-          <ChartContainer config={chartConfig} className={`aspect-auto ${CHART_HEIGHT_CLASS} w-full`}>
+          <ChartContainer
+            config={chartConfig}
+            className={`aspect-auto ${CHART_HEIGHT_CLASS} w-full`}
+          >
             <BarChart
               data={data.map((point) => ({ ...point, label: formatMonth(point.month) }))}
               barGap={6}

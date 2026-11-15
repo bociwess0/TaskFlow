@@ -76,7 +76,10 @@ export function ProjectsToolbar() {
             })
           }
         >
-          <SelectTrigger aria-label="Filter by status" className={`${TRIGGER_CLASS} w-full sm:w-40`}>
+          <SelectTrigger
+            aria-label="Filter by status"
+            className={`${TRIGGER_CLASS} w-full sm:w-40`}
+          >
             <SelectValue />
           </SelectTrigger>
           <SelectContent position="popper" align="end">

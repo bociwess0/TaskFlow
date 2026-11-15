@@ -37,7 +37,12 @@ export function StatCard({
 
   return (
     <Card className="flex-row items-start gap-4 px-5 py-5">
-      <span className={cn("flex size-10 shrink-0 items-center justify-center rounded-lg", TONE_CLASS[tone])}>
+      <span
+        className={cn(
+          "flex size-10 shrink-0 items-center justify-center rounded-lg",
+          TONE_CLASS[tone],
+        )}
+      >
         <Icon className="size-5" aria-hidden />
       </span>
       <div className="flex min-w-0 flex-col gap-1">

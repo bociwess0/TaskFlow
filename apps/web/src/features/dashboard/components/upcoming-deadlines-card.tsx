@@ -58,7 +58,10 @@ export function UpcomingDeadlinesCard() {
               return (
                 <li key={deadline.id} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
                   <span
-                    className={cn("h-9 w-1 shrink-0 rounded-full", PRIORITY_BAR_CLASS[deadline.priority])}
+                    className={cn(
+                      "h-9 w-1 shrink-0 rounded-full",
+                      PRIORITY_BAR_CLASS[deadline.priority],
+                    )}
                     aria-hidden
                   />
                   <div className="min-w-0 flex-1">

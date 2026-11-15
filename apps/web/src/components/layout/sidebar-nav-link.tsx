@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Suspense } from "react";
 import type { NavItem } from "@/components/layout/nav-items";
 import { cn } from "@/lib/utils";
 
@@ -11,9 +12,30 @@ interface SidebarNavLinkProps {
   onNavigate?: () => void;
 }
 
-export function SidebarNavLink({ item, badge, onNavigate }: SidebarNavLinkProps) {
+export function SidebarNavLink(props: SidebarNavLinkProps) {
+  // The pathname is request data on dynamic routes, so the active state renders
+  // inside Suspense; until then the link shows as inactive.
+  return (
+    <Suspense fallback={<NavLink {...props} isActive={false} />}>
+      <ActiveAwareNavLink {...props} />
+    </Suspense>
+  );
+}
+
+function ActiveAwareNavLink(props: SidebarNavLinkProps) {
   const pathname = usePathname();
-  const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+  const { href } = props.item;
+  const isActive = pathname === href || pathname.startsWith(`${href}/`);
+
+  return <NavLink {...props} isActive={isActive} />;
+}
+
+function NavLink({
+  item,
+  badge,
+  onNavigate,
+  isActive,
+}: SidebarNavLinkProps & { isActive: boolean }) {
   const Icon = item.icon;
 
   return (
