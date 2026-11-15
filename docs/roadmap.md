@@ -61,7 +61,8 @@ Grana `feature/project-details` · dizajn `05-project-detail.png` · ruta `/proj
 | 4 | `ProjectDescriptionCard`: opis i tehnologije kao tagovi | ✓ | `feat(projects): add project description card` |
 | 5 | `MilestonesCard`: lista sa statusom i rokom | ✓ | `feat(projects): add milestones card` |
 | 6 | `QuickLinksCard`: GitHub, Figma, API dokumentacija, Live Preview | ✓ | `feat(projects): add quick links card` |
-| 7 | Povezivanje: klik na `ProjectCard` i „View details“ vode na detalje; `not-found` za nepostojeći projekat | ▶ | |
+| 7 | Povezivanje: klik na `ProjectCard` (stretched link) i „View details“ vode na detalje. Nepostojeći projekat je već rešen u `ProjectShell` („Project not found“) | ✓ | `feat(projects): link project cards to details` |
+| 8 | Završetak: pull request i merge u `main` | ▶ | |
 
 ### 1.4 Kanban tabla ☐
 Dizajn `04-kanban.png` · ruta `/projects/[projectId]/board`
@@ -198,3 +199,4 @@ Razbija se na korake kad dođemo do nje.
 - Nepostojeći projekat (`/projects/xyz`) prikazuje „Project not found“, ali HTTP status je 200, jer se projekat učitava u browseru. Pravi 404 status traži učitavanje na serveru (kad stigne API).
 - Sadržaj taba projekta se prikazuje tek kad se učita projekat (zaglavlje). Ako tab bude imao svoje podatke (npr. zadaci za Board), oni počinju da se učitavaju posle projekta; po potrebi ih učitavati paralelno.
 - Lucide nema brand ikonice, pa GitHub i Figma linkovi imaju neutralne ikonice (kod i dizajn). Ako zatrebaju prave, može se dodati mali SVG ili biblioteka (uz dogovor).
+- Kad linkovi projekta budu mogli da se unose kroz formu, dozvoliti samo http(s) adrese (validacija i na frontendu i na backendu), da se ne bi mogao ubaciti `javascript:` link.
