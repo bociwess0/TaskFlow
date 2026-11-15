@@ -1,4 +1,6 @@
-/** Project Overview tab; its cards are added in the next steps. */
+import { ProjectOverview } from "@/features/projects/components/project-overview";
+
+/** Project Overview tab. */
 export default function ProjectOverviewPage() {
-  return null;
+  return <ProjectOverview />;
 }

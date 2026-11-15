@@ -57,8 +57,8 @@ Grana `feature/project-details` · dizajn `05-project-detail.png` · ruta `/proj
 |---|---|---|---|
 | 1 | Podaci: `getProject(id)`, milestone-ovi, brzi linkovi, tehnologije; `useProject` | ✓ | `feat(projects): add project details data` |
 | 2 | Layout projekta: breadcrumb, ikonica, naziv, opis, dugme Edit Project, tabovi | ✓ | `feat(projects): add project layout with tabs` |
-| 3 | `ProjectSummaryCard`: progres, članovi, period trajanja | ▶ | |
-| 4 | `ProjectDescriptionCard`: opis i tehnologije kao tagovi | ☐ | |
+| 3 | `ProjectSummaryCard`: progres, članovi, period trajanja | ✓ | `feat(projects): add project summary card` |
+| 4 | `ProjectDescriptionCard`: opis i tehnologije kao tagovi | ▶ | |
 | 5 | `MilestonesCard`: lista sa statusom i rokom | ☐ | |
 | 6 | `QuickLinksCard`: GitHub, Figma, API dokumentacija, Live Preview | ☐ | |
 | 7 | Povezivanje: klik na `ProjectCard` i „View details“ vode na detalje; `not-found` za nepostojeći projekat | ☐ | |
@@ -182,6 +182,7 @@ Razbija se na korake kad dođemo do nje.
 - **Resources:** Ana sa 100% je označena kao Overallocated. Po specifikaciji, preopterećen je samo onaj ko je iznad 100%, pa mock podaci treba da imaju npr. 120%.
 - **Team:** kolona Role meša sistemsku ulogu (Admin) i poziciju (Frontend Developer). Sistemska uloga ide kao bedž, a pozicija se prikazuje odvojeno.
 - **Detalji projekta i Kanban:** imaju različite tabove. Koristi se jedan zajednički set: Overview, Board, List, Timeline, Team, Files, Settings.
+- **Detalji projekta:** kartica sa progresom ima dva reda avatara, a drugi deluje kao duplikat. Prikazuje se samo jedan red članova.
 
 ## Za kasnije
 
