@@ -60,8 +60,8 @@ Grana `feature/project-details` · dizajn `05-project-detail.png` · ruta `/proj
 | 3 | `ProjectSummaryCard`: progres, članovi, period trajanja | ✓ | `feat(projects): add project summary card` |
 | 4 | `ProjectDescriptionCard`: opis i tehnologije kao tagovi | ✓ | `feat(projects): add project description card` |
 | 5 | `MilestonesCard`: lista sa statusom i rokom | ✓ | `feat(projects): add milestones card` |
-| 6 | `QuickLinksCard`: GitHub, Figma, API dokumentacija, Live Preview | ▶ | |
-| 7 | Povezivanje: klik na `ProjectCard` i „View details“ vode na detalje; `not-found` za nepostojeći projekat | ☐ | |
+| 6 | `QuickLinksCard`: GitHub, Figma, API dokumentacija, Live Preview | ✓ | `feat(projects): add quick links card` |
+| 7 | Povezivanje: klik na `ProjectCard` i „View details“ vode na detalje; `not-found` za nepostojeći projekat | ▶ | |
 
 ### 1.4 Kanban tabla ☐
 Dizajn `04-kanban.png` · ruta `/projects/[projectId]/board`
@@ -197,3 +197,4 @@ Razbija se na korake kad dođemo do nje.
 - `ApiError` (status + poruka) je zajednički oblik greške servisnog sloja. Pravi `api-client` (faza 4) treba svaki neuspešan HTTP odgovor da pretvori u `ApiError` sa statusom odgovora.
 - Nepostojeći projekat (`/projects/xyz`) prikazuje „Project not found“, ali HTTP status je 200, jer se projekat učitava u browseru. Pravi 404 status traži učitavanje na serveru (kad stigne API).
 - Sadržaj taba projekta se prikazuje tek kad se učita projekat (zaglavlje). Ako tab bude imao svoje podatke (npr. zadaci za Board), oni počinju da se učitavaju posle projekta; po potrebi ih učitavati paralelno.
+- Lucide nema brand ikonice, pa GitHub i Figma linkovi imaju neutralne ikonice (kod i dizajn). Ako zatrebaju prave, može se dodati mali SVG ili biblioteka (uz dogovor).
