@@ -1,5 +1,5 @@
 import { mockResponse } from "@/services/mock-response";
-import type { Project } from "@/types/project";
+import type { Project, ProjectListParams, ProjectSort } from "@/types/project";
 import type { UserSummary } from "@/types/user";
 
 /** Local date `days` from today as YYYY-MM-DD, so mock deadlines stay current. */
@@ -33,6 +33,7 @@ const projects: Project[] = [
     icon: "shopping-cart",
     color: "success",
     members: [users.ana, users.marko, users.jelena, users.nikola, users.sara],
+    createdAt: dateFromToday(-30),
   },
   {
     id: "p-2",
@@ -45,6 +46,7 @@ const projects: Project[] = [
     icon: "smartphone",
     color: "primary",
     members: [users.marko, users.sara, users.ivan, users.bogdan],
+    createdAt: dateFromToday(-60),
   },
   {
     id: "p-3",
@@ -57,6 +59,7 @@ const projects: Project[] = [
     icon: "wrench",
     color: "neutral",
     members: [users.nikola, users.ivan, users.bogdan],
+    createdAt: dateFromToday(-4),
   },
   {
     id: "p-4",
@@ -69,6 +72,7 @@ const projects: Project[] = [
     icon: "globe",
     color: "primary",
     members: [users.jelena, users.ana],
+    createdAt: dateFromToday(-130),
   },
   {
     id: "p-5",
@@ -81,6 +85,7 @@ const projects: Project[] = [
     icon: "contact",
     color: "highlight",
     members: [users.ana, users.sara],
+    createdAt: dateFromToday(-45),
   },
   {
     id: "p-6",
@@ -93,9 +98,50 @@ const projects: Project[] = [
     icon: "briefcase",
     color: "primary",
     members: [users.ivan, users.marko],
+    createdAt: dateFromToday(-75),
+  },
+  {
+    id: "p-7",
+    name: "Legacy Intranet",
+    description: "Old company intranet, replaced by the HR Portal",
+    status: "ARCHIVED",
+    progress: 100,
+    startDate: dateFromToday(-400),
+    endDate: dateFromToday(-200),
+    icon: "globe",
+    color: "neutral",
+    members: [users.bogdan, users.jelena],
+    createdAt: dateFromToday(-420),
   },
 ];
 
-export function getProjects(): Promise<Project[]> {
-  return mockResponse(projects);
+const PROJECT_SORTERS: Record<ProjectSort, (a: Project, b: Project) => number> = {
+  newest: (a, b) => b.createdAt.localeCompare(a.createdAt),
+  name: (a, b) => a.name.localeCompare(b.name),
+  deadline: (a, b) => a.endDate.localeCompare(b.endDate),
+  progress: (a, b) => b.progress - a.progress,
+};
+
+/**
+ * Filters and sorts on the "server", the same way the API will.
+ * Without a status filter, archived projects are left out.
+ */
+export function getProjects({
+  q,
+  status,
+  sort = "newest",
+}: ProjectListParams = {}): Promise<Project[]> {
+  const search = q?.trim().toLowerCase();
+
+  const result = projects
+    .filter((project) => (status ? project.status === status : project.status !== "ARCHIVED"))
+    .filter(
+      (project) =>
+        !search ||
+        project.name.toLowerCase().includes(search) ||
+        project.description.toLowerCase().includes(search),
+    )
+    .sort(PROJECT_SORTERS[sort]);
+
+  return mockResponse(result);
 }

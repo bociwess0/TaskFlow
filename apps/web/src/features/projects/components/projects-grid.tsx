@@ -1,27 +1,26 @@
 "use client";
 
+import { SearchX } from "lucide-react";
 import { EmptyState } from "@/components/shared/empty-state";
 import { ErrorState } from "@/components/shared/error-state";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NewProjectButton } from "@/features/projects/components/new-project-button";
 import { ProjectCard } from "@/features/projects/components/project-card";
+import { useProjectFilters } from "@/features/projects/hooks/use-project-filters";
 import { useProjects } from "@/features/projects/hooks/use-projects";
+import { cn } from "@/lib/utils";
 
 const GRID_CLASS = "grid gap-6 sm:grid-cols-2 xl:grid-cols-3";
 const SKELETON_COUNT = 6;
 
 export function ProjectsGrid() {
-  const { data: projects, isPending, isError, refetch } = useProjects();
+  const { params, hasFilters, clearFilters } = useProjectFilters();
+  const { data: projects, isPending, isError, isPlaceholderData, refetch } = useProjects(params);
 
   if (isPending) {
-    return (
-      <div className={GRID_CLASS} aria-busy="true" aria-label="Loading projects">
-        {Array.from({ length: SKELETON_COUNT }, (_, index) => (
-          <ProjectCardSkeleton key={index} />
-        ))}
-      </div>
-    );
+    return <ProjectsGridSkeleton />;
   }
 
   if (isError) {
@@ -35,18 +34,43 @@ export function ProjectsGrid() {
   if (projects.length === 0) {
     return (
       <Card className="py-12">
-        <EmptyState
-          message="No projects yet. Create your first project to get started."
-          action={<NewProjectButton />}
-        />
+        {hasFilters ? (
+          <EmptyState
+            icon={SearchX}
+            message="No projects match your filters."
+            action={
+              <Button variant="outline" onClick={clearFilters}>
+                Clear filters
+              </Button>
+            }
+          />
+        ) : (
+          <EmptyState
+            message="No projects yet. Create your first project to get started."
+            action={<NewProjectButton />}
+          />
+        )}
       </Card>
     );
   }
 
   return (
-    <div className={GRID_CLASS}>
+    <div
+      className={cn(GRID_CLASS, "transition-opacity", isPlaceholderData && "opacity-60")}
+      aria-busy={isPlaceholderData}
+    >
       {projects.map((project) => (
         <ProjectCard key={project.id} project={project} />
+      ))}
+    </div>
+  );
+}
+
+export function ProjectsGridSkeleton() {
+  return (
+    <div className={GRID_CLASS} aria-busy="true" aria-label="Loading projects">
+      {Array.from({ length: SKELETON_COUNT }, (_, index) => (
+        <ProjectCardSkeleton key={index} />
       ))}
     </div>
   );

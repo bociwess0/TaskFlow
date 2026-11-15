@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { PageHeader } from "@/components/shared/page-header";
 import { NewProjectButton } from "@/features/projects/components/new-project-button";
-import { ProjectsGrid } from "@/features/projects/components/projects-grid";
+import { ProjectsGrid, ProjectsGridSkeleton } from "@/features/projects/components/projects-grid";
+import {
+  ProjectsToolbar,
+  ProjectsToolbarSkeleton,
+} from "@/features/projects/components/projects-toolbar";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -15,7 +20,18 @@ export default function ProjectsPage() {
         description="Manage and track all your projects in one place."
         actions={<NewProjectButton />}
       />
-      <ProjectsGrid />
+      {/* Toolbar and grid read search params, which are only known at request time. */}
+      <Suspense
+        fallback={
+          <>
+            <ProjectsToolbarSkeleton />
+            <ProjectsGridSkeleton />
+          </>
+        }
+      >
+        <ProjectsToolbar />
+        <ProjectsGrid />
+      </Suspense>
     </div>
   );
 }
