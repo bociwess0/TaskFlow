@@ -1,7 +1,7 @@
-import { Plus } from "lucide-react";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
-import { Button } from "@/components/ui/button";
+import { NewProjectButton } from "@/features/projects/components/new-project-button";
+import { ProjectsGrid } from "@/features/projects/components/projects-grid";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -13,13 +13,9 @@ export default function ProjectsPage() {
       <PageHeader
         title="Projects"
         description="Manage and track all your projects in one place."
-        actions={
-          <Button size="lg" className="h-10 px-4">
-            <Plus data-icon="inline-start" />
-            New Project
-          </Button>
-        }
+        actions={<NewProjectButton />}
       />
+      <ProjectsGrid />
     </div>
   );
 }

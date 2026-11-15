@@ -45,8 +45,8 @@ Grana `feature/projects-list` · dizajn `03-projects.png`
 | 2 | `PageHeader` i strana `/projects` | ✓ | `feat(projects): add projects page header` |
 | 3 | `StatusBadge` (statusi projekta) | ✓ | `feat(shared): add status badge` |
 | 4 | `ProjectCard` (+ `AvatarGroup`, shadcn `Progress`) | ✓ | `feat(projects): add project card` |
-| 5 | `ProjectsGrid`: mreža 3/2/1 kolone, skeleton, prazno stanje, greška | ▶ | |
-| 6 | `ProjectsToolbar`: pretraga, filter po statusu, sortiranje (stanje u URL-u) | ☐ | |
+| 5 | `ProjectsGrid`: mreža 3/2/1 kolone, skeleton, prazno stanje, greška | ✓ | `feat(projects): add projects grid` |
+| 6 | `ProjectsToolbar`: pretraga, filter po statusu, sortiranje (stanje u URL-u) | ▶ | |
 | 7 | Završetak: pull request i merge u `main` | ☐ | |
 
 ### 1.3 Detalji projekta ☐
@@ -188,3 +188,6 @@ Razbija se na korake kad dođemo do nje.
 - `DashboardGreeting` ponavlja HTML naslova; može da koristi `PageHeader`.
 - `StatCard` je u `features/dashboard`, a treba i drugim ekranima (korak 1.6/3).
 - Polja projekta `icon` i `color` ne postoje u modelu iz specifikacije. Treba ih dodati u Prisma šemu.
+- `NewProjectButton` još nema akciju. Treba ga povezati kad bude postojalo kreiranje projekta (dijalog ili strana).
+- Sortiranje „Newest“ (korak 1.2/6) traži polje `createdAt` na projektu, ili se sortira po `startDate`.
+- `dateFromToday` je dupliran u `projects-service` i `dashboard-service`. Treba ga premestiti u zajednički mock helper (uz korak 1.5/1).
