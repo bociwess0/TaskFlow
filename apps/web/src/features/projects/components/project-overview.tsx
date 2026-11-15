@@ -1,6 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import { MilestonesCard } from "@/features/projects/components/milestones-card";
 import { ProjectDescriptionCard } from "@/features/projects/components/project-description-card";
 import { ProjectSummaryCard } from "@/features/projects/components/project-summary-card";
 import { useProject } from "@/features/projects/hooks/use-project";
@@ -22,6 +23,7 @@ export function ProjectOverview() {
       {/* Left column: summary, then milestones. Right column: description and quick links. */}
       <div className="flex flex-col gap-6">
         <ProjectSummaryCard project={project} />
+        <MilestonesCard milestones={project.milestones} />
       </div>
       <div className="flex flex-col gap-6">
         <ProjectDescriptionCard project={project} />

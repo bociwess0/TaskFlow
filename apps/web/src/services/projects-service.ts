@@ -157,6 +157,9 @@ const projectExtras: Record<string, ProjectExtras> = {
     technologies: ["react-native", "expo", "typescript"],
     milestones: [
       { id: "m-5", name: "MVP", status: "COMPLETED", dueDate: dateFromToday(-20) },
+      { id: "m-12", name: "Beta Testing", status: "IN_PROGRESS", dueDate: dateFromToday(-3) },
+      { id: "m-13", name: "Push Notifications", status: "PENDING", dueDate: dateFromToday(20) },
+      { id: "m-14", name: "Offline Mode", status: "PENDING", dueDate: dateFromToday(45) },
       { id: "m-6", name: "Store Release", status: "PENDING", dueDate: dateFromToday(68) },
     ],
     links: [

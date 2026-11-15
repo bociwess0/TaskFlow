@@ -59,8 +59,8 @@ Grana `feature/project-details` · dizajn `05-project-detail.png` · ruta `/proj
 | 2 | Layout projekta: breadcrumb, ikonica, naziv, opis, dugme Edit Project, tabovi | ✓ | `feat(projects): add project layout with tabs` |
 | 3 | `ProjectSummaryCard`: progres, članovi, period trajanja | ✓ | `feat(projects): add project summary card` |
 | 4 | `ProjectDescriptionCard`: opis i tehnologije kao tagovi | ✓ | `feat(projects): add project description card` |
-| 5 | `MilestonesCard`: lista sa statusom i rokom | ▶ | |
-| 6 | `QuickLinksCard`: GitHub, Figma, API dokumentacija, Live Preview | ☐ | |
+| 5 | `MilestonesCard`: lista sa statusom i rokom | ✓ | `feat(projects): add milestones card` |
+| 6 | `QuickLinksCard`: GitHub, Figma, API dokumentacija, Live Preview | ▶ | |
 | 7 | Povezivanje: klik na `ProjectCard` i „View details“ vode na detalje; `not-found` za nepostojeći projekat | ☐ | |
 
 ### 1.4 Kanban tabla ☐
