@@ -36,8 +36,8 @@ Grana `feature/app-layout`, spojena u `main`.
 | 1 | App layout: sidebar, header, mobilni meni | ✓ | `feat: add app layout with sidebar and header` |
 | 2 | Dashboard: pozdrav, KPI kartice, grafikoni, nedavne aktivnosti, rokovi | ✓ | `feat: add dashboard with mock data` |
 
-### 1.2 Projects – lista projekata ▶
-Grana `feature/projects-list` · dizajn `03-projects.png`
+### 1.2 Projects – lista projekata ✓
+Grana `feature/projects-list`, spojena u `main` (PR #1) · dizajn `03-projects.png`
 
 | # | Korak | Status | Commit |
 |---|---|---|---|
@@ -47,20 +47,20 @@ Grana `feature/projects-list` · dizajn `03-projects.png`
 | 4 | `ProjectCard` (+ `AvatarGroup`, shadcn `Progress`) | ✓ | `feat(projects): add project card` |
 | 5 | `ProjectsGrid`: mreža 3/2/1 kolone, skeleton, prazno stanje, greška | ✓ | `feat(projects): add projects grid` |
 | 6 | `ProjectsToolbar`: pretraga, filter po statusu, sortiranje (stanje u URL-u) | ✓ | `feat(projects): add projects toolbar` |
-| 7 | Završetak: pull request i merge u `main` | ▶ | |
+| 7 | Završetak: pull request i merge u `main` | ✓ | PR #1 |
 
-### 1.3 Detalji projekta ☐
-Dizajn `05-project-detail.png` · ruta `/projects/[projectId]`
+### 1.3 Detalji projekta ▶
+Grana `feature/project-details` · dizajn `05-project-detail.png` · ruta `/projects/[projectId]`
 
-| # | Korak | Status |
-|---|---|---|
-| 1 | Podaci: `getProject(id)`, milestone-ovi, brzi linkovi, tehnologije; `useProject` | ☐ |
-| 2 | Layout projekta: breadcrumb, ikonica, naziv, opis, dugme Edit Project, tabovi | ☐ |
-| 3 | `ProjectSummaryCard`: progres, članovi, period trajanja | ☐ |
-| 4 | `ProjectDescriptionCard`: opis i tehnologije kao tagovi | ☐ |
-| 5 | `MilestonesCard`: lista sa statusom i rokom | ☐ |
-| 6 | `QuickLinksCard`: GitHub, Figma, API dokumentacija, Live Preview | ☐ |
-| 7 | Povezivanje: klik na `ProjectCard` i „View details“ vode na detalje; `not-found` za nepostojeći projekat | ☐ |
+| # | Korak | Status | Commit |
+|---|---|---|---|
+| 1 | Podaci: `getProject(id)`, milestone-ovi, brzi linkovi, tehnologije; `useProject` | ✓ | `feat(projects): add project details data` |
+| 2 | Layout projekta: breadcrumb, ikonica, naziv, opis, dugme Edit Project, tabovi | ▶ | |
+| 3 | `ProjectSummaryCard`: progres, članovi, period trajanja | ☐ | |
+| 4 | `ProjectDescriptionCard`: opis i tehnologije kao tagovi | ☐ | |
+| 5 | `MilestonesCard`: lista sa statusom i rokom | ☐ | |
+| 6 | `QuickLinksCard`: GitHub, Figma, API dokumentacija, Live Preview | ☐ | |
+| 7 | Povezivanje: klik na `ProjectCard` i „View details“ vode na detalje; `not-found` za nepostojeći projekat | ☐ | |
 
 ### 1.4 Kanban tabla ☐
 Dizajn `04-kanban.png` · ruta `/projects/[projectId]/board`
@@ -192,3 +192,4 @@ Razbija se na korake kad dođemo do nje.
 - Polje `createdAt` je dodato projektu zbog sortiranja „Newest“. Treba ga imati i u Prisma šemi.
 - Filtriranje i sortiranje projekata trenutno radi mock servis. API treba da podrži iste parametre (`q`, `status`, `sort`), a bez `status` da ne vraća arhivirane projekte.
 - `dateFromToday` je dupliran u `projects-service` i `dashboard-service`. Treba ga premestiti u zajednički mock helper (uz korak 1.5/1).
+- `ApiError` (status + poruka) je zajednički oblik greške servisnog sloja. Pravi `api-client` (faza 4) treba svaki neuspešan HTTP odgovor da pretvori u `ApiError` sa statusom odgovora.
