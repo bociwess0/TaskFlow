@@ -4,12 +4,7 @@ export type ProjectStatus = "PLANNING" | "IN_PROGRESS" | "ON_HOLD" | "COMPLETED"
 
 /** Icon shown on the project card; the UI maps each key to an icon component. */
 export type ProjectIcon =
-  | "shopping-cart"
-  | "smartphone"
-  | "wrench"
-  | "globe"
-  | "contact"
-  | "briefcase";
+  "shopping-cart" | "smartphone" | "wrench" | "globe" | "contact" | "briefcase";
 
 /** Theme color of the project icon. */
 export type ProjectColor = "primary" | "success" | "warning" | "danger" | "highlight" | "neutral";
@@ -60,7 +55,7 @@ export interface ProjectDetails extends Project {
   links: ProjectLink[];
 }
 
-export type ProjectSort ="newest" | "name" | "deadline" | "progress";
+export type ProjectSort = "newest" | "name" | "deadline" | "progress";
 
 /** Query parameters of the project list (search, status filter, sorting). */
 export interface ProjectListParams {

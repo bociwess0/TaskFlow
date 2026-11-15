@@ -1,11 +1,6 @@
 import { ApiError } from "@/services/api-error";
 import { mockError, mockResponse } from "@/services/mock-response";
-import type {
-  Project,
-  ProjectDetails,
-  ProjectListParams,
-  ProjectSort,
-} from "@/types/project";
+import type { Project, ProjectDetails, ProjectListParams, ProjectSort } from "@/types/project";
 import type { UserSummary } from "@/types/user";
 
 /** Local date `days` from today as YYYY-MM-DD, so mock deadlines stay current. */
@@ -184,12 +179,8 @@ const projectExtras: Record<string, ProjectExtras> = {
   "p-4": {
     overview: "Redesigned company website with a CMS for the marketing team.",
     technologies: ["nextjs", "tailwind", "sanity"],
-    milestones: [
-      { id: "m-8", name: "Launch", status: "COMPLETED", dueDate: dateFromToday(-10) },
-    ],
-    links: [
-      { id: "l-6", type: "preview", label: "Live Website", url: "https://www.example.com" },
-    ],
+    milestones: [{ id: "m-8", name: "Launch", status: "COMPLETED", dueDate: dateFromToday(-10) }],
+    links: [{ id: "l-6", type: "preview", label: "Live Website", url: "https://www.example.com" }],
   },
   "p-5": {
     overview: "Customer relationship management platform for the sales team.",
@@ -238,11 +229,9 @@ const PROJECT_SORTERS: Record<ProjectSort, (a: Project, b: Project) => number> =
  * Filters and sorts on the "server", the same way the API will.
  * Without a status filter, archived projects are left out.
  */
-export function getProjects({
-  q,
-  status,
-  sort = "newest",
-}: ProjectListParams = {}): Promise<Project[]> {
+export function getProjects({ q, status, sort = "newest" }: ProjectListParams = {}): Promise<
+  Project[]
+> {
   const search = q?.trim().toLowerCase();
 
   const result = projects

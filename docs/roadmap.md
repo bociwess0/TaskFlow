@@ -21,6 +21,7 @@ Plan rada po koracima i status svakog koraka. Specifikacija je u `docs/kontekst-
 | LF kraj redova za sve fajlove | ✓ | `chore: enforce LF line endings with .gitattributes` |
 | TanStack Query i Recharts | ✓ | `chore: set up TanStack Query and charts` |
 | Pravila rada u CLAUDE.md | ✓ | `docs: add working rules` |
+| Prettier (+ sortiranje Tailwind klasa), provera u lint-u, formatiran ceo kod | ✓ | `chore: add prettier and format code` |
 
 ---
 

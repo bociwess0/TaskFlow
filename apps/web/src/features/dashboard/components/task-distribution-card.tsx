@@ -24,9 +24,7 @@ const chartConfig = Object.fromEntries(
 export function TaskDistributionCard() {
   const { data, isPending, isError, refetch } = useTaskDistribution();
 
-  const segments = data
-    ? TASK_STATUSES.map((status) => ({ status, count: data[status] }))
-    : [];
+  const segments = data ? TASK_STATUSES.map((status) => ({ status, count: data[status] })) : [];
   const total = segments.reduce((sum, segment) => sum + segment.count, 0);
 
   return (

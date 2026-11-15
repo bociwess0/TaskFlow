@@ -39,7 +39,12 @@ export function StatsGrid() {
 
   return (
     <div className={GRID_CLASS}>
-      <StatCard label="Active Projects" stat={stats.activeProjects} icon={FolderOpen} tone="success" />
+      <StatCard
+        label="Active Projects"
+        stat={stats.activeProjects}
+        icon={FolderOpen}
+        tone="success"
+      />
       <StatCard
         label="Open Tasks"
         stat={stats.openTasks}

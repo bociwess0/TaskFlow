@@ -17,10 +17,7 @@ interface StatusBadgeProps {
 
 export function StatusBadge({ status, className }: StatusBadgeProps) {
   return (
-    <Badge
-      variant={STATUS_TONE[status]}
-      className={cn("h-6 rounded-md px-2.5 text-xs", className)}
-    >
+    <Badge variant={STATUS_TONE[status]} className={cn("h-6 rounded-md px-2.5 text-xs", className)}>
       {STATUS_LABEL[status]}
     </Badge>
   );
