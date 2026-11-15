@@ -40,6 +40,13 @@
   --color-highlight: var(--highlight);
   --color-highlight-foreground: var(--highlight-foreground);
 
+  /* Darker shades of the status colors, for text on soft (tinted) backgrounds */
+  --color-primary-strong: color-mix(in oklab, var(--primary) 85%, black);
+  --color-success-strong: color-mix(in oklab, var(--success) 75%, black);
+  --color-warning-strong: color-mix(in oklab, var(--warning) 70%, black);
+  --color-danger-strong: color-mix(in oklab, var(--danger) 85%, black);
+  --color-highlight-strong: color-mix(in oklab, var(--highlight) 85%, black);
+
   /* Charts */
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
