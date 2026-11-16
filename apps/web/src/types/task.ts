@@ -45,6 +45,21 @@ export interface TaskFilters {
   due: TaskDueFilter[];
 }
 
+/** New task (POST /projects/:id/tasks); it is added to the end of its status column. */
+export interface CreateTaskInput {
+  projectId: string;
+  title: string;
+  description: string;
+  status: TaskStatus;
+  priority: Priority;
+  /** Must be a member of the project; null for an unassigned task. */
+  assigneeId: string | null;
+  /** ISO date (YYYY-MM-DD) or null. */
+  dueDate: string | null;
+  estimatedHours: number | null;
+  labels: string[];
+}
+
 /** Moving a task on the board (PATCH /tasks/:id/move). */
 export interface TaskMove {
   taskId: string;

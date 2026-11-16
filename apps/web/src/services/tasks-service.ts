@@ -3,8 +3,8 @@ import { ApiError } from "@/services/api-error";
 import { dateFromToday, minutesAgo } from "@/services/mock/dates";
 import { mockUsers } from "@/services/mock/users";
 import { mockError, mockResponse } from "@/services/mock-response";
-import { mockProjectExists } from "@/services/projects-service";
-import type { Task, TaskComment, TaskMove } from "@/types/task";
+import { findMockProject } from "@/services/projects-service";
+import type { CreateTaskInput, Task, TaskComment, TaskMove } from "@/types/task";
 
 const { ana, bogdan, ivan, jelena, marko, nikola, sara } = mockUsers;
 
@@ -244,7 +244,7 @@ let tasks: Task[] = [
  * Rejects with a 404 ApiError for an unknown project, the same way the API will respond.
  */
 export function getProjectTasks(projectId: string): Promise<Task[]> {
-  if (!mockProjectExists(projectId)) {
+  if (!findMockProject(projectId)) {
     return mockError(new ApiError(404, `Project ${projectId} not found`));
   }
 
@@ -275,6 +275,47 @@ export function moveTask(move: TaskMove): Promise<Task> {
 
   const updated = projectTasks.find((item) => item.id === move.taskId) ?? task;
   return mockResponse({ ...updated });
+}
+
+/** Id for the next created task; mock tasks use t-1 … t-16. */
+let nextTaskNumber = 17;
+
+/**
+ * Creates a task at the end of its status column (POST /projects/:id/tasks).
+ * Like the API: 404 for an unknown project, 400 when the assignee isn't a project member.
+ */
+export function createTask(input: CreateTaskInput): Promise<Task> {
+  const project = findMockProject(input.projectId);
+  if (!project) {
+    return mockError(new ApiError(404, `Project ${input.projectId} not found`));
+  }
+
+  const assignee = input.assigneeId
+    ? project.members.find((member) => member.id === input.assigneeId)
+    : null;
+  if (assignee === undefined) {
+    return mockError(new ApiError(400, "The assignee must be a member of the project."));
+  }
+
+  const task: Task = {
+    id: `t-${nextTaskNumber++}`,
+    projectId: input.projectId,
+    title: input.title,
+    description: input.description,
+    status: input.status,
+    priority: input.priority,
+    labels: input.labels,
+    assignee,
+    dueDate: input.dueDate,
+    estimatedHours: input.estimatedHours,
+    position: tasks.filter(
+      (item) => item.projectId === input.projectId && item.status === input.status,
+    ).length,
+    createdAt: dateFromToday(0),
+  };
+  tasks = [...tasks, task];
+
+  return mockResponse({ ...task });
 }
 
 const comments: TaskComment[] = [
