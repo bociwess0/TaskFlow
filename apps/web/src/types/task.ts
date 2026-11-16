@@ -45,9 +45,8 @@ export interface TaskFilters {
   due: TaskDueFilter[];
 }
 
-/** New task (POST /projects/:id/tasks); it is added to the end of its status column. */
-export interface CreateTaskInput {
-  projectId: string;
+/** Task fields the user fills in, the same for creating and editing a task. */
+export interface TaskInput {
   title: string;
   description: string;
   status: TaskStatus;
@@ -58,6 +57,19 @@ export interface CreateTaskInput {
   dueDate: string | null;
   estimatedHours: number | null;
   labels: string[];
+}
+
+/** New task (POST /projects/:id/tasks); it is added to the end of its status column. */
+export interface CreateTaskInput extends TaskInput {
+  projectId: string;
+}
+
+/**
+ * Changed task (PATCH /tasks/:id). All fields are sent; a new status moves the task to the
+ * end of that column.
+ */
+export interface UpdateTaskInput extends TaskInput {
+  taskId: string;
 }
 
 /** Moving a task on the board (PATCH /tasks/:id/move). */
