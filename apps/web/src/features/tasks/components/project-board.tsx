@@ -23,5 +23,5 @@ export function ProjectBoard() {
     );
   }
 
-  return <KanbanBoard tasks={tasks} />;
+  return <KanbanBoard projectId={projectId} tasks={tasks} />;
 }

@@ -73,8 +73,8 @@ Grana `feature/kanban-board` · dizajn `04-kanban.png` · ruta `/projects/[proje
 | 2 | `TaskCard`: naslov, labela, rok (crveno ako kasni), avatar izvršioca, prioritet | ✓ | `feat(tasks): add task card` |
 | 3 | `KanbanColumn`: naslov sa brojem zadataka, lista kartica, „+ Add task“ | ✓ | `feat(tasks): add kanban column` |
 | 4 | `KanbanBoard`: 4 kolone, horizontalni skrol na mobilnom | ✓ | `feat(tasks): add kanban board layout` |
-| 5 | Drag & drop (dnd-kit): između kolona i redosled u koloni, optimistic update preko `useMutation` | ▶ | |
-| 6 | `BoardToolbar`: pretraga i filteri (član, labela, rok) | ☐ | |
+| 5 | Drag & drop (dnd-kit): između kolona i redosled u koloni, optimistic update preko `useMutation` | ✓ | `feat(tasks): add drag and drop to kanban board` |
+| 6 | `BoardToolbar`: pretraga i filteri (član, labela, rok) | ▶ | |
 | 7 | `TaskDetailsSheet`: klik na karticu otvara panel sa detaljima i komentarima | ☐ | |
 | 8 | `AddTaskDialog`: forma (React Hook Form + Zod) | ☐ | |
 | 9 | Prikazi List i Timeline (opciono, posle osnovnih ekrana) | ☐ | |

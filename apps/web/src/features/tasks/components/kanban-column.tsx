@@ -1,6 +1,10 @@
+"use client";
+
+import { useDroppable } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { TaskCard } from "@/features/tasks/components/task-card";
+import { SortableTaskCard } from "@/features/tasks/components/sortable-task-card";
 import { TASK_STATUS_COLUMN_CLASS, TASK_STATUS_LABEL } from "@/lib/task-status";
 import { cn } from "@/lib/utils";
 import type { Task, TaskStatus } from "@/types/task";
@@ -13,15 +17,23 @@ interface KanbanColumnProps {
   className?: string;
 }
 
-/** One board column: status title with task count, task cards and Add task. */
+/** One board column: status title with task count, task cards and Add task. Also a drop target. */
 export function KanbanColumn({ status, tasks, className }: KanbanColumnProps) {
   const colors = TASK_STATUS_COLUMN_CLASS[status];
   const titleId = `kanban-column-${status}`;
+  // The whole column accepts drops, so an empty column can receive a card too.
+  const { setNodeRef, isOver } = useDroppable({ id: status });
 
   return (
     <section
+      ref={setNodeRef}
       aria-labelledby={titleId}
-      className={cn("flex flex-col gap-3 rounded-xl p-3", colors.surface, className)}
+      className={cn(
+        "flex flex-col gap-3 rounded-xl p-3 transition-shadow",
+        colors.surface,
+        isOver && tasks.length === 0 && "ring-2 ring-ring/40",
+        className,
+      )}
     >
       <header className="flex items-center gap-2 px-1">
         <h2 id={titleId} className={cn("text-sm font-semibold", colors.title)}>
@@ -38,19 +50,19 @@ export function KanbanColumn({ status, tasks, className }: KanbanColumnProps) {
         </span>
       </header>
 
-      {tasks.length === 0 ? (
-        <p className="rounded-lg border border-dashed border-foreground/15 py-8 text-center text-sm text-muted-foreground">
-          No tasks
-        </p>
-      ) : (
-        <ul className="flex flex-col gap-3">
-          {tasks.map((task) => (
-            <li key={task.id}>
-              <TaskCard task={task} />
-            </li>
-          ))}
-        </ul>
-      )}
+      <SortableContext items={tasks.map((task) => task.id)} strategy={verticalListSortingStrategy}>
+        {tasks.length === 0 ? (
+          <p className="rounded-lg border border-dashed border-foreground/15 py-8 text-center text-sm text-muted-foreground">
+            No tasks
+          </p>
+        ) : (
+          <ul className="flex flex-col gap-3">
+            {tasks.map((task) => (
+              <SortableTaskCard key={task.id} task={task} />
+            ))}
+          </ul>
+        )}
+      </SortableContext>
 
       {/* Opens AddTaskDialog once it exists. */}
       <Button variant="ghost" className={cn("justify-start", colors.action)}>
