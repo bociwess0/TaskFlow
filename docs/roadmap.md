@@ -70,8 +70,8 @@ Grana `feature/kanban-board` · dizajn `04-kanban.png` · ruta `/projects/[proje
 | # | Korak | Status | Commit |
 |---|---|---|---|
 | 1 | Podaci: tip `Task` (labele, izvršilac, rok, prioritet, pozicija), mock po projektu, `useProjectTasks` | ✓ | `feat(tasks): add task types and mock service` |
-| 2 | `TaskCard`: naslov, labela, rok (crveno ako kasni), avatar izvršioca, prioritet | ▶ | |
-| 3 | `KanbanColumn`: naslov sa brojem zadataka, lista kartica, „+ Add task“ | ☐ | |
+| 2 | `TaskCard`: naslov, labela, rok (crveno ako kasni), avatar izvršioca, prioritet | ✓ | `feat(tasks): add task card` |
+| 3 | `KanbanColumn`: naslov sa brojem zadataka, lista kartica, „+ Add task“ | ▶ | |
 | 4 | `KanbanBoard`: 4 kolone, horizontalni skrol na mobilnom | ☐ | |
 | 5 | Drag & drop (dnd-kit): između kolona i redosled u koloni, optimistic update preko `useMutation` | ☐ | |
 | 6 | `BoardToolbar`: pretraga i filteri (član, labela, rok) | ☐ | |
