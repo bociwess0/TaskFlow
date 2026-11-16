@@ -23,3 +23,11 @@ export interface Task {
   /** ISO date (YYYY-MM-DD). */
   createdAt: string;
 }
+
+/** Moving a task on the board (PATCH /tasks/:id/move). */
+export interface TaskMove {
+  taskId: string;
+  status: TaskStatus;
+  /** 0-based index in the target column, counted without the moved task. */
+  position: number;
+}

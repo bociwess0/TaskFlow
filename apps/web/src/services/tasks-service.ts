@@ -1,14 +1,14 @@
-import { TASK_STATUSES } from "@/lib/task-status";
+import { applyTaskMove, compareTasks } from "@/lib/task-move";
 import { ApiError } from "@/services/api-error";
 import { dateFromToday } from "@/services/mock/dates";
 import { mockUsers } from "@/services/mock/users";
 import { mockError, mockResponse } from "@/services/mock-response";
 import { mockProjectExists } from "@/services/projects-service";
-import type { Task } from "@/types/task";
+import type { Task, TaskMove } from "@/types/task";
 
 const { ana, bogdan, ivan, jelena, marko, nikola, sara } = mockUsers;
 
-const tasks: Task[] = [
+let tasks: Task[] = [
   // E-commerce Platform (p-1), as on the Kanban design
   {
     id: "t-1",
@@ -239,8 +239,6 @@ const tasks: Task[] = [
   },
 ];
 
-const statusOrder = (task: Task) => TASK_STATUSES.indexOf(task.status);
-
 /**
  * Tasks of one project, ordered by status column and position.
  * Rejects with a 404 ApiError for an unknown project, the same way the API will respond.
@@ -250,9 +248,31 @@ export function getProjectTasks(projectId: string): Promise<Task[]> {
     return mockError(new ApiError(404, `Project ${projectId} not found`));
   }
 
+  // Copies, so later mock changes never mutate data already handed to the UI.
   const result = tasks
     .filter((task) => task.projectId === projectId)
-    .sort((a, b) => statusOrder(a) - statusOrder(b) || a.position - b.position);
+    .sort(compareTasks)
+    .map((task) => ({ ...task }));
 
   return mockResponse(result);
+}
+
+/**
+ * Moves a task to another column and/or position (PATCH /tasks/:id/move).
+ * Like the API, it renumbers positions in the old and the new column.
+ */
+export function moveTask(move: TaskMove): Promise<Task> {
+  const task = tasks.find((item) => item.id === move.taskId);
+  if (!task) {
+    return mockError(new ApiError(404, `Task ${move.taskId} not found`));
+  }
+
+  const projectTasks = applyTaskMove(
+    tasks.filter((item) => item.projectId === task.projectId),
+    move,
+  );
+  tasks = [...tasks.filter((item) => item.projectId !== task.projectId), ...projectTasks];
+
+  const updated = projectTasks.find((item) => item.id === move.taskId) ?? task;
+  return mockResponse({ ...updated });
 }
