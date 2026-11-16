@@ -1,10 +1,10 @@
 import { applyTaskMove, compareTasks } from "@/lib/task-move";
 import { ApiError } from "@/services/api-error";
-import { dateFromToday } from "@/services/mock/dates";
+import { dateFromToday, minutesAgo } from "@/services/mock/dates";
 import { mockUsers } from "@/services/mock/users";
 import { mockError, mockResponse } from "@/services/mock-response";
 import { mockProjectExists } from "@/services/projects-service";
-import type { Task, TaskMove } from "@/types/task";
+import type { Comment, Task, TaskMove } from "@/types/task";
 
 const { ana, bogdan, ivan, jelena, marko, nikola, sara } = mockUsers;
 
@@ -275,4 +275,73 @@ export function moveTask(move: TaskMove): Promise<Task> {
 
   const updated = projectTasks.find((item) => item.id === move.taskId) ?? task;
   return mockResponse({ ...updated });
+}
+
+const comments: Comment[] = [
+  {
+    id: "c-1",
+    taskId: "t-5",
+    author: jelena,
+    content: "I added the button and input variants to Figma. Can someone check the focus states?",
+    createdAt: minutesAgo(3 * 24 * 60),
+  },
+  {
+    id: "c-2",
+    taskId: "t-5",
+    author: sara,
+    content: "Looks good. The disabled state needs a bit more contrast, I'll update it today.",
+    createdAt: minutesAgo(26 * 60),
+  },
+  {
+    id: "c-3",
+    taskId: "t-5",
+    author: ana,
+    content: "Badges are done too, so cards can use them now.",
+    createdAt: minutesAgo(45),
+  },
+  {
+    id: "c-4",
+    taskId: "t-6",
+    author: nikola,
+    content: "Hero section is in. Waiting for final product photos for the featured grid.",
+    createdAt: minutesAgo(5 * 60),
+  },
+  {
+    id: "c-5",
+    taskId: "t-8",
+    author: marko,
+    content: "Checkout breaks below 360px, the summary box overflows.",
+    createdAt: minutesAgo(2 * 24 * 60),
+  },
+  {
+    id: "c-6",
+    taskId: "t-8",
+    author: ana,
+    content: "Fixed it, ready for another look.",
+    createdAt: minutesAgo(20 * 60),
+  },
+  {
+    id: "c-7",
+    taskId: "t-1",
+    author: jelena,
+    content: "Please include the empty cart state in the wireframes.",
+    createdAt: minutesAgo(4 * 24 * 60),
+  },
+];
+
+/**
+ * Comments of one task, oldest first.
+ * Rejects with a 404 ApiError for an unknown task, the same way the API will respond.
+ */
+export function getTaskComments(taskId: string): Promise<Comment[]> {
+  if (!tasks.some((task) => task.id === taskId)) {
+    return mockError(new ApiError(404, `Task ${taskId} not found`));
+  }
+
+  const result = comments
+    .filter((comment) => comment.taskId === taskId)
+    .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+    .map((comment) => ({ ...comment }));
+
+  return mockResponse(result);
 }

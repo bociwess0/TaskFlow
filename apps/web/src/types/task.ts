@@ -24,6 +24,15 @@ export interface Task {
   createdAt: string;
 }
 
+export interface Comment {
+  id: string;
+  taskId: string;
+  author: UserSummary;
+  content: string;
+  /** ISO timestamp (date and time). */
+  createdAt: string;
+}
+
 export type TaskDueFilter = "overdue" | "week" | "none";
 
 /** Board filters. Within a group any value matches; groups combine (AND). */
