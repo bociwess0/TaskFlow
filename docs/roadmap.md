@@ -50,8 +50,8 @@ Grana `feature/projects-list`, spojena u `main` (PR #1) · dizajn `03-projects.p
 | 6 | `ProjectsToolbar`: pretraga, filter po statusu, sortiranje (stanje u URL-u) | ✓ | `feat(projects): add projects toolbar` |
 | 7 | Završetak: pull request i merge u `main` | ✓ | PR #1 |
 
-### 1.3 Detalji projekta ▶
-Grana `feature/project-details` · dizajn `05-project-detail.png` · ruta `/projects/[projectId]`
+### 1.3 Detalji projekta ✓
+Grana `feature/project-details`, spojena u `main` (PR #2) · dizajn `05-project-detail.png` · ruta `/projects/[projectId]`
 
 | # | Korak | Status | Commit |
 |---|---|---|---|
@@ -62,7 +62,7 @@ Grana `feature/project-details` · dizajn `05-project-detail.png` · ruta `/proj
 | 5 | `MilestonesCard`: lista sa statusom i rokom | ✓ | `feat(projects): add milestones card` |
 | 6 | `QuickLinksCard`: GitHub, Figma, API dokumentacija, Live Preview | ✓ | `feat(projects): add quick links card` |
 | 7 | Povezivanje: klik na `ProjectCard` (stretched link) i „View details“ vode na detalje. Nepostojeći projekat je već rešen u `ProjectShell` („Project not found“) | ✓ | `feat(projects): link project cards to details` |
-| 8 | Završetak: pull request i merge u `main` | ▶ | |
+| 8 | Završetak: pull request i merge u `main` | ✓ | PR #2 |
 
 ### 1.4 Kanban tabla ☐
 Dizajn `04-kanban.png` · ruta `/projects/[projectId]/board`
@@ -84,7 +84,7 @@ Dizajn `08-team.png` · ruta `/team`
 
 | # | Korak | Status |
 |---|---|---|
-| 1 | Zajednički mock korisnici (`services/mock/users.ts`) koje koriste svi servisi; `getTeamMembers` | ☐ |
+| 1 | Mock korisnici: proširiti `services/mock/users.ts` (e-mail, uloga, pozicija) i koristiti ga i u `auth-service`; `getTeamMembers` | ☐ |
 | 2 | `RoleBadge` za sistemske uloge (Admin, Project Manager, Team Member) | ☐ |
 | 3 | `TeamMembersTable`: ime i avatar, e-mail, uloga, pozicija, broj projekata, status, izmena | ☐ |
 | 4 | `TeamToolbar`: pretraga, filter po ulozi, dugme Invite Member | ☐ |
@@ -187,14 +187,12 @@ Razbija se na korake kad dođemo do nje.
 
 ## Za kasnije
 
-- Mock korisnici su definisani u više servisa. Treba ih prebaciti u jedan fajl (korak 1.5/1).
 - `DashboardGreeting` ponavlja HTML naslova; može da koristi `PageHeader`.
 - `StatCard` je u `features/dashboard`, a treba i drugim ekranima (korak 1.6/3).
 - Polja projekta `icon` i `color` ne postoje u modelu iz specifikacije. Treba ih dodati u Prisma šemu.
 - `NewProjectButton` još nema akciju. Treba ga povezati kad bude postojalo kreiranje projekta (dijalog ili strana).
 - Polje `createdAt` je dodato projektu zbog sortiranja „Newest“. Treba ga imati i u Prisma šemi.
 - Filtriranje i sortiranje projekata trenutno radi mock servis. API treba da podrži iste parametre (`q`, `status`, `sort`), a bez `status` da ne vraća arhivirane projekte.
-- `dateFromToday` je dupliran u `projects-service` i `dashboard-service`. Treba ga premestiti u zajednički mock helper (uz korak 1.5/1).
 - `ApiError` (status + poruka) je zajednički oblik greške servisnog sloja. Pravi `api-client` (faza 4) treba svaki neuspešan HTTP odgovor da pretvori u `ApiError` sa statusom odgovora.
 - Nepostojeći projekat (`/projects/xyz`) prikazuje „Project not found“, ali HTTP status je 200, jer se projekat učitava u browseru. Pravi 404 status traži učitavanje na serveru (kad stigne API).
 - Sadržaj taba projekta se prikazuje tek kad se učita projekat (zaglavlje). Ako tab bude imao svoje podatke (npr. zadaci za Board), oni počinju da se učitavaju posle projekta; po potrebi ih učitavati paralelno.

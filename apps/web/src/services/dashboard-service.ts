@@ -1,3 +1,5 @@
+import { daysFromNow, minutesAgo, monthStart } from "@/services/mock/dates";
+import { mockUsers } from "@/services/mock/users";
 import { mockResponse } from "@/services/mock-response";
 import type {
   ActivityItem,
@@ -6,24 +8,6 @@ import type {
   TaskDistribution,
   UpcomingDeadline,
 } from "@/types/dashboard";
-
-const MINUTE_MS = 60 * 1000;
-const DAY_MS = 24 * 60 * MINUTE_MS;
-
-function minutesAgo(minutes: number): string {
-  return new Date(Date.now() - minutes * MINUTE_MS).toISOString();
-}
-
-function daysFromNow(days: number): string {
-  return new Date(Date.now() + days * DAY_MS).toISOString();
-}
-
-/** First day of the month `offset` months before the current one, as YYYY-MM-DD. */
-function monthStart(offset: number): string {
-  const now = new Date();
-  const date = new Date(Date.UTC(now.getFullYear(), now.getMonth() - offset, 1));
-  return date.toISOString().slice(0, 10);
-}
 
 export function getDashboardStats(): Promise<DashboardStats> {
   return mockResponse({
@@ -60,20 +44,20 @@ export function getRecentActivity(): Promise<ActivityItem[]> {
   return mockResponse([
     {
       id: "a-1",
-      actor: { id: "u-2", name: "Ana Markovic" },
+      actor: mockUsers.ana,
       action: "completed a task",
       createdAt: minutesAgo(2),
     },
     {
       id: "a-2",
-      actor: { id: "u-3", name: "Marko Petrovic" },
+      actor: mockUsers.marko,
       action: "commented on",
       target: { name: "Design system", href: "/tasks/t-12" },
       createdAt: minutesAgo(15),
     },
     {
       id: "a-3",
-      actor: { id: "u-1", name: "Bogdan Djordjevic" },
+      actor: mockUsers.bogdan,
       action: "created a new project",
       target: { name: "E-commerce Platform", href: "/projects/p-1" },
       createdAt: minutesAgo(60),

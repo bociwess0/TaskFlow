@@ -1,26 +1,8 @@
 import { ApiError } from "@/services/api-error";
+import { dateFromToday } from "@/services/mock/dates";
+import { mockUsers } from "@/services/mock/users";
 import { mockError, mockResponse } from "@/services/mock-response";
 import type { Project, ProjectDetails, ProjectListParams, ProjectSort } from "@/types/project";
-import type { UserSummary } from "@/types/user";
-
-/** Local date `days` from today as YYYY-MM-DD, so mock deadlines stay current. */
-function dateFromToday(days: number): string {
-  const date = new Date();
-  date.setDate(date.getDate() + days);
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${date.getFullYear()}-${month}-${day}`;
-}
-
-const users = {
-  bogdan: { id: "u-1", name: "Bogdan Djordjevic" },
-  ana: { id: "u-2", name: "Ana Markovic" },
-  marko: { id: "u-3", name: "Marko Petrovic" },
-  jelena: { id: "u-4", name: "Jelena Ilic" },
-  nikola: { id: "u-5", name: "Nikola Radovic" },
-  sara: { id: "u-6", name: "Sara Jovanovic" },
-  ivan: { id: "u-7", name: "Ivan Stojanovic" },
-} satisfies Record<string, UserSummary>;
 
 const projects: Project[] = [
   {
@@ -33,7 +15,7 @@ const projects: Project[] = [
     endDate: dateFromToday(83),
     icon: "shopping-cart",
     color: "success",
-    members: [users.ana, users.marko, users.jelena, users.nikola, users.sara],
+    members: [mockUsers.ana, mockUsers.marko, mockUsers.jelena, mockUsers.nikola, mockUsers.sara],
     createdAt: dateFromToday(-30),
   },
   {
@@ -46,7 +28,7 @@ const projects: Project[] = [
     endDate: dateFromToday(68),
     icon: "smartphone",
     color: "primary",
-    members: [users.marko, users.sara, users.ivan, users.bogdan],
+    members: [mockUsers.marko, mockUsers.sara, mockUsers.ivan, mockUsers.bogdan],
     createdAt: dateFromToday(-60),
   },
   {
@@ -59,7 +41,7 @@ const projects: Project[] = [
     endDate: dateFromToday(119),
     icon: "wrench",
     color: "neutral",
-    members: [users.nikola, users.ivan, users.bogdan],
+    members: [mockUsers.nikola, mockUsers.ivan, mockUsers.bogdan],
     createdAt: dateFromToday(-4),
   },
   {
@@ -72,7 +54,7 @@ const projects: Project[] = [
     endDate: dateFromToday(-10),
     icon: "globe",
     color: "primary",
-    members: [users.jelena, users.ana],
+    members: [mockUsers.jelena, mockUsers.ana],
     createdAt: dateFromToday(-130),
   },
   {
@@ -85,7 +67,7 @@ const projects: Project[] = [
     endDate: dateFromToday(78),
     icon: "contact",
     color: "highlight",
-    members: [users.ana, users.sara],
+    members: [mockUsers.ana, mockUsers.sara],
     createdAt: dateFromToday(-45),
   },
   {
@@ -98,7 +80,7 @@ const projects: Project[] = [
     endDate: dateFromToday(144),
     icon: "briefcase",
     color: "primary",
-    members: [users.ivan, users.marko],
+    members: [mockUsers.ivan, mockUsers.marko],
     createdAt: dateFromToday(-75),
   },
   {
@@ -111,7 +93,7 @@ const projects: Project[] = [
     endDate: dateFromToday(-200),
     icon: "globe",
     color: "neutral",
-    members: [users.bogdan, users.jelena],
+    members: [mockUsers.bogdan, mockUsers.jelena],
     createdAt: dateFromToday(-420),
   },
 ];
