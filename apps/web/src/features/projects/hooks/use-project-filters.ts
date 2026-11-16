@@ -1,7 +1,8 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useCallback, useMemo } from "react";
+import { useSearchParamsUpdater } from "@/hooks/use-search-params-updater";
 import { PROJECT_STATUSES } from "@/lib/project-status";
 import type { ProjectListParams, ProjectSort, ProjectStatus } from "@/types/project";
 
@@ -40,27 +41,20 @@ function parseParams(searchParams: URLSearchParams): ProjectListParams & { sort:
 /** Project list search, filter and sort, kept in the URL so it survives refresh and can be shared. */
 export function useProjectFilters() {
   const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
+  const updateSearchParams = useSearchParamsUpdater();
 
   const params = useMemo(() => parseParams(searchParams), [searchParams]);
 
   const setParams = useCallback(
-    (patch: Partial<ProjectListParams>) => {
-      // Read the live URL so delayed calls (debounced search) don't overwrite newer changes.
-      const next = new URLSearchParams(window.location.search);
-      for (const [key, value] of Object.entries(patch)) {
-        const isDefault = key === "sort" && value === DEFAULT_PROJECT_SORT;
-        if (value && !isDefault) {
-          next.set(key, value);
-        } else {
-          next.delete(key);
-        }
-      }
-      const query = next.toString();
-      router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
-    },
-    [router, pathname],
+    (patch: Partial<ProjectListParams>) =>
+      updateSearchParams({
+        ...patch,
+        // The default sort is left out, so a plain /projects link stays clean.
+        ...("sort" in patch && {
+          sort: patch.sort === DEFAULT_PROJECT_SORT ? undefined : patch.sort,
+        }),
+      }),
+    [updateSearchParams],
   );
 
   const clearFilters = useCallback(

@@ -27,6 +27,15 @@ export function formatShortDate(date: string | Date): string {
   return new Date(date).toLocaleDateString(LOCALE, { month: "short", day: "numeric" });
 }
 
+/** "Sep 25" for an ISO date (YYYY-MM-DD), independent of the viewer's time zone. */
+export function formatShortIsoDate(isoDate: string): string {
+  return new Date(isoDate).toLocaleDateString(LOCALE, {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+}
+
 /** "Dec 15, 2024" for an ISO date (YYYY-MM-DD), independent of the viewer's time zone. */
 export function formatDate(isoDate: string): string {
   return new Date(isoDate).toLocaleDateString(LOCALE, {

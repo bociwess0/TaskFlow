@@ -9,6 +9,11 @@ const currentUser: User = {
   role: "ADMIN",
 };
 
+/** For other mock services that act as the signed-in user (e.g. comment author). */
+export function getMockCurrentUser(): User {
+  return currentUser;
+}
+
 export function getCurrentUser(): Promise<User> {
   return mockResponse(currentUser);
 }

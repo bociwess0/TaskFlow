@@ -14,7 +14,7 @@ interface ProjectTab {
 
 const PROJECT_TABS: ProjectTab[] = [
   { label: "Overview", segment: "", enabled: true },
-  { label: "Board", segment: "board", enabled: false },
+  { label: "Board", segment: "board", enabled: true },
   { label: "List", segment: "list", enabled: false },
   { label: "Timeline", segment: "timeline", enabled: false },
   { label: "Team", segment: "team", enabled: false },

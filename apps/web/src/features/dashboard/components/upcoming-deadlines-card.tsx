@@ -7,18 +7,11 @@ import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/componen
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUpcomingDeadlines } from "@/features/dashboard/hooks/use-dashboard-queries";
 import { daysUntil, formatShortDate } from "@/lib/format";
+import { TASK_PRIORITY_BG_CLASS } from "@/lib/task-priority";
 import { cn } from "@/lib/utils";
-import type { Priority } from "@/types/task";
 
 /** Deadlines within this many days are highlighted. */
 const SOON_THRESHOLD_DAYS = 3;
-
-const PRIORITY_BAR_CLASS: Record<Priority, string> = {
-  URGENT: "bg-danger",
-  HIGH: "bg-warning",
-  MEDIUM: "bg-primary",
-  LOW: "bg-muted-foreground/40",
-};
 
 export function UpcomingDeadlinesCard() {
   const { data: deadlines, isPending, isError, refetch } = useUpcomingDeadlines();
@@ -60,7 +53,7 @@ export function UpcomingDeadlinesCard() {
                   <span
                     className={cn(
                       "h-9 w-1 shrink-0 rounded-full",
-                      PRIORITY_BAR_CLASS[deadline.priority],
+                      TASK_PRIORITY_BG_CLASS[deadline.priority],
                     )}
                     aria-hidden
                   />

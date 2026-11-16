@@ -50,8 +50,8 @@ Grana `feature/projects-list`, spojena u `main` (PR #1) · dizajn `03-projects.p
 | 6 | `ProjectsToolbar`: pretraga, filter po statusu, sortiranje (stanje u URL-u) | ✓ | `feat(projects): add projects toolbar` |
 | 7 | Završetak: pull request i merge u `main` | ✓ | PR #1 |
 
-### 1.3 Detalji projekta ▶
-Grana `feature/project-details` · dizajn `05-project-detail.png` · ruta `/projects/[projectId]`
+### 1.3 Detalji projekta ✓
+Grana `feature/project-details`, spojena u `main` (PR #2) · dizajn `05-project-detail.png` · ruta `/projects/[projectId]`
 
 | # | Korak | Status | Commit |
 |---|---|---|---|
@@ -62,29 +62,32 @@ Grana `feature/project-details` · dizajn `05-project-detail.png` · ruta `/proj
 | 5 | `MilestonesCard`: lista sa statusom i rokom | ✓ | `feat(projects): add milestones card` |
 | 6 | `QuickLinksCard`: GitHub, Figma, API dokumentacija, Live Preview | ✓ | `feat(projects): add quick links card` |
 | 7 | Povezivanje: klik na `ProjectCard` (stretched link) i „View details“ vode na detalje. Nepostojeći projekat je već rešen u `ProjectShell` („Project not found“) | ✓ | `feat(projects): link project cards to details` |
-| 8 | Završetak: pull request i merge u `main` | ▶ | |
+| 8 | Završetak: pull request i merge u `main` | ✓ | PR #2 |
 
-### 1.4 Kanban tabla ☐
-Dizajn `04-kanban.png` · ruta `/projects/[projectId]/board`
+### 1.4 Kanban tabla ▶
+Grana `feature/kanban-board` · dizajn `04-kanban.png` · ruta `/projects/[projectId]/board`
 
-| # | Korak | Status |
-|---|---|---|
-| 1 | Podaci: tip `Task` (labele, izvršilac, rok, prioritet, pozicija), mock po projektu, `useProjectTasks` | ☐ |
-| 2 | `TaskCard`: naslov, labela, rok (crveno ako kasni), avatar izvršioca, prioritet | ☐ |
-| 3 | `KanbanColumn`: naslov sa brojem zadataka, lista kartica, „+ Add task“ | ☐ |
-| 4 | `KanbanBoard`: 4 kolone, horizontalni skrol na mobilnom | ☐ |
-| 5 | Drag & drop (dnd-kit): između kolona i redosled u koloni, optimistic update preko `useMutation` | ☐ |
-| 6 | `BoardToolbar`: pretraga i filteri (član, labela, rok) | ☐ |
-| 7 | `TaskDetailsSheet`: klik na karticu otvara panel sa detaljima i komentarima | ☐ |
-| 8 | `AddTaskDialog`: forma (React Hook Form + Zod) | ☐ |
-| 9 | Prikazi List i Timeline (opciono, posle osnovnih ekrana) | ☐ |
+| # | Korak | Status | Commit |
+|---|---|---|---|
+| 1 | Podaci: tip `Task` (labele, izvršilac, rok, prioritet, pozicija), mock po projektu, `useProjectTasks` | ✓ | `feat(tasks): add task types and mock service` |
+| 2 | `TaskCard`: naslov, labela, rok (crveno ako kasni), avatar izvršioca, prioritet | ✓ | `feat(tasks): add task card` |
+| 3 | `KanbanColumn`: naslov sa brojem zadataka, lista kartica, „+ Add task“ | ✓ | `feat(tasks): add kanban column` |
+| 4 | `KanbanBoard`: 4 kolone, horizontalni skrol na mobilnom | ✓ | `feat(tasks): add kanban board layout` |
+| 5 | Drag & drop (dnd-kit): između kolona i redosled u koloni, optimistic update preko `useMutation` | ✓ | `feat(tasks): add drag and drop to kanban board` |
+| 6 | `BoardToolbar`: pretraga i filteri (član, labela, rok) | ✓ | `feat(tasks): add board toolbar` |
+| 7 | `TaskDetailsSheet`: klik na karticu otvara panel sa detaljima i komentarima (samo čitanje) | ✓ | `feat(tasks): add task details sheet` |
+| 8 | `AddTaskDialog`: forma (React Hook Form + Zod) | ✓ | `feat(tasks): add task dialog` |
+| 9 | Izmena zadatka u panelu: dugme Edit prebacuje panel u formu (zajednički `TaskForm` sa `AddTaskDialog`) | ✓ | `feat(tasks): edit task in details panel` |
+| 10 | Dodavanje komentara: forma ispod liste, optimistic update, Ctrl/Cmd+Enter | ✓ | `feat(tasks): add task comments` |
+| 11 | Prikazi List i Timeline (opciono), odloženo, posle osnovnih ekrana | ☐ | |
+| 12 | Završetak: pull request i merge u `main` | ▶ | |
 
 ### 1.5 Team Members ☐
 Dizajn `08-team.png` · ruta `/team`
 
 | # | Korak | Status |
 |---|---|---|
-| 1 | Zajednički mock korisnici (`services/mock/users.ts`) koje koriste svi servisi; `getTeamMembers` | ☐ |
+| 1 | Mock korisnici: proširiti `services/mock/users.ts` (e-mail, uloga, pozicija) i koristiti ga i u `auth-service`; `getTeamMembers` | ☐ |
 | 2 | `RoleBadge` za sistemske uloge (Admin, Project Manager, Team Member) | ☐ |
 | 3 | `TeamMembersTable`: ime i avatar, e-mail, uloga, pozicija, broj projekata, status, izmena | ☐ |
 | 4 | `TeamToolbar`: pretraga, filter po ulozi, dugme Invite Member | ☐ |
@@ -184,19 +187,24 @@ Razbija se na korake kad dođemo do nje.
 - **Team:** kolona Role meša sistemsku ulogu (Admin) i poziciju (Frontend Developer). Sistemska uloga ide kao bedž, a pozicija se prikazuje odvojeno.
 - **Detalji projekta i Kanban:** imaju različite tabove. Koristi se jedan zajednički set: Overview, Board, List, Timeline, Team, Files, Settings.
 - **Detalji projekta:** kartica sa progresom ima dva reda avatara, a drugi deluje kao duplikat. Prikazuje se samo jedan red članova.
+- **Kanban:** na dizajnu je tabla projekta „Website Redesign“, kog nema u listi projekata. Zadaci sa dizajna su u mock-u vezani za E-commerce Platform.
+- **Kanban:** dizajn za istu vrstu posla koristi labele „dev“ i „development“. Koristi se samo „development“.
 
 ## Za kasnije
 
-- Mock korisnici su definisani u više servisa. Treba ih prebaciti u jedan fajl (korak 1.5/1).
 - `DashboardGreeting` ponavlja HTML naslova; može da koristi `PageHeader`.
 - `StatCard` je u `features/dashboard`, a treba i drugim ekranima (korak 1.6/3).
 - Polja projekta `icon` i `color` ne postoje u modelu iz specifikacije. Treba ih dodati u Prisma šemu.
 - `NewProjectButton` još nema akciju. Treba ga povezati kad bude postojalo kreiranje projekta (dijalog ili strana).
 - Polje `createdAt` je dodato projektu zbog sortiranja „Newest“. Treba ga imati i u Prisma šemi.
 - Filtriranje i sortiranje projekata trenutno radi mock servis. API treba da podrži iste parametre (`q`, `status`, `sort`), a bez `status` da ne vraća arhivirane projekte.
-- `dateFromToday` je dupliran u `projects-service` i `dashboard-service`. Treba ga premestiti u zajednički mock helper (uz korak 1.5/1).
 - `ApiError` (status + poruka) je zajednički oblik greške servisnog sloja. Pravi `api-client` (faza 4) treba svaki neuspešan HTTP odgovor da pretvori u `ApiError` sa statusom odgovora.
 - Nepostojeći projekat (`/projects/xyz`) prikazuje „Project not found“, ali HTTP status je 200, jer se projekat učitava u browseru. Pravi 404 status traži učitavanje na serveru (kad stigne API).
 - Sadržaj taba projekta se prikazuje tek kad se učita projekat (zaglavlje). Ako tab bude imao svoje podatke (npr. zadaci za Board), oni počinju da se učitavaju posle projekta; po potrebi ih učitavati paralelno.
 - Lucide nema brand ikonice, pa GitHub i Figma linkovi imaju neutralne ikonice (kod i dizajn). Ako zatrebaju prave, može se dodati mali SVG ili biblioteka (uz dogovor).
 - Kad linkovi projekta budu mogli da se unose kroz formu, dozvoliti samo http(s) adrese (validacija i na frontendu i na backendu), da se ne bi mogao ubaciti `javascript:` link.
+- Backend mora da proverava da je izvršilac zadatka član projekta.
+- Ista pravila validacije iz Zod šeme (title 3–120 znakova, opis do 2000, procena 0.5–200 sati, izvršilac je član projekta, labele…) moraju da postoje i u NestJS DTO-u, jer se frontend validaciji ne može verovati.
+- Zatvaranje panela zadatka (ili prelazak na drugi zadatak) dok je forma za izmenu otvorena odbacuje nesačuvane izmene bez upozorenja. Po potrebi dodati potvrdu.
+- U formi zadatka labele se biraju samo od onih koje već postoje na tabli; nove labele zasad ne mogu da se dodaju.
+- Komentarisanje: mock korisnik je Admin, pa mock servis ne proverava prava. Backend mora da proveri da korisnik sme da komentariše na projektu (Admin svuda, Project Manager na svojim projektima, Team Member samo na projektima na kojima je član) i da sadržaj nije prazan i da ima najviše 1000 znakova.

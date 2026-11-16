@@ -2,22 +2,26 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { MILESTONE_STATUS_LABEL, MILESTONE_STATUS_TONE } from "@/lib/milestone-status";
 import { PROJECT_STATUS_LABEL, PROJECT_STATUS_TONE } from "@/lib/project-status";
+import { TASK_STATUS_LABEL, TASK_STATUS_TONE } from "@/lib/task-status";
 import type { MilestoneStatus, ProjectStatus } from "@/types/project";
 import type { StatusTone } from "@/types/status";
+import type { TaskStatus } from "@/types/task";
 
 /**
  * Every status that has a badge. Add new status groups here (e.g. utilization).
  * Groups that share a status (COMPLETED, IN_PROGRESS) use the same label and tone.
  */
-export type Status = ProjectStatus | MilestoneStatus;
+export type Status = ProjectStatus | MilestoneStatus | TaskStatus;
 
 const STATUS_LABEL: Record<Status, string> = {
   ...PROJECT_STATUS_LABEL,
   ...MILESTONE_STATUS_LABEL,
+  ...TASK_STATUS_LABEL,
 };
 const STATUS_TONE: Record<Status, StatusTone> = {
   ...PROJECT_STATUS_TONE,
   ...MILESTONE_STATUS_TONE,
+  ...TASK_STATUS_TONE,
 };
 
 interface StatusBadgeProps {
