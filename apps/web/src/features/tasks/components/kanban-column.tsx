@@ -9,17 +9,19 @@ interface KanbanColumnProps {
   status: TaskStatus;
   /** Tasks of this column, already in display order. */
   tasks: Task[];
+  /** Width and placement, set by the board layout. */
+  className?: string;
 }
 
 /** One board column: status title with task count, task cards and Add task. */
-export function KanbanColumn({ status, tasks }: KanbanColumnProps) {
+export function KanbanColumn({ status, tasks, className }: KanbanColumnProps) {
   const colors = TASK_STATUS_COLUMN_CLASS[status];
   const titleId = `kanban-column-${status}`;
 
   return (
     <section
       aria-labelledby={titleId}
-      className={cn("flex w-72 shrink-0 flex-col gap-3 rounded-xl p-3", colors.surface)}
+      className={cn("flex flex-col gap-3 rounded-xl p-3", colors.surface, className)}
     >
       <header className="flex items-center gap-2 px-1">
         <h2 id={titleId} className={cn("text-sm font-semibold", colors.title)}>
