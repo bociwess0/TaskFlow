@@ -79,7 +79,8 @@ Grana `feature/kanban-board` · dizajn `04-kanban.png` · ruta `/projects/[proje
 | 8 | `AddTaskDialog`: forma (React Hook Form + Zod) | ✓ | `feat(tasks): add task dialog` |
 | 9 | Izmena zadatka u panelu: dugme Edit prebacuje panel u formu (zajednički `TaskForm` sa `AddTaskDialog`) | ✓ | `feat(tasks): edit task in details panel` |
 | 10 | Dodavanje komentara: forma ispod liste, optimistic update, Ctrl/Cmd+Enter | ✓ | `feat(tasks): add task comments` |
-| 11 | Prikazi List i Timeline (opciono, posle osnovnih ekrana) | ▶ | |
+| 11 | Prikazi List i Timeline (opciono), odloženo, posle osnovnih ekrana | ☐ | |
+| 12 | Završetak: pull request i merge u `main` | ▶ | |
 
 ### 1.5 Team Members ☐
 Dizajn `08-team.png` · ruta `/team`
