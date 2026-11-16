@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { TASK_PRIORITIES } from "@/lib/task-priority";
 import { TASK_STATUSES } from "@/lib/task-status";
-import type { CreateTaskInput, Priority, TaskStatus } from "@/types/task";
+import type { Priority, Task, TaskInput, TaskStatus } from "@/types/task";
 
 /** Assignee value for "Unassigned" in the form (selects can't hold null). */
 export const UNASSIGNED = "unassigned";
@@ -21,7 +21,7 @@ interface TaskFormContext {
 
 /**
  * Validation for the task form. Values are kept as the inputs give them (strings);
- * toCreateTaskInput turns them into the API shape.
+ * toTaskInput turns them into the API shape.
  */
 export function createTaskFormSchema({ memberIds, labels }: TaskFormContext) {
   return z.object({
@@ -72,8 +72,22 @@ export function getTaskFormDefaults(status: TaskStatus): TaskFormValues {
   };
 }
 
-/** Form values (already validated) in the shape createTask expects. */
-export function toCreateTaskInput(values: TaskFormValues): Omit<CreateTaskInput, "projectId"> {
+/** Form values for editing an existing task. */
+export function getTaskFormValues(task: Task): TaskFormValues {
+  return {
+    title: task.title,
+    description: task.description,
+    status: task.status,
+    priority: task.priority,
+    assigneeId: task.assignee?.id ?? UNASSIGNED,
+    dueDate: task.dueDate ?? "",
+    estimatedHours: task.estimatedHours === null ? "" : String(task.estimatedHours),
+    labels: task.labels,
+  };
+}
+
+/** Form values (already validated) in the shape createTask and updateTask expect. */
+export function toTaskInput(values: TaskFormValues): TaskInput {
   return {
     title: values.title,
     description: values.description,
