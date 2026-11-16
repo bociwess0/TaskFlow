@@ -1,10 +1,18 @@
 import { applyTaskMove, compareTasks } from "@/lib/task-move";
 import { ApiError } from "@/services/api-error";
+import { getMockCurrentUser } from "@/services/auth-service";
 import { dateFromToday, minutesAgo } from "@/services/mock/dates";
 import { mockUsers } from "@/services/mock/users";
 import { mockError, mockResponse } from "@/services/mock-response";
 import { findMockProject } from "@/services/projects-service";
-import type { CreateTaskInput, Task, TaskComment, TaskMove, UpdateTaskInput } from "@/types/task";
+import type {
+  CreateCommentInput,
+  CreateTaskInput,
+  Task,
+  TaskComment,
+  TaskMove,
+  UpdateTaskInput,
+} from "@/types/task";
 
 const { ana, bogdan, ivan, jelena, marko, nikola, sara } = mockUsers;
 
@@ -366,7 +374,7 @@ export function updateTask({ taskId, ...input }: UpdateTaskInput): Promise<Task>
   return mockResponse({ ...updated });
 }
 
-const comments: TaskComment[] = [
+let comments: TaskComment[] = [
   {
     id: "c-1",
     taskId: "t-5",
@@ -433,4 +441,30 @@ export function getTaskComments(taskId: string): Promise<TaskComment[]> {
     .map((comment) => ({ ...comment }));
 
   return mockResponse(result);
+}
+
+/** Id for the next added comment; mock comments use c-1 … c-7. */
+let nextCommentNumber = 8;
+
+/**
+ * Adds a comment by the signed-in user (POST /tasks/:id/comments).
+ * Like the API: 404 for an unknown task. The mock user is an Admin, who may comment on any
+ * project, so there is no permission check here.
+ */
+export function addTaskComment({ taskId, content }: CreateCommentInput): Promise<TaskComment> {
+  if (!tasks.some((task) => task.id === taskId)) {
+    return mockError(new ApiError(404, `Task ${taskId} not found`));
+  }
+
+  const { id, name, avatarUrl } = getMockCurrentUser();
+  const comment: TaskComment = {
+    id: `c-${nextCommentNumber++}`,
+    taskId,
+    author: { id, name, avatarUrl },
+    content,
+    createdAt: new Date().toISOString(),
+  };
+  comments = [...comments, comment];
+
+  return mockResponse({ ...comment });
 }

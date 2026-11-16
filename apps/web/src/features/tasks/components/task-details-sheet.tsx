@@ -10,7 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
+import { CommentForm } from "@/features/tasks/components/comment-form";
 import { TaskForm } from "@/features/tasks/components/task-form";
+import { isPendingComment } from "@/features/tasks/hooks/use-add-comment";
 import { useTaskComments } from "@/features/tasks/hooks/use-task-comments";
 import { useUpdateTask } from "@/features/tasks/hooks/use-update-task";
 import { getTaskFormValues, toTaskInput } from "@/features/tasks/schemas";
@@ -34,7 +36,7 @@ interface TaskDetailsSheetProps {
   labels: string[];
 }
 
-/** Task details in a side panel (full width on phones), with an edit mode. */
+/** Task details in a side panel (full width on phones), with an edit mode and comments. */
 export function TaskDetailsSheet({
   openTaskId,
   tasks,
@@ -277,7 +279,14 @@ function TaskComments({ taskId }: { taskId: string }) {
       ) : (
         <ul className="flex flex-col gap-4">
           {comments.map((comment) => (
-            <li key={comment.id} className="flex gap-3">
+            <li
+              key={comment.id}
+              className={cn(
+                "flex gap-3 transition-opacity",
+                isPendingComment(comment) && "opacity-60",
+              )}
+              aria-busy={isPendingComment(comment) || undefined}
+            >
               <UserAvatar user={comment.author} />
               <div className="min-w-0 flex-1">
                 <p className="flex flex-wrap items-baseline gap-x-2 text-sm">
@@ -294,6 +303,8 @@ function TaskComments({ taskId }: { taskId: string }) {
           ))}
         </ul>
       )}
+
+      <CommentForm taskId={taskId} />
     </section>
   );
 }

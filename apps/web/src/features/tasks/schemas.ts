@@ -99,3 +99,15 @@ export function toTaskInput(values: TaskFormValues): TaskInput {
     labels: values.labels,
   };
 }
+
+export const COMMENT_MAX = 1000;
+
+export const commentFormSchema = z.object({
+  content: z
+    .string()
+    .trim()
+    .min(1, "Write a comment first.")
+    .max(COMMENT_MAX, `Comment must be at most ${COMMENT_MAX} characters.`),
+});
+
+export type CommentFormValues = z.infer<typeof commentFormSchema>;

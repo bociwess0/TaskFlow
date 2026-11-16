@@ -78,8 +78,8 @@ Grana `feature/kanban-board` · dizajn `04-kanban.png` · ruta `/projects/[proje
 | 7 | `TaskDetailsSheet`: klik na karticu otvara panel sa detaljima i komentarima (samo čitanje) | ✓ | `feat(tasks): add task details sheet` |
 | 8 | `AddTaskDialog`: forma (React Hook Form + Zod) | ✓ | `feat(tasks): add task dialog` |
 | 9 | Izmena zadatka u panelu: dugme Edit prebacuje panel u formu (zajednički `TaskForm` sa `AddTaskDialog`) | ✓ | `feat(tasks): edit task in details panel` |
-| 10 | Dodavanje komentara | ▶ | |
-| 11 | Prikazi List i Timeline (opciono, posle osnovnih ekrana) | ☐ | |
+| 10 | Dodavanje komentara: forma ispod liste, optimistic update, Ctrl/Cmd+Enter | ✓ | `feat(tasks): add task comments` |
+| 11 | Prikazi List i Timeline (opciono, posle osnovnih ekrana) | ▶ | |
 
 ### 1.5 Team Members ☐
 Dizajn `08-team.png` · ruta `/team`
@@ -206,3 +206,4 @@ Razbija se na korake kad dođemo do nje.
 - Ista pravila validacije iz Zod šeme (title 3–120 znakova, opis do 2000, procena 0.5–200 sati, izvršilac je član projekta, labele…) moraju da postoje i u NestJS DTO-u, jer se frontend validaciji ne može verovati.
 - Zatvaranje panela zadatka (ili prelazak na drugi zadatak) dok je forma za izmenu otvorena odbacuje nesačuvane izmene bez upozorenja. Po potrebi dodati potvrdu.
 - U formi zadatka labele se biraju samo od onih koje već postoje na tabli; nove labele zasad ne mogu da se dodaju.
+- Komentarisanje: mock korisnik je Admin, pa mock servis ne proverava prava. Backend mora da proveri da korisnik sme da komentariše na projektu (Admin svuda, Project Manager na svojim projektima, Team Member samo na projektima na kojima je član) i da sadržaj nije prazan i da ima najviše 1000 znakova.

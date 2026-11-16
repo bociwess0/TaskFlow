@@ -33,6 +33,12 @@ export interface TaskComment {
   createdAt: string;
 }
 
+/** New comment (POST /tasks/:id/comments); the author is the signed-in user. */
+export interface CreateCommentInput {
+  taskId: string;
+  content: string;
+}
+
 export type TaskDueFilter = "overdue" | "week" | "none";
 
 /** Board filters. Within a group any value matches; groups combine (AND). */
