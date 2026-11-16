@@ -1,25 +1,23 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { EmptyState } from "@/components/shared/empty-state";
 import { ErrorState } from "@/components/shared/error-state";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TaskCard } from "@/features/tasks/components/task-card";
+import { KanbanColumn } from "@/features/tasks/components/kanban-column";
 import { useProjectTasks } from "@/features/tasks/hooks/use-project-tasks";
+import { TASK_STATUSES } from "@/lib/task-status";
 
-const GRID_CLASS = "grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4";
-
-/** Board tab. For now a simple list of task cards; the columns come in the next steps. */
+/** Board tab. For now the columns side by side; the real board layout comes in the next step. */
 export function ProjectBoard() {
   const { projectId } = useParams<{ projectId: string }>();
   const { data: tasks, isPending, isError, refetch } = useProjectTasks(projectId);
 
   if (isPending) {
     return (
-      <div className={GRID_CLASS} aria-busy="true" aria-label="Loading tasks">
-        {Array.from({ length: 8 }, (_, index) => (
-          <Skeleton key={index} className="h-28 rounded-xl" />
+      <div className="flex gap-4 overflow-x-auto" aria-busy="true" aria-label="Loading tasks">
+        {TASK_STATUSES.map((status) => (
+          <Skeleton key={status} className="h-96 w-72 shrink-0 rounded-xl" />
         ))}
       </div>
     );
@@ -33,21 +31,16 @@ export function ProjectBoard() {
     );
   }
 
-  if (tasks.length === 0) {
-    return (
-      <Card className="py-12">
-        <EmptyState message="No tasks yet." />
-      </Card>
-    );
-  }
-
   return (
-    <ul className={GRID_CLASS}>
-      {tasks.map((task) => (
-        <li key={task.id}>
-          <TaskCard task={task} />
-        </li>
+    <div className="flex items-start gap-4 overflow-x-auto">
+      {TASK_STATUSES.map((status) => (
+        <KanbanColumn
+          key={status}
+          status={status}
+          // The service returns tasks ordered by status and position.
+          tasks={tasks.filter((task) => task.status === status)}
+        />
       ))}
-    </ul>
+    </div>
   );
 }
