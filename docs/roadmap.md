@@ -77,8 +77,8 @@ Grana `feature/kanban-board` · dizajn `04-kanban.png` · ruta `/projects/[proje
 | 6 | `BoardToolbar`: pretraga i filteri (član, labela, rok) | ✓ | `feat(tasks): add board toolbar` |
 | 7 | `TaskDetailsSheet`: klik na karticu otvara panel sa detaljima i komentarima (samo čitanje) | ✓ | `feat(tasks): add task details sheet` |
 | 8 | `AddTaskDialog`: forma (React Hook Form + Zod) | ✓ | `feat(tasks): add task dialog` |
-| 9 | Izmena zadatka u panelu | ▶ | |
-| 10 | Dodavanje komentara | ☐ | |
+| 9 | Izmena zadatka u panelu: dugme Edit prebacuje panel u formu (zajednički `TaskForm` sa `AddTaskDialog`) | ✓ | `feat(tasks): edit task in details panel` |
+| 10 | Dodavanje komentara | ▶ | |
 | 11 | Prikazi List i Timeline (opciono, posle osnovnih ekrana) | ☐ | |
 
 ### 1.5 Team Members ☐
@@ -204,3 +204,5 @@ Razbija se na korake kad dođemo do nje.
 - Kad linkovi projekta budu mogli da se unose kroz formu, dozvoliti samo http(s) adrese (validacija i na frontendu i na backendu), da se ne bi mogao ubaciti `javascript:` link.
 - Backend mora da proverava da je izvršilac zadatka član projekta.
 - Ista pravila validacije iz Zod šeme (title 3–120 znakova, opis do 2000, procena 0.5–200 sati, izvršilac je član projekta, labele…) moraju da postoje i u NestJS DTO-u, jer se frontend validaciji ne može verovati.
+- Zatvaranje panela zadatka (ili prelazak na drugi zadatak) dok je forma za izmenu otvorena odbacuje nesačuvane izmene bez upozorenja. Po potrebi dodati potvrdu.
+- U formi zadatka labele se biraju samo od onih koje već postoje na tabli; nove labele zasad ne mogu da se dodaju.

@@ -71,7 +71,14 @@ export function ProjectBoard() {
       )}
 
       {/* Reads the task from the loaded board (all tasks, not only filtered ones). */}
-      <TaskDetailsSheet openTaskId={openTaskId} tasks={tasks} onClose={closeTask} />
+      <TaskDetailsSheet
+        openTaskId={openTaskId}
+        tasks={tasks}
+        onClose={closeTask}
+        projectId={projectId}
+        members={project?.members ?? []}
+        labels={labels}
+      />
 
       <AddTaskDialog
         projectId={projectId}

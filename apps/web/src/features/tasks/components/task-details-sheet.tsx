@@ -1,20 +1,25 @@
 "use client";
 
-import { Flag, UserRound } from "lucide-react";
-import type { ReactNode } from "react";
+import { Flag, Pencil, UserRound } from "lucide-react";
+import { type ReactNode, useState } from "react";
 import { ErrorState } from "@/components/shared/error-state";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
+import { TaskForm } from "@/features/tasks/components/task-form";
 import { useTaskComments } from "@/features/tasks/hooks/use-task-comments";
+import { useUpdateTask } from "@/features/tasks/hooks/use-update-task";
+import { getTaskFormValues, toTaskInput } from "@/features/tasks/schemas";
 import { daysUntil, formatDate, formatRelativeTime } from "@/lib/format";
 import { getTaskLabelTone } from "@/lib/task-labels";
 import { TASK_PRIORITY_LABEL, TASK_PRIORITY_TEXT_CLASS } from "@/lib/task-priority";
 import { cn } from "@/lib/utils";
 import type { Task } from "@/types/task";
+import type { UserSummary } from "@/types/user";
 
 interface TaskDetailsSheetProps {
   /** Task id from the URL (?task=), or null when the panel is closed. */
@@ -22,10 +27,22 @@ interface TaskDetailsSheetProps {
   /** All tasks of the board (unfiltered); undefined while they load. */
   tasks: Task[] | undefined;
   onClose: () => void;
+  projectId: string;
+  /** Project members, for the assignee field when editing. */
+  members: UserSummary[];
+  /** Labels used on the board, for the labels field when editing. */
+  labels: string[];
 }
 
-/** Read-only task details in a side panel (full width on phones). */
-export function TaskDetailsSheet({ openTaskId, tasks, onClose }: TaskDetailsSheetProps) {
+/** Task details in a side panel (full width on phones), with an edit mode. */
+export function TaskDetailsSheet({
+  openTaskId,
+  tasks,
+  onClose,
+  projectId,
+  members,
+  labels,
+}: TaskDetailsSheetProps) {
   const task = openTaskId ? tasks?.find((item) => item.id === openTaskId) : undefined;
 
   return (
@@ -37,7 +54,14 @@ export function TaskDetailsSheet({ openTaskId, tasks, onClose }: TaskDetailsShee
         {!tasks ? (
           <TaskDetailsSkeleton />
         ) : task ? (
-          <TaskDetails task={task} />
+          // Keyed by task, so switching tasks always starts in view mode.
+          <TaskDetails
+            key={task.id}
+            task={task}
+            projectId={projectId}
+            members={members}
+            labels={labels}
+          />
         ) : (
           <SheetHeader className="gap-2 p-6">
             <SheetTitle className="text-lg font-semibold">Task not found</SheetTitle>
@@ -51,13 +75,40 @@ export function TaskDetailsSheet({ openTaskId, tasks, onClose }: TaskDetailsShee
   );
 }
 
-function TaskDetails({ task }: { task: Task }) {
+interface TaskDetailsProps {
+  task: Task;
+  projectId: string;
+  members: UserSummary[];
+  labels: string[];
+}
+
+function TaskDetails({ task, projectId, members, labels }: TaskDetailsProps) {
+  const [isEditing, setIsEditing] = useState(false);
+
+  if (isEditing) {
+    return (
+      <EditTask
+        task={task}
+        projectId={projectId}
+        members={members}
+        labels={labels}
+        onDone={() => setIsEditing(false)}
+      />
+    );
+  }
+
   const isOverdue = task.dueDate !== null && task.status !== "DONE" && daysUntil(task.dueDate) < 0;
 
   return (
     <>
       <SheetHeader className="gap-3 p-6 pr-12">
-        <StatusBadge status={task.status} />
+        <div className="flex items-center justify-between gap-2">
+          <StatusBadge status={task.status} />
+          <Button variant="outline" size="sm" onClick={() => setIsEditing(true)}>
+            <Pencil aria-hidden />
+            Edit
+          </Button>
+        </div>
         <SheetTitle className="text-xl leading-snug font-semibold">{task.title}</SheetTitle>
       </SheetHeader>
 
@@ -136,6 +187,51 @@ function TaskDetails({ task }: { task: Task }) {
 
         {/* Mounted only while the panel shows a task, so comments load when it opens. */}
         <TaskComments taskId={task.id} />
+      </div>
+    </>
+  );
+}
+
+interface EditTaskProps extends TaskDetailsProps {
+  /** Called after saving or on Cancel, to return to the details. */
+  onDone: () => void;
+}
+
+function EditTask({ task, projectId, members, labels, onDone }: EditTaskProps) {
+  const updateTask = useUpdateTask(projectId);
+
+  return (
+    <>
+      <SheetHeader className="p-6 pr-12">
+        <SheetTitle className="text-xl font-semibold">Edit task</SheetTitle>
+      </SheetHeader>
+      <div className="px-6 pb-6">
+        <TaskForm
+          defaultValues={getTaskFormValues(task)}
+          members={members}
+          labels={labels}
+          // On error the form keeps the entered values; the toast explains what failed.
+          onSubmit={(values) =>
+            updateTask.mutate({ ...toTaskInput(values), taskId: task.id }, { onSuccess: onDone })
+          }
+          actions={
+            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+              <Button
+                type="button"
+                variant="outline"
+                size="lg"
+                className="h-10 px-4"
+                onClick={onDone}
+                disabled={updateTask.isPending}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" size="lg" className="h-10 px-4" disabled={updateTask.isPending}>
+                {updateTask.isPending ? "Saving..." : "Save changes"}
+              </Button>
+            </div>
+          }
+        />
       </div>
     </>
   );
