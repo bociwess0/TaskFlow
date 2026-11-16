@@ -75,8 +75,13 @@ function findColumn(columns: Columns, id: UniqueIdentifier): TaskStatus | undefi
 
 interface KanbanBoardProps {
   projectId: string;
-  /** All tasks of the project, ordered by status and position. */
+  /** Tasks to show, ordered by status and position. */
   tasks: Task[];
+  /**
+   * Turns drag & drop off, e.g. while filters hide some tasks: a position counted among
+   * the visible cards would be wrong in the full list.
+   */
+  dragDisabled?: boolean;
 }
 
 /**
@@ -84,7 +89,7 @@ interface KanbanBoardProps {
  * mouse, touch (after a short press, so scrolling still works) or keyboard.
  * Loading lives in ProjectBoard.
  */
-export function KanbanBoard({ projectId, tasks }: KanbanBoardProps) {
+export function KanbanBoard({ projectId, tasks, dragDisabled = false }: KanbanBoardProps) {
   const moveTask = useMoveTask(projectId);
   const dndContextId = useId();
   const sensors = useSensors(
@@ -212,6 +217,7 @@ export function KanbanBoard({ projectId, tasks }: KanbanBoardProps) {
             status={status}
             tasks={columns[status].flatMap((id) => taskById.get(id) ?? [])}
             className={COLUMN_CLASS}
+            dragDisabled={dragDisabled}
           />
         ))}
       </div>

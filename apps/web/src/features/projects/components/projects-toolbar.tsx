@@ -1,8 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Input } from "@/components/ui/input";
+import { SearchInput } from "@/components/shared/search-input";
 import {
   Select,
   SelectContent,
@@ -18,54 +16,19 @@ import {
 import { PROJECT_STATUS_LABEL, PROJECT_STATUSES } from "@/lib/project-status";
 import type { ProjectSort, ProjectStatus } from "@/types/project";
 
-const SEARCH_DEBOUNCE_MS = 300;
 const ALL_STATUSES = "ALL";
-const CONTROL_CLASS = "h-10 bg-card";
 const TRIGGER_CLASS = "bg-card data-[size=default]:h-10 px-3";
 
 export function ProjectsToolbar() {
   const { params, setParams } = useProjectFilters();
-  const urlQuery = params.q ?? "";
-
-  const [search, setSearch] = useState(urlQuery);
-  // Last value this input wrote to the URL, to tell our own updates apart from outside ones.
-  const [sentQuery, setSentQuery] = useState(urlQuery);
-  const [prevUrlQuery, setPrevUrlQuery] = useState(urlQuery);
-
-  // Sync the input when the URL changes from outside (Clear filters, back/forward).
-  if (urlQuery !== prevUrlQuery) {
-    setPrevUrlQuery(urlQuery);
-    if (urlQuery !== sentQuery.trim()) {
-      setSearch(urlQuery);
-      setSentQuery(urlQuery);
-    }
-  }
-
-  useEffect(() => {
-    if (search === sentQuery) return;
-    const timeout = setTimeout(() => {
-      setSentQuery(search);
-      setParams({ q: search.trim() || undefined });
-    }, SEARCH_DEBOUNCE_MS);
-    return () => clearTimeout(timeout);
-  }, [search, sentQuery, setParams]);
 
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <div className="relative w-full sm:max-w-xs">
-        <Search
-          className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
-          aria-hidden
-        />
-        <Input
-          type="search"
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder="Search projects..."
-          aria-label="Search projects"
-          className={`${CONTROL_CLASS} pl-9`}
-        />
-      </div>
+      <SearchInput
+        value={params.q ?? ""}
+        onSearch={(q) => setParams({ q })}
+        placeholder="Search projects..."
+      />
 
       <div className="grid grid-cols-2 gap-3 sm:flex">
         <Select

@@ -24,6 +24,18 @@ export interface Task {
   createdAt: string;
 }
 
+export type TaskDueFilter = "overdue" | "week" | "none";
+
+/** Board filters. Within a group any value matches; groups combine (AND). */
+export interface TaskFilters {
+  /** Matches title or description. */
+  q?: string;
+  /** User ids; UNASSIGNED_FILTER matches tasks without an assignee. */
+  assignee: string[];
+  label: string[];
+  due: TaskDueFilter[];
+}
+
 /** Moving a task on the board (PATCH /tasks/:id/move). */
 export interface TaskMove {
   taskId: string;

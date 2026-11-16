@@ -15,14 +15,21 @@ interface KanbanColumnProps {
   tasks: Task[];
   /** Width and placement, set by the board layout. */
   className?: string;
+  /** While filters are active, cards can't be moved. */
+  dragDisabled?: boolean;
 }
 
 /** One board column: status title with task count, task cards and Add task. Also a drop target. */
-export function KanbanColumn({ status, tasks, className }: KanbanColumnProps) {
+export function KanbanColumn({
+  status,
+  tasks,
+  className,
+  dragDisabled = false,
+}: KanbanColumnProps) {
   const colors = TASK_STATUS_COLUMN_CLASS[status];
   const titleId = `kanban-column-${status}`;
   // The whole column accepts drops, so an empty column can receive a card too.
-  const { setNodeRef, isOver } = useDroppable({ id: status });
+  const { setNodeRef, isOver } = useDroppable({ id: status, disabled: dragDisabled });
 
   return (
     <section
@@ -58,7 +65,7 @@ export function KanbanColumn({ status, tasks, className }: KanbanColumnProps) {
         ) : (
           <ul className="flex flex-col gap-3">
             {tasks.map((task) => (
-              <SortableTaskCard key={task.id} task={task} />
+              <SortableTaskCard key={task.id} task={task} disabled={dragDisabled} />
             ))}
           </ul>
         )}
