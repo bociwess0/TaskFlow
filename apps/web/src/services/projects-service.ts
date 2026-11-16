@@ -194,6 +194,11 @@ const projectExtras: Record<string, ProjectExtras> = {
 
 const EMPTY_EXTRAS: ProjectExtras = { overview: "", technologies: [], milestones: [], links: [] };
 
+/** For other mock services that need to answer 404 for an unknown project, like the API. */
+export function mockProjectExists(id: string): boolean {
+  return projects.some((project) => project.id === id);
+}
+
 /** Rejects with a 404 ApiError for an unknown id, the same way the API will respond. */
 export function getProject(id: string): Promise<ProjectDetails> {
   const project = projects.find((item) => item.id === id);
