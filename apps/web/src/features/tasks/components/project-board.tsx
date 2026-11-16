@@ -2,9 +2,11 @@
 
 import { Info } from "lucide-react";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 import { ErrorState } from "@/components/shared/error-state";
 import { Card } from "@/components/ui/card";
 import { useProject } from "@/features/projects/hooks/use-project";
+import { AddTaskDialog } from "@/features/tasks/components/add-task-dialog";
 import { BoardToolbar } from "@/features/tasks/components/board-toolbar";
 import { KanbanBoard, KanbanBoardSkeleton } from "@/features/tasks/components/kanban-board";
 import { TaskDetailsSheet } from "@/features/tasks/components/task-details-sheet";
@@ -12,6 +14,7 @@ import { useBoardFilters } from "@/features/tasks/hooks/use-board-filters";
 import { useOpenTask } from "@/features/tasks/hooks/use-open-task";
 import { useProjectTasks } from "@/features/tasks/hooks/use-project-tasks";
 import { filterTasks } from "@/lib/task-filters";
+import type { TaskStatus } from "@/types/task";
 
 /**
  * Board tab: loads the project's tasks, filters them on the client (the board always loads
@@ -24,12 +27,18 @@ export function ProjectBoard() {
   const { data: tasks, isPending, isError, refetch } = useProjectTasks(projectId);
   const { filters, hasFilters, clearFilters } = useBoardFilters();
   const { openTaskId, openTask, closeTask } = useOpenTask();
+  // Column for the new task while AddTaskDialog is open.
+  const [addTaskStatus, setAddTaskStatus] = useState<TaskStatus | null>(null);
 
   const labels = [...new Set(tasks?.flatMap((task) => task.labels))].sort();
 
   return (
     <div className="flex flex-col gap-4">
-      <BoardToolbar members={project?.members ?? []} labels={labels} />
+      <BoardToolbar
+        members={project?.members ?? []}
+        labels={labels}
+        onAddTask={() => setAddTaskStatus("TODO")}
+      />
 
       {hasFilters && (
         <p className="flex items-center gap-2 text-sm text-muted-foreground" role="status">
@@ -57,11 +66,20 @@ export function ProjectBoard() {
           tasks={hasFilters ? filterTasks(tasks, filters) : tasks}
           dragDisabled={hasFilters}
           onOpenTask={openTask}
+          onAddTask={setAddTaskStatus}
         />
       )}
 
       {/* Reads the task from the loaded board (all tasks, not only filtered ones). */}
       <TaskDetailsSheet openTaskId={openTaskId} tasks={tasks} onClose={closeTask} />
+
+      <AddTaskDialog
+        projectId={projectId}
+        status={addTaskStatus}
+        onClose={() => setAddTaskStatus(null)}
+        members={project?.members ?? []}
+        labels={labels}
+      />
     </div>
   );
 }

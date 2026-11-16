@@ -76,8 +76,8 @@ Grana `feature/kanban-board` · dizajn `04-kanban.png` · ruta `/projects/[proje
 | 5 | Drag & drop (dnd-kit): između kolona i redosled u koloni, optimistic update preko `useMutation` | ✓ | `feat(tasks): add drag and drop to kanban board` |
 | 6 | `BoardToolbar`: pretraga i filteri (član, labela, rok) | ✓ | `feat(tasks): add board toolbar` |
 | 7 | `TaskDetailsSheet`: klik na karticu otvara panel sa detaljima i komentarima (samo čitanje) | ✓ | `feat(tasks): add task details sheet` |
-| 8 | `AddTaskDialog`: forma (React Hook Form + Zod) | ▶ | |
-| 9 | Izmena zadatka u panelu | ☐ | |
+| 8 | `AddTaskDialog`: forma (React Hook Form + Zod) | ✓ | `feat(tasks): add task dialog` |
+| 9 | Izmena zadatka u panelu | ▶ | |
 | 10 | Dodavanje komentara | ☐ | |
 | 11 | Prikazi List i Timeline (opciono, posle osnovnih ekrana) | ☐ | |
 
@@ -203,3 +203,4 @@ Razbija se na korake kad dođemo do nje.
 - Lucide nema brand ikonice, pa GitHub i Figma linkovi imaju neutralne ikonice (kod i dizajn). Ako zatrebaju prave, može se dodati mali SVG ili biblioteka (uz dogovor).
 - Kad linkovi projekta budu mogli da se unose kroz formu, dozvoliti samo http(s) adrese (validacija i na frontendu i na backendu), da se ne bi mogao ubaciti `javascript:` link.
 - Backend mora da proverava da je izvršilac zadatka član projekta.
+- Ista pravila validacije iz Zod šeme (title 3–120 znakova, opis do 2000, procena 0.5–200 sati, izvršilac je član projekta, labele…) moraju da postoje i u NestJS DTO-u, jer se frontend validaciji ne može verovati.

@@ -23,10 +23,12 @@ interface BoardToolbarProps {
   members: UserSummary[];
   /** Labels used on the board, for the Label filter. */
   labels: string[];
+  /** Opens AddTaskDialog for the To Do column. */
+  onAddTask: () => void;
 }
 
 /** Search, Filters menu and Add Task above the Kanban board. */
-export function BoardToolbar({ members, labels }: BoardToolbarProps) {
+export function BoardToolbar({ members, labels, onAddTask }: BoardToolbarProps) {
   const { filters, setSearch, toggleFilter, clearFilters, activeFilterCount } = useBoardFilters();
 
   return (
@@ -106,8 +108,7 @@ export function BoardToolbar({ members, labels }: BoardToolbarProps) {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* Opens AddTaskDialog once it exists. */}
-        <Button size="lg" className="h-10 flex-1 px-4 sm:flex-none">
+        <Button size="lg" className="h-10 flex-1 px-4 sm:flex-none" onClick={onAddTask}>
           <Plus data-icon="inline-start" />
           Add Task
         </Button>

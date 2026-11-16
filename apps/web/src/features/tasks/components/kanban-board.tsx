@@ -90,6 +90,8 @@ interface KanbanBoardProps {
   dragDisabled?: boolean;
   /** Opens the task details panel. */
   onOpenTask: (taskId: string) => void;
+  /** Opens AddTaskDialog for a column. */
+  onAddTask: (status: TaskStatus) => void;
 }
 
 /**
@@ -102,6 +104,7 @@ export function KanbanBoard({
   tasks,
   dragDisabled = false,
   onOpenTask,
+  onAddTask,
 }: KanbanBoardProps) {
   const moveTask = useMoveTask(projectId);
   const dndContextId = useId();
@@ -246,6 +249,7 @@ export function KanbanBoard({
             className={COLUMN_CLASS}
             dragDisabled={dragDisabled}
             onOpenTask={handleOpenTask}
+            onAddTask={onAddTask}
           />
         ))}
       </div>

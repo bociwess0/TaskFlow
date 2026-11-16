@@ -19,6 +19,8 @@ interface KanbanColumnProps {
   dragDisabled?: boolean;
   /** Opens the task details panel. */
   onOpenTask: (taskId: string) => void;
+  /** Opens AddTaskDialog for this column. */
+  onAddTask: (status: TaskStatus) => void;
 }
 
 /** One board column: status title with task count, task cards and Add task. Also a drop target. */
@@ -28,6 +30,7 @@ export function KanbanColumn({
   className,
   dragDisabled = false,
   onOpenTask,
+  onAddTask,
 }: KanbanColumnProps) {
   const colors = TASK_STATUS_COLUMN_CLASS[status];
   const titleId = `kanban-column-${status}`;
@@ -79,8 +82,11 @@ export function KanbanColumn({
         )}
       </SortableContext>
 
-      {/* Opens AddTaskDialog once it exists. */}
-      <Button variant="ghost" className={cn("justify-start", colors.action)}>
+      <Button
+        variant="ghost"
+        className={cn("justify-start", colors.action)}
+        onClick={() => onAddTask(status)}
+      >
         <Plus data-icon="inline-start" />
         Add task
       </Button>
