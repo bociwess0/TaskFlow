@@ -1,3 +1,4 @@
+import type { StatusTone } from "@/types/status";
 import type { TaskStatus } from "@/types/task";
 
 export const TASK_STATUSES: TaskStatus[] = ["TODO", "IN_PROGRESS", "REVIEW", "DONE"];
@@ -46,4 +47,12 @@ export const TASK_STATUS_COLUMN_CLASS: Record<
     surface: "bg-success/5",
     action: "text-success-strong hover:bg-success/10 hover:text-success-strong",
   },
+};
+
+/** Badge tone of each task status. */
+export const TASK_STATUS_TONE: Record<TaskStatus, StatusTone> = {
+  TODO: "neutral",
+  IN_PROGRESS: "info",
+  REVIEW: "warning",
+  DONE: "success",
 };

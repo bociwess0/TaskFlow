@@ -16,7 +16,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { KanbanColumn } from "@/features/tasks/components/kanban-column";
 import { TaskCard } from "@/features/tasks/components/task-card";
@@ -39,7 +39,13 @@ const SCROLLER_CLASS =
 const COLUMN_CLASS = "min-w-[min(18rem,85%)] flex-1 basis-0 snap-start";
 
 const SCREEN_READER_INSTRUCTIONS =
-  "To pick up a task, press Space or Enter. Use the arrow keys to move it within a column or to another column. Press Space or Enter again to drop it, or Escape to cancel.";
+  "Press Enter to open the task details. To move a task, press Space to pick it up, use the arrow keys to move it within a column or to another column, then press Space again to drop it, or Escape to cancel.";
+
+/** Space picks a card up and drops it; Enter is left for opening the task details. */
+const KEYBOARD_CODES = { start: ["Space"], cancel: ["Escape"], end: ["Space"] };
+
+/** A click right after a drop belongs to the drag, not to opening the card. */
+const CLICK_AFTER_DRAG_MS = 250;
 
 /** Task ids of each column, in display order. */
 type Columns = Record<TaskStatus, string[]>;
@@ -82,6 +88,8 @@ interface KanbanBoardProps {
    * the visible cards would be wrong in the full list.
    */
   dragDisabled?: boolean;
+  /** Opens the task details panel. */
+  onOpenTask: (taskId: string) => void;
 }
 
 /**
@@ -89,14 +97,29 @@ interface KanbanBoardProps {
  * mouse, touch (after a short press, so scrolling still works) or keyboard.
  * Loading lives in ProjectBoard.
  */
-export function KanbanBoard({ projectId, tasks, dragDisabled = false }: KanbanBoardProps) {
+export function KanbanBoard({
+  projectId,
+  tasks,
+  dragDisabled = false,
+  onOpenTask,
+}: KanbanBoardProps) {
   const moveTask = useMoveTask(projectId);
   const dndContextId = useId();
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 5 } }),
     useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 5 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+      keyboardCodes: KEYBOARD_CODES,
+    }),
   );
+  const lastDragEndRef = useRef(0);
+
+  function handleOpenTask(taskId: string) {
+    if (Date.now() - lastDragEndRef.current > CLICK_AFTER_DRAG_MS) {
+      onOpenTask(taskId);
+    }
+  }
   const [drag, setDrag] = useState<DragState | null>(null);
 
   // After a drop, keep the dropped order until the optimistic update reaches the cache.
@@ -142,6 +165,7 @@ export function KanbanBoard({ projectId, tasks, dragDisabled = false }: KanbanBo
   }
 
   function handleDragEnd({ active, over }: DragEndEvent) {
+    lastDragEndRef.current = Date.now();
     if (!drag || !over) {
       setDrag(null);
       return;
@@ -204,7 +228,10 @@ export function KanbanBoard({ projectId, tasks, dragDisabled = false }: KanbanBo
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
-      onDragCancel={() => setDrag(null)}
+      onDragCancel={() => {
+        lastDragEndRef.current = Date.now();
+        setDrag(null);
+      }}
       accessibility={{
         announcements,
         screenReaderInstructions: { draggable: SCREEN_READER_INSTRUCTIONS },
@@ -218,6 +245,7 @@ export function KanbanBoard({ projectId, tasks, dragDisabled = false }: KanbanBo
             tasks={columns[status].flatMap((id) => taskById.get(id) ?? [])}
             className={COLUMN_CLASS}
             dragDisabled={dragDisabled}
+            onOpenTask={handleOpenTask}
           />
         ))}
       </div>

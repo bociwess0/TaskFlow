@@ -24,7 +24,7 @@ export interface Task {
   createdAt: string;
 }
 
-export interface Comment {
+export interface TaskComment {
   id: string;
   taskId: string;
   author: UserSummary;

@@ -7,7 +7,9 @@ import { Card } from "@/components/ui/card";
 import { useProject } from "@/features/projects/hooks/use-project";
 import { BoardToolbar } from "@/features/tasks/components/board-toolbar";
 import { KanbanBoard, KanbanBoardSkeleton } from "@/features/tasks/components/kanban-board";
+import { TaskDetailsSheet } from "@/features/tasks/components/task-details-sheet";
 import { useBoardFilters } from "@/features/tasks/hooks/use-board-filters";
+import { useOpenTask } from "@/features/tasks/hooks/use-open-task";
 import { useProjectTasks } from "@/features/tasks/hooks/use-project-tasks";
 import { filterTasks } from "@/lib/task-filters";
 
@@ -21,6 +23,7 @@ export function ProjectBoard() {
   const { data: project } = useProject(projectId);
   const { data: tasks, isPending, isError, refetch } = useProjectTasks(projectId);
   const { filters, hasFilters, clearFilters } = useBoardFilters();
+  const { openTaskId, openTask, closeTask } = useOpenTask();
 
   const labels = [...new Set(tasks?.flatMap((task) => task.labels))].sort();
 
@@ -53,8 +56,12 @@ export function ProjectBoard() {
           projectId={projectId}
           tasks={hasFilters ? filterTasks(tasks, filters) : tasks}
           dragDisabled={hasFilters}
+          onOpenTask={openTask}
         />
       )}
+
+      {/* Reads the task from the loaded board (all tasks, not only filtered ones). */}
+      <TaskDetailsSheet openTaskId={openTaskId} tasks={tasks} onClose={closeTask} />
     </div>
   );
 }

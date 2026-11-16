@@ -17,6 +17,8 @@ interface KanbanColumnProps {
   className?: string;
   /** While filters are active, cards can't be moved. */
   dragDisabled?: boolean;
+  /** Opens the task details panel. */
+  onOpenTask: (taskId: string) => void;
 }
 
 /** One board column: status title with task count, task cards and Add task. Also a drop target. */
@@ -25,6 +27,7 @@ export function KanbanColumn({
   tasks,
   className,
   dragDisabled = false,
+  onOpenTask,
 }: KanbanColumnProps) {
   const colors = TASK_STATUS_COLUMN_CLASS[status];
   const titleId = `kanban-column-${status}`;
@@ -65,7 +68,12 @@ export function KanbanColumn({
         ) : (
           <ul className="flex flex-col gap-3">
             {tasks.map((task) => (
-              <SortableTaskCard key={task.id} task={task} disabled={dragDisabled} />
+              <SortableTaskCard
+                key={task.id}
+                task={task}
+                onOpen={onOpenTask}
+                disabled={dragDisabled}
+              />
             ))}
           </ul>
         )}

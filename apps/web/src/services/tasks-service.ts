@@ -4,7 +4,7 @@ import { dateFromToday, minutesAgo } from "@/services/mock/dates";
 import { mockUsers } from "@/services/mock/users";
 import { mockError, mockResponse } from "@/services/mock-response";
 import { mockProjectExists } from "@/services/projects-service";
-import type { Comment, Task, TaskMove } from "@/types/task";
+import type { Task, TaskComment, TaskMove } from "@/types/task";
 
 const { ana, bogdan, ivan, jelena, marko, nikola, sara } = mockUsers;
 
@@ -277,7 +277,7 @@ export function moveTask(move: TaskMove): Promise<Task> {
   return mockResponse({ ...updated });
 }
 
-const comments: Comment[] = [
+const comments: TaskComment[] = [
   {
     id: "c-1",
     taskId: "t-5",
@@ -333,7 +333,7 @@ const comments: Comment[] = [
  * Comments of one task, oldest first.
  * Rejects with a 404 ApiError for an unknown task, the same way the API will respond.
  */
-export function getTaskComments(taskId: string): Promise<Comment[]> {
+export function getTaskComments(taskId: string): Promise<TaskComment[]> {
   if (!tasks.some((task) => task.id === taskId)) {
     return mockError(new ApiError(404, `Task ${taskId} not found`));
   }
