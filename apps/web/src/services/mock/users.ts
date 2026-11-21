@@ -1,6 +1,7 @@
 import type { User, UserSummary } from "@/types/user";
 
-const DEFAULT_WEEKLY_CAPACITY = 40;
+/** Weekly capacity (hours) of a new user unless set otherwise. */
+export const DEFAULT_WEEKLY_CAPACITY = 40;
 
 /** Mock users shared by all mock services, so the same person has the same id everywhere. */
 export const mockUserRecords = {

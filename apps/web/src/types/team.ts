@@ -12,3 +12,12 @@ export interface TeamMemberListParams {
   q?: string;
   role?: Role;
 }
+
+/** New member invitation (POST /team/invitations); the user starts as INVITED. */
+export interface InviteMemberInput {
+  name: string;
+  email: string;
+  role: Role;
+  /** Empty string when not given. */
+  jobTitle: string;
+}

@@ -91,7 +91,7 @@ Grana `feature/team-members` · dizajn `08-team.png` · ruta `/team`
 | 2 | `RoleBadge` za sistemske uloge (Admin, Project Manager, Team Member) i statusi korisnika u `StatusBadge`; strana `/team` sa zaglavljem | ✓ | `feat(team): add role badge` |
 | 3 | `TeamMembersTable`: ime i avatar, e-mail, uloga, pozicija, broj projekata, status, izmena | ✓ | `feat(team): add team members table` |
 | 4 | `TeamToolbar`: pretraga, filter po ulozi, dugme Invite Member (stanje u URL-u) | ✓ | `feat(team): add team toolbar` |
-| 5 | `InviteMemberDialog`: forma za pozivnicu | ☐ | |
+| 5 | `InviteMemberDialog`: forma za pozivnicu | ▶ | |
 | 6 | `EditMemberDialog`: promena uloge i deaktivacija naloga (samo Admin) | ☐ | |
 | 7 | Timovi i vođe timova (`/team/teams`) | ☐ | |
 
@@ -212,3 +212,4 @@ Razbija se na korake kad dođemo do nje.
 - Komentarisanje: mock korisnik je Admin, pa mock servis ne proverava prava. Backend mora da proveri da korisnik sme da komentariše na projektu (Admin svuda, Project Manager na svojim projektima, Team Member samo na projektima na kojima je član) i da sadržaj nije prazan i da ima najviše 1000 znakova.
 - Lista članova tima: API treba da podrži iste parametre (`q` po imenu i e-mailu, `role`) i da vrati broj projekata bez arhiviranih. Članovi su zasad u redosledu kreiranja, bez sortiranja.
 - `Project` nema polje za project managera (`managerId`), a treba za prava pristupa (PM upravlja samo svojim projektima) i za Resources.
+- Pozivanje člana: mock samo dodaje korisnika sa statusom INVITED. Backend treba da pošalje e-mail sa jednokratnim tokenom (sa rokom važenja) za prihvatanje pozivnice, i da dozvoli pozivanje samo Admin-u. E-mail mora da bude jedinstven (409), bez obzira na velika i mala slova.
