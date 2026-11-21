@@ -23,7 +23,9 @@ interface AllocationSeed {
  * - Ivan 70% (Mobile 40 + Internal Tools 30): active
  * - Nikola 40% (E-commerce 25 + Internal Tools 15): available
  * - Bogdan 40% (Mobile 20 + Internal Tools 20): available
- * Internal Tools starts next week, so it doesn't count in the current week yet.
+ * Totals are the peak week (see getTotalAllocation); these allocations overlap all the time,
+ * so the peak is the plain sum. Internal Tools starts in 8 days, so it doesn't count in the
+ * current week yet.
  */
 const seeds: AllocationSeed[] = [
   // E-commerce Platform (IN_PROGRESS)
