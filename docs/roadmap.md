@@ -92,7 +92,7 @@ Grana `feature/team-members` · dizajn `08-team.png` · ruta `/team`
 | 3 | `TeamMembersTable`: ime i avatar, e-mail, uloga, pozicija, broj projekata, status, izmena | ✓ | `feat(team): add team members table` |
 | 4 | `TeamToolbar`: pretraga, filter po ulozi, dugme Invite Member (stanje u URL-u) | ✓ | `feat(team): add team toolbar` |
 | 5 | `InviteMemberDialog`: forma za pozivnicu (React Hook Form + Zod), greška 409 ispod polja Email | ✓ | `feat(team): add invite member mutation`, `feat(team): add invite member dialog` |
-| 6 | `EditMemberDialog`: promena uloge i deaktivacija naloga (samo Admin) | ☐ | |
+| 6 | `EditMemberDialog`: promena uloge i deaktivacija naloga (samo Admin) | ▶ | |
 | 7 | Timovi i vođe timova (`/team/teams`) | ☐ | |
 
 ### 1.6 Resources – upravljanje resursima ☐
@@ -213,3 +213,5 @@ Razbija se na korake kad dođemo do nje.
 - Lista članova tima: API treba da podrži iste parametre (`q` po imenu i e-mailu, `role`) i da vrati broj projekata bez arhiviranih. Članovi su zasad u redosledu kreiranja, bez sortiranja.
 - `Project` nema polje za project managera (`managerId`), a treba za prava pristupa (PM upravlja samo svojim projektima) i za Resources.
 - Pozivanje člana: mock samo dodaje korisnika sa statusom INVITED. Backend treba da pošalje e-mail sa jednokratnim tokenom (sa rokom važenja) za prihvatanje pozivnice, i da dozvoli pozivanje samo Admin-u. E-mail mora da bude jedinstven (409), bez obzira na velika i mala slova.
+- Izmenu članova (uloga, pozicija, kapacitet, deaktivacija) sme samo Admin. Kad stignu prava pristupa, dugme za izmenu u tabeli treba sakriti ostalim ulogama, a backend mora da proverava ulogu i pravila (ne menja se sopstvena uloga i ne deaktivira sopstveni nalog, ostaje bar jedan aktivan Admin, kapacitet 1–60 h).
+- Deaktivirani korisnici ne treba da se nude kao izvršioci zadataka (i članovi projekta).

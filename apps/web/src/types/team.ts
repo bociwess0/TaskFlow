@@ -1,4 +1,4 @@
-import type { Role, User } from "@/types/user";
+import type { Role, User, UserStatus } from "@/types/user";
 
 /** A user as shown in the Team Members table. */
 export interface TeamMember extends User {
@@ -20,4 +20,23 @@ export interface InviteMemberInput {
   role: Role;
   /** Empty string when not given. */
   jobTitle: string;
+}
+
+/**
+ * Changed member (PATCH /team/members/:id). Name and e-mail are not here; users change
+ * them themselves in Settings.
+ */
+export interface UpdateMemberInput {
+  userId: string;
+  role: Role;
+  /** Empty string when not given. */
+  jobTitle: string;
+  /** Hours per week, WEEKLY_CAPACITY_MIN–WEEKLY_CAPACITY_MAX. */
+  weeklyCapacity: number;
+}
+
+/** Deactivating or reactivating an account (PATCH /team/members/:id/status). */
+export interface SetMemberStatusInput {
+  userId: string;
+  status: Exclude<UserStatus, "INVITED">;
 }
