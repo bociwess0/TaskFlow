@@ -28,3 +28,10 @@ export function monthStart(offset: number): string {
   const date = new Date(Date.UTC(now.getFullYear(), now.getMonth() - offset, 1));
   return date.toISOString().slice(0, 10);
 }
+
+/** Last day of the month `offset` months before the current one, as YYYY-MM-DD. */
+export function monthEnd(offset: number): string {
+  const now = new Date();
+  const date = new Date(Date.UTC(now.getFullYear(), now.getMonth() - offset + 1, 0));
+  return date.toISOString().slice(0, 10);
+}

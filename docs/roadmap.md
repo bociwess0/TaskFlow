@@ -82,8 +82,8 @@ Grana `feature/kanban-board`, spojena u `main` (PR #3) · dizajn `04-kanban.png`
 | 11 | Prikazi List i Timeline (opciono), odloženo, posle osnovnih ekrana | ☐ | |
 | 12 | Završetak: pull request i merge u `main` | ✓ | PR #3 |
 
-### 1.5 Team Members ▶
-Grana `feature/team-members` · dizajn `08-team.png` · ruta `/team`
+### 1.5 Team Members ✓
+Grana `feature/team-members`, spojena u `main` (PR #4) · dizajn `08-team.png` · ruta `/team`
 
 | # | Korak | Status | Commit |
 |---|---|---|---|
@@ -93,20 +93,21 @@ Grana `feature/team-members` · dizajn `08-team.png` · ruta `/team`
 | 4 | `TeamToolbar`: pretraga, filter po ulozi, dugme Invite Member (stanje u URL-u) | ✓ | `feat(team): add team toolbar` |
 | 5 | `InviteMemberDialog`: forma za pozivnicu (React Hook Form + Zod), greška 409 ispod polja Email | ✓ | `feat(team): add invite member mutation`, `feat(team): add invite member dialog` |
 | 6 | `EditMemberDialog`: uloga, pozicija i kapacitet, deaktivacija uz potvrdu i ponovno aktiviranje (samo Admin) | ✓ | `feat(team): add update member mutations`, `feat(team): add edit member dialog` |
-| 7 | Timovi i vođe timova (`/team/teams`) | ☐ | |
+| 7 | Timovi i vođe timova (`/team/teams`), odloženo, posle osnovnih ekrana | ☐ | |
+| 8 | Završetak: pull request i merge u `main` | ✓ | PR #4 |
 
-### 1.6 Resources – upravljanje resursima ☐
-Dizajn `06-resources.png` · ruta `/resources` · najvažniji deo aplikacije
+### 1.6 Resources – upravljanje resursima ▶
+Grana `feature/resources` · dizajn `06-resources.png` · ruta `/resources` · najvažniji deo aplikacije
 
-| # | Korak | Status |
-|---|---|---|
-| 1 | Podaci: alokacije po članu i projektu (procenat, period), mock sa preopterećenim članovima, `useResources` | ☐ |
-| 2 | Statusi zauzetosti u `StatusBadge`: Available, Active, Overallocated | ☐ |
-| 3 | `StatCard` iz Dashboard-a premestiti u `components/shared`; kartice Total, Utilization, Overallocated, Available | ☐ |
-| 4 | `TeamViewTable`: član, uloga, alokacija (progres bar), broj projekata, status | ☐ |
-| 5 | `ProjectViewTable`: projekti i članovi sa procentima | ☐ |
-| 6 | `PeriodSelect`: ova nedelja, ovaj mesec, kvartal (u URL-u) | ☐ |
-| 7 | `AllocationDialog`: dodela člana projektu sa procentom i preventivnim upozorenjem kad ukupno prelazi 100% | ☐ |
+| # | Korak | Status | Commit |
+|---|---|---|---|
+| 1 | Podaci: tip `Allocation` i mock alokacije (svaki član projekta, bar jedan preopterećen i jedan dostupan), obračun zauzetosti u `lib/utilization.ts`; `getResourceOverview({ period })` i `useResourceOverview` | ▶ | |
+| 2 | Statusi zauzetosti u `StatusBadge`: Available, Active, Overallocated | ☐ | |
+| 3 | `StatCard` iz Dashboard-a premestiti u `components/shared`; kartice Total, Utilization, Overallocated, Available | ☐ | |
+| 4 | `TeamViewTable`: član, uloga, alokacija (progres bar), broj projekata, status | ☐ | |
+| 5 | `ProjectViewTable`: projekti i članovi sa procentima | ☐ | |
+| 6 | `PeriodSelect`: ova nedelja, ovaj mesec, kvartal (u URL-u) | ☐ | |
+| 7 | `AllocationDialog`: dodela člana projektu sa procentom i preventivnim upozorenjem kad ukupno prelazi 100% | ☐ | |
 
 ### 1.7 Timesheets ☐
 Dizajn `07-timesheets.png` · ruta `/timesheets`
