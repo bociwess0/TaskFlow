@@ -1,6 +1,6 @@
 "use client";
 
-import { Pencil } from "lucide-react";
+import { Pencil, SearchX } from "lucide-react";
 import type { ReactNode } from "react";
 import { EmptyState } from "@/components/shared/empty-state";
 import { ErrorState } from "@/components/shared/error-state";
@@ -18,6 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useTeamFilters } from "@/features/team/hooks/use-team-filters";
 import { useTeamMembers } from "@/features/team/hooks/use-team-members";
 import { cn } from "@/lib/utils";
 import type { TeamMember } from "@/types/team";
@@ -31,7 +32,12 @@ const FIRST_CELL = "pl-4 sm:pl-6";
 const LAST_CELL = "w-px pr-4 sm:pr-6";
 
 export function TeamMembersTable() {
-  const { data: members, isPending, isError, isPlaceholderData, refetch } = useTeamMembers();
+  const { params, hasFilters, clearFilters } = useTeamFilters();
+  const { data: members, isPending, isError, isPlaceholderData, refetch } = useTeamMembers(params);
+
+  if (isPending) {
+    return <TeamMembersTableSkeleton />;
+  }
 
   if (isError) {
     return (
@@ -41,10 +47,22 @@ export function TeamMembersTable() {
     );
   }
 
-  if (!isPending && members.length === 0) {
+  if (members.length === 0) {
     return (
       <Card className="py-12">
-        <EmptyState message="No team members found" />
+        {hasFilters ? (
+          <EmptyState
+            icon={SearchX}
+            message="No team members match your filters"
+            action={
+              <Button variant="outline" onClick={clearFilters}>
+                Clear filters
+              </Button>
+            }
+          />
+        ) : (
+          <EmptyState message="No team members found" />
+        )}
       </Card>
     );
   }
@@ -53,11 +71,23 @@ export function TeamMembersTable() {
     <TableCard>
       <TableBody
         className={cn("transition-opacity", isPlaceholderData && "opacity-60")}
-        aria-busy={isPending || isPlaceholderData}
+        aria-busy={isPlaceholderData}
       >
-        {isPending
-          ? Array.from({ length: SKELETON_ROWS }, (_, index) => <MemberRowSkeleton key={index} />)
-          : members.map((member) => <MemberRow key={member.id} member={member} />)}
+        {members.map((member) => (
+          <MemberRow key={member.id} member={member} />
+        ))}
+      </TableBody>
+    </TableCard>
+  );
+}
+
+export function TeamMembersTableSkeleton() {
+  return (
+    <TableCard>
+      <TableBody aria-busy="true" aria-label="Loading team members">
+        {Array.from({ length: SKELETON_ROWS }, (_, index) => (
+          <MemberRowSkeleton key={index} />
+        ))}
       </TableBody>
     </TableCard>
   );
