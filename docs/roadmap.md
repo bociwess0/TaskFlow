@@ -64,8 +64,8 @@ Grana `feature/project-details`, spojena u `main` (PR #2) · dizajn `05-project-
 | 7 | Povezivanje: klik na `ProjectCard` (stretched link) i „View details“ vode na detalje. Nepostojeći projekat je već rešen u `ProjectShell` („Project not found“) | ✓ | `feat(projects): link project cards to details` |
 | 8 | Završetak: pull request i merge u `main` | ✓ | PR #2 |
 
-### 1.4 Kanban tabla ▶
-Grana `feature/kanban-board` · dizajn `04-kanban.png` · ruta `/projects/[projectId]/board`
+### 1.4 Kanban tabla ✓
+Grana `feature/kanban-board`, spojena u `main` (PR #3) · dizajn `04-kanban.png` · ruta `/projects/[projectId]/board`
 
 | # | Korak | Status | Commit |
 |---|---|---|---|
@@ -80,19 +80,20 @@ Grana `feature/kanban-board` · dizajn `04-kanban.png` · ruta `/projects/[proje
 | 9 | Izmena zadatka u panelu: dugme Edit prebacuje panel u formu (zajednički `TaskForm` sa `AddTaskDialog`) | ✓ | `feat(tasks): edit task in details panel` |
 | 10 | Dodavanje komentara: forma ispod liste, optimistic update, Ctrl/Cmd+Enter | ✓ | `feat(tasks): add task comments` |
 | 11 | Prikazi List i Timeline (opciono), odloženo, posle osnovnih ekrana | ☐ | |
-| 12 | Završetak: pull request i merge u `main` | ▶ | |
+| 12 | Završetak: pull request i merge u `main` | ✓ | PR #3 |
 
-### 1.5 Team Members ☐
-Dizajn `08-team.png` · ruta `/team`
+### 1.5 Team Members ▶
+Grana `feature/team-members` · dizajn `08-team.png` · ruta `/team`
 
-| # | Korak | Status |
-|---|---|---|
-| 1 | Mock korisnici: proširiti `services/mock/users.ts` (e-mail, uloga, pozicija) i koristiti ga i u `auth-service`; `getTeamMembers` | ☐ |
-| 2 | `RoleBadge` za sistemske uloge (Admin, Project Manager, Team Member) | ☐ |
-| 3 | `TeamMembersTable`: ime i avatar, e-mail, uloga, pozicija, broj projekata, status, izmena | ☐ |
-| 4 | `TeamToolbar`: pretraga, filter po ulozi, dugme Invite Member | ☐ |
-| 5 | `InviteMemberDialog`: forma za pozivnicu | ☐ |
-| 6 | Timovi i vođe timova (`/team/teams`) | ☐ |
+| # | Korak | Status | Commit |
+|---|---|---|---|
+| 1 | Podaci: zajednički mock korisnici (`services/mock/users.ts`) prošireni na pun tip `User` (e-mail, pozicija, uloga, status, nedeljni kapacitet) i jedan pozvani korisnik; `auth-service` koristi istog korisnika; `getTeamMembers({ q, role })` sa brojem projekata; `useTeamMembers` | ✓ | `feat(team): add team members data` |
+| 2 | `RoleBadge` za sistemske uloge (Admin, Project Manager, Team Member) i statusi korisnika u `StatusBadge`; strana `/team` sa zaglavljem | ✓ | `feat(team): add role badge` |
+| 3 | `TeamMembersTable`: ime i avatar, e-mail, uloga, pozicija, broj projekata, status, izmena | ✓ | `feat(team): add team members table` |
+| 4 | `TeamToolbar`: pretraga, filter po ulozi, dugme Invite Member (stanje u URL-u) | ✓ | `feat(team): add team toolbar` |
+| 5 | `InviteMemberDialog`: forma za pozivnicu (React Hook Form + Zod), greška 409 ispod polja Email | ✓ | `feat(team): add invite member mutation`, `feat(team): add invite member dialog` |
+| 6 | `EditMemberDialog`: uloga, pozicija i kapacitet, deaktivacija uz potvrdu i ponovno aktiviranje (samo Admin) | ✓ | `feat(team): add update member mutations`, `feat(team): add edit member dialog` |
+| 7 | Timovi i vođe timova (`/team/teams`) | ☐ | |
 
 ### 1.6 Resources – upravljanje resursima ☐
 Dizajn `06-resources.png` · ruta `/resources` · najvažniji deo aplikacije
@@ -189,6 +190,7 @@ Razbija se na korake kad dođemo do nje.
 - **Detalji projekta:** kartica sa progresom ima dva reda avatara, a drugi deluje kao duplikat. Prikazuje se samo jedan red članova.
 - **Kanban:** na dizajnu je tabla projekta „Website Redesign“, kog nema u listi projekata. Zadaci sa dizajna su u mock-u vezani za E-commerce Platform.
 - **Kanban:** dizajn za istu vrstu posla koristi labele „dev“ i „development“. Koristi se samo „development“.
+- **Team:** broj projekata na dizajnu (npr. Bogdan 5) ne odgovara mock projektima. Broj se računa iz članstva u projektima (bez arhiviranih), pa se razlikuje od dizajna. Ivan (Project Manager) i pozvani korisnik nisu na dizajnu, a u mock-u jesu.
 
 ## Za kasnije
 
@@ -208,3 +210,8 @@ Razbija se na korake kad dođemo do nje.
 - Zatvaranje panela zadatka (ili prelazak na drugi zadatak) dok je forma za izmenu otvorena odbacuje nesačuvane izmene bez upozorenja. Po potrebi dodati potvrdu.
 - U formi zadatka labele se biraju samo od onih koje već postoje na tabli; nove labele zasad ne mogu da se dodaju.
 - Komentarisanje: mock korisnik je Admin, pa mock servis ne proverava prava. Backend mora da proveri da korisnik sme da komentariše na projektu (Admin svuda, Project Manager na svojim projektima, Team Member samo na projektima na kojima je član) i da sadržaj nije prazan i da ima najviše 1000 znakova.
+- Lista članova tima: API treba da podrži iste parametre (`q` po imenu i e-mailu, `role`) i da vrati broj projekata bez arhiviranih. Članovi su zasad u redosledu kreiranja, bez sortiranja.
+- `Project` nema polje za project managera (`managerId`), a treba za prava pristupa (PM upravlja samo svojim projektima) i za Resources.
+- Pozivanje člana: mock samo dodaje korisnika sa statusom INVITED. Backend treba da pošalje e-mail sa jednokratnim tokenom (sa rokom važenja) za prihvatanje pozivnice, i da dozvoli pozivanje samo Admin-u. E-mail mora da bude jedinstven (409), bez obzira na velika i mala slova.
+- Izmenu članova (uloga, pozicija, kapacitet, deaktivacija) sme samo Admin. Kad stignu prava pristupa, dugme za izmenu u tabeli treba sakriti ostalim ulogama, a backend mora da proverava ulogu i pravila (ne menja se sopstvena uloga i ne deaktivira sopstveni nalog, ostaje bar jedan aktivan Admin, kapacitet 1–60 h).
+- Deaktivirani korisnici ne treba da se nude kao izvršioci zadataka (i članovi projekta).

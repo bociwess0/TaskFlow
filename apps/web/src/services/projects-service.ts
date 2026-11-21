@@ -202,6 +202,11 @@ export function findMockProject(id: string): Project | undefined {
   return projects.find((project) => project.id === id);
 }
 
+/** For other mock services that count projects (e.g. projects per team member). */
+export function listMockProjects(): Project[] {
+  return projects;
+}
+
 /** Rejects with a 404 ApiError for an unknown id, the same way the API will respond. */
 export function getProject(id: string): Promise<ProjectDetails> {
   const project = projects.find((item) => item.id === id);

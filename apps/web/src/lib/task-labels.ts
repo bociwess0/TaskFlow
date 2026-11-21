@@ -1,9 +1,7 @@
 import type { StatusTone } from "@/types/status";
 
-/** Tag color of a task label; each tone is a soft Badge variant. */
-export type TaskLabelTone = StatusTone | "highlight";
-
-const TASK_LABEL_TONE: Record<string, TaskLabelTone> = {
+/** Tag color of each known task label; each tone is a soft Badge variant. */
+const TASK_LABEL_TONE: Record<string, StatusTone> = {
   design: "highlight",
   development: "info",
   backend: "success",
@@ -12,6 +10,6 @@ const TASK_LABEL_TONE: Record<string, TaskLabelTone> = {
 };
 
 /** Labels are free text, so unknown labels get a neutral tag. */
-export function getTaskLabelTone(label: string): TaskLabelTone {
+export function getTaskLabelTone(label: string): StatusTone {
   return TASK_LABEL_TONE[label.toLowerCase()] ?? "neutral";
 }

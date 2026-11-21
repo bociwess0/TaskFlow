@@ -16,3 +16,8 @@ export class ApiError extends Error {
 export function isNotFoundError(error: unknown): boolean {
   return error instanceof ApiError && error.status === 404;
 }
+
+/** 409: the request conflicts with existing data (e.g. a duplicate e-mail). */
+export function isConflictError(error: unknown): boolean {
+  return error instanceof ApiError && error.status === 409;
+}
