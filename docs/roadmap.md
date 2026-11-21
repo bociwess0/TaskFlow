@@ -101,7 +101,7 @@ Grana `feature/resources` · dizajn `06-resources.png` · ruta `/resources` · n
 
 | # | Korak | Status | Commit |
 |---|---|---|---|
-| 1 | Podaci: tip `Allocation` i mock alokacije (svaki član projekta, bar jedan preopterećen i jedan dostupan), obračun zauzetosti u `lib/utilization.ts`; `getResourceOverview({ period })` i `useResourceOverview` | ▶ | |
+| 1 | Podaci: tip `Allocation` i mock alokacije (svaki član projekta, bar jedan preopterećen i jedan dostupan), obračun zauzetosti po nedeljama u `lib/utilization.ts`; `getResourceOverview({ period })` i `useResourceOverview` | ✓ | `feat(resources): add allocation data and utilization logic`, `fix(resources): calculate allocation by weeks`, `feat(resources): add resource overview service` |
 | 2 | Statusi zauzetosti u `StatusBadge`: Available, Active, Overallocated | ☐ | |
 | 3 | `StatCard` iz Dashboard-a premestiti u `components/shared`; kartice Total, Utilization, Overallocated, Available | ☐ | |
 | 4 | `TeamViewTable`: član, uloga, alokacija (progres bar), broj projekata, status | ☐ | |
@@ -216,3 +216,6 @@ Razbija se na korake kad dođemo do nje.
 - Pozivanje člana: mock samo dodaje korisnika sa statusom INVITED. Backend treba da pošalje e-mail sa jednokratnim tokenom (sa rokom važenja) za prihvatanje pozivnice, i da dozvoli pozivanje samo Admin-u. E-mail mora da bude jedinstven (409), bez obzira na velika i mala slova.
 - Izmenu članova (uloga, pozicija, kapacitet, deaktivacija) sme samo Admin. Kad stignu prava pristupa, dugme za izmenu u tabeli treba sakriti ostalim ulogama, a backend mora da proverava ulogu i pravila (ne menja se sopstvena uloga i ne deaktivira sopstveni nalog, ostaje bar jedan aktivan Admin, kapacitet 1–60 h).
 - Deaktivirani korisnici ne treba da se nude kao izvršioci zadataka (i članovi projekta).
+- Obračun zauzetosti na backendu radi ASP.NET Core servis. `lib/utilization.ts` ga samo oponaša (pragovi, nedeljni obračun sa vrhom opterećenja, samo projekti u statusu PLANNING i IN_PROGRESS) i dobar je kandidat za unit testove, i na frontendu i u .NET servisu.
+- Kartica Utilization Rate za sada prikazuje prosečnu planiranu alokaciju. Kad stignu Timesheets, treba da prikazuje stvarnu iskorišćenost (evidentirani sati ÷ kapacitet).
+- Pragovi statusa zauzetosti su zasad podrazumevani (50% i 100%). Treba ih čitati iz podešavanja organizacije (korak 1.8/4).

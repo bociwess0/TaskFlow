@@ -1,3 +1,5 @@
+import type { User } from "@/types/user";
+
 /**
  * A member's planned engagement on a project (ProjectMember in the database).
  * The base for resource management: utilization is the sum of a member's allocations.
@@ -30,4 +32,49 @@ export interface UtilizationThresholds {
   available: number;
   /** Above this a member is OVERALLOCATED. */
   overallocated: number;
+}
+
+/** One of a member's allocations in the overview, with the project it belongs to. */
+export interface ProjectAllocation {
+  allocationId: string;
+  projectId: string;
+  projectName: string;
+  percent: number;
+  /** ISO date (YYYY-MM-DD). */
+  startDate: string;
+  /** ISO date (YYYY-MM-DD), inclusive. */
+  endDate: string;
+}
+
+/** A member's utilization in the selected period (a Team View row). */
+export interface MemberUtilization {
+  member: Pick<User, "id" | "name" | "avatarUrl" | "jobTitle" | "role" | "weeklyCapacity">;
+  /** Peak weekly allocation (%) in the period; see getTotalAllocation. */
+  totalAllocation: number;
+  status: UtilizationStatus;
+  /** Planned hours per week at that peak: weekly capacity × total allocation. */
+  plannedHours: number;
+  /** Projects with an allocation in the period (PLANNING or IN_PROGRESS only). */
+  projectCount: number;
+  allocations: ProjectAllocation[];
+}
+
+export interface ResourceSummary {
+  totalMembers: number;
+  /** Average of members' total allocation (%), rounded. */
+  averageAllocation: number;
+  overallocatedCount: number;
+  availableCount: number;
+}
+
+/** Resources page data for a period (GET /resources/overview?period=). */
+export interface ResourceOverview {
+  period: ResourcePeriod;
+  range: DateRange;
+  members: MemberUtilization[];
+  summary: ResourceSummary;
+}
+
+export interface ResourceOverviewParams {
+  period: ResourcePeriod;
 }

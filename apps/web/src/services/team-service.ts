@@ -154,3 +154,8 @@ export function setMemberStatus({ userId, status }: SetMemberStatusInput): Promi
 
   return saveUser({ ...user, status });
 }
+
+/** For other mock services that need the current users (e.g. resources). */
+export function listMockUsers(): User[] {
+  return users;
+}
