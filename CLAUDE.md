@@ -68,7 +68,8 @@ Svetla radna površina, tamni sidebar, kartice sa zaobljenim ivicama i suptilnim
 - Commit poruke po Conventional Commits: `feat:`, `fix:`, `chore:`, `refactor:`, `style:`, `docs:`, `test:`.
 - Commit-ovi su mali i logični, jedna celina po commit-u.
 - Pre commit-a pokreni lint i build za `apps/web`.
-- Ne push-uj, ne merge-uj i ne briši grane bez moje potvrde.
+- Posle svake moje potvrde napravi commit i odmah push-uj granu.
+- Merge u `main` i brisanje grana idu samo uz moju potvrdu.
 - Repo je javan: nikada ne commit-uj `.env` fajlove, ključeve ni lozinke.
 - U commit poruke i PR-ove ne dodaj `Co-Authored-By` ni bilo kakve druge oznake o AI-ju. Autor je samo vlasnik repoa.
 
