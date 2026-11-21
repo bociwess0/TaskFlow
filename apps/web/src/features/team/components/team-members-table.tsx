@@ -1,7 +1,7 @@
 "use client";
 
 import { Pencil, SearchX } from "lucide-react";
-import type { ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { EmptyState } from "@/components/shared/empty-state";
 import { ErrorState } from "@/components/shared/error-state";
 import { RoleBadge } from "@/components/shared/role-badge";
@@ -18,6 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { EditMemberDialog } from "@/features/team/components/edit-member-dialog";
 import { useTeamFilters } from "@/features/team/hooks/use-team-filters";
 import { useTeamMembers } from "@/features/team/hooks/use-team-members";
 import { cn } from "@/lib/utils";
@@ -34,6 +35,7 @@ const LAST_CELL = "w-px pr-4 sm:pr-6";
 export function TeamMembersTable() {
   const { params, hasFilters, clearFilters } = useTeamFilters();
   const { data: members, isPending, isError, isPlaceholderData, refetch } = useTeamMembers(params);
+  const [editingMember, setEditingMember] = useState<TeamMember | null>(null);
 
   if (isPending) {
     return <TeamMembersTableSkeleton />;
@@ -68,16 +70,19 @@ export function TeamMembersTable() {
   }
 
   return (
-    <TableCard>
-      <TableBody
-        className={cn("transition-opacity", isPlaceholderData && "opacity-60")}
-        aria-busy={isPlaceholderData}
-      >
-        {members.map((member) => (
-          <MemberRow key={member.id} member={member} />
-        ))}
-      </TableBody>
-    </TableCard>
+    <>
+      <TableCard>
+        <TableBody
+          className={cn("transition-opacity", isPlaceholderData && "opacity-60")}
+          aria-busy={isPlaceholderData}
+        >
+          {members.map((member) => (
+            <MemberRow key={member.id} member={member} onEdit={() => setEditingMember(member)} />
+          ))}
+        </TableBody>
+      </TableCard>
+      <EditMemberDialog member={editingMember} onClose={() => setEditingMember(null)} />
+    </>
   );
 }
 
@@ -115,7 +120,12 @@ function TableCard({ children }: { children: ReactNode }) {
   );
 }
 
-function MemberRow({ member }: { member: TeamMember }) {
+interface MemberRowProps {
+  member: TeamMember;
+  onEdit: () => void;
+}
+
+function MemberRow({ member, onEdit }: MemberRowProps) {
   return (
     <TableRow>
       <TableCell className={cn(FIRST_CELL, "py-3 whitespace-normal")}>
@@ -136,8 +146,12 @@ function MemberRow({ member }: { member: TeamMember }) {
         <StatusBadge status={member.status} />
       </TableCell>
       <TableCell className={LAST_CELL}>
-        {/* No action yet; editing comes with EditMemberDialog. */}
-        <Button variant="outline" size="icon-sm" aria-label={`Edit ${member.name}`}>
+        <Button
+          variant="outline"
+          size="icon-sm"
+          aria-label={`Edit ${member.name}`}
+          onClick={onEdit}
+        >
           <Pencil />
         </Button>
       </TableCell>

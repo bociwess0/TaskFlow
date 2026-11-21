@@ -92,7 +92,7 @@ Grana `feature/team-members` · dizajn `08-team.png` · ruta `/team`
 | 3 | `TeamMembersTable`: ime i avatar, e-mail, uloga, pozicija, broj projekata, status, izmena | ✓ | `feat(team): add team members table` |
 | 4 | `TeamToolbar`: pretraga, filter po ulozi, dugme Invite Member (stanje u URL-u) | ✓ | `feat(team): add team toolbar` |
 | 5 | `InviteMemberDialog`: forma za pozivnicu (React Hook Form + Zod), greška 409 ispod polja Email | ✓ | `feat(team): add invite member mutation`, `feat(team): add invite member dialog` |
-| 6 | `EditMemberDialog`: promena uloge i deaktivacija naloga (samo Admin) | ▶ | |
+| 6 | `EditMemberDialog`: uloga, pozicija i kapacitet, deaktivacija uz potvrdu i ponovno aktiviranje (samo Admin) | ✓ | `feat(team): add update member mutations`, `feat(team): add edit member dialog` |
 | 7 | Timovi i vođe timova (`/team/teams`) | ☐ | |
 
 ### 1.6 Resources – upravljanje resursima ☐

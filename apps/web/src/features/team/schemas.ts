@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ROLES } from "@/lib/user-role";
+import { WEEKLY_CAPACITY_MAX, WEEKLY_CAPACITY_MIN } from "@/lib/weekly-capacity";
 import type { Role } from "@/types/user";
 
 export const NAME_MIN = 2;
@@ -33,3 +34,22 @@ export const INVITE_MEMBER_DEFAULTS: InviteMemberFormValues = {
   role: "TEAM_MEMBER",
   jobTitle: "",
 };
+
+/** Values are kept as the inputs give them (capacity is a string); onSubmit converts them. */
+export const editMemberSchema = z.object({
+  role: z.enum(ROLES as [Role, ...Role[]]),
+  jobTitle: z
+    .string()
+    .trim()
+    .max(JOB_TITLE_MAX, `Job title must be at most ${JOB_TITLE_MAX} characters.`),
+  weeklyCapacity: z
+    .string()
+    .trim()
+    .min(1, "Weekly capacity is required.")
+    .refine((value) => {
+      const hours = Number(value);
+      return Number.isFinite(hours) && hours >= WEEKLY_CAPACITY_MIN && hours <= WEEKLY_CAPACITY_MAX;
+    }, `Weekly capacity must be between ${WEEKLY_CAPACITY_MIN} and ${WEEKLY_CAPACITY_MAX} hours.`),
+});
+
+export type EditMemberFormValues = z.infer<typeof editMemberSchema>;
