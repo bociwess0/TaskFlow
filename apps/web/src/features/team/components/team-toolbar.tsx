@@ -1,8 +1,6 @@
 "use client";
 
-import { Plus } from "lucide-react";
 import { SearchInput } from "@/components/shared/search-input";
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -11,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
+import { InviteMemberDialog } from "@/features/team/components/invite-member-dialog";
 import { useTeamFilters } from "@/features/team/hooks/use-team-filters";
 import { ROLE_LABEL, ROLES } from "@/lib/user-role";
 import type { Role } from "@/types/user";
@@ -51,11 +50,7 @@ export function TeamToolbar() {
           </SelectContent>
         </Select>
 
-        {/* No action yet; InviteMemberDialog comes in the next step. */}
-        <Button size="lg" className="h-10 px-4">
-          <Plus data-icon="inline-start" />
-          Invite Member
-        </Button>
+        <InviteMemberDialog />
       </div>
     </div>
   );

@@ -3,6 +3,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { teamKeys } from "@/features/team/hooks/use-team-members";
+import { isConflictError } from "@/services/api-error";
 import { inviteMember } from "@/services/team-service";
 import type { InviteMemberInput } from "@/types/team";
 
@@ -17,6 +18,8 @@ export function useInviteMember() {
       return queryClient.invalidateQueries({ queryKey: teamKeys.lists() });
     },
     onError: (error) => {
+      // A duplicate e-mail (409) is shown under the Email field instead.
+      if (isConflictError(error)) return;
       toast.error("Could not send the invitation.", { description: error.message });
     },
   });

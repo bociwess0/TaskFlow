@@ -91,7 +91,7 @@ Grana `feature/team-members` · dizajn `08-team.png` · ruta `/team`
 | 2 | `RoleBadge` za sistemske uloge (Admin, Project Manager, Team Member) i statusi korisnika u `StatusBadge`; strana `/team` sa zaglavljem | ✓ | `feat(team): add role badge` |
 | 3 | `TeamMembersTable`: ime i avatar, e-mail, uloga, pozicija, broj projekata, status, izmena | ✓ | `feat(team): add team members table` |
 | 4 | `TeamToolbar`: pretraga, filter po ulozi, dugme Invite Member (stanje u URL-u) | ✓ | `feat(team): add team toolbar` |
-| 5 | `InviteMemberDialog`: forma za pozivnicu | ▶ | |
+| 5 | `InviteMemberDialog`: forma za pozivnicu (React Hook Form + Zod), greška 409 ispod polja Email | ✓ | `feat(team): add invite member mutation`, `feat(team): add invite member dialog` |
 | 6 | `EditMemberDialog`: promena uloge i deaktivacija naloga (samo Admin) | ☐ | |
 | 7 | Timovi i vođe timova (`/team/teams`) | ☐ | |
 
