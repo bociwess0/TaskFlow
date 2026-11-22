@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
+import { ResourceSummary } from "@/features/resources/components/resource-summary";
 
 export const metadata: Metadata = {
   title: "Resource Management",
@@ -12,6 +13,7 @@ export default function ResourcesPage() {
         title="Resource Management"
         description="Monitor team allocation and availability across projects."
       />
+      <ResourceSummary />
     </div>
   );
 }

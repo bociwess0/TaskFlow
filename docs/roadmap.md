@@ -103,7 +103,7 @@ Grana `feature/resources` · dizajn `06-resources.png` · ruta `/resources` · n
 |---|---|---|---|
 | 1 | Podaci: tip `Allocation` i mock alokacije (svaki član projekta, bar jedan preopterećen i jedan dostupan), obračun zauzetosti po nedeljama u `lib/utilization.ts`; `getResourceOverview({ period })` i `useResourceOverview` | ✓ | `feat(resources): add allocation data and utilization logic`, `fix(resources): calculate allocation by weeks`, `feat(resources): add resource overview service` |
 | 2 | Statusi zauzetosti u `StatusBadge`: Available, Active, Overallocated | ✓ | `feat(resources): add utilization status badges` |
-| 3 | `StatCard` iz Dashboard-a premestiti u `components/shared`; kartice Total, Utilization, Overallocated, Available | ☐ | |
+| 3 | `StatCard` iz Dashboard-a premestiti u `components/shared`; kartice Total, Utilization, Overallocated, Available | ✓ | `feat(resources): add resource summary cards` |
 | 4 | `TeamViewTable`: član, uloga, alokacija (progres bar), broj projekata, status | ☐ | |
 | 5 | `ProjectViewTable`: projekti i članovi sa procentima | ☐ | |
 | 6 | `PeriodSelect`: ova nedelja, ovaj mesec, kvartal (u URL-u) | ☐ | |
@@ -186,6 +186,7 @@ Razbija se na korake kad dođemo do nje.
 
 - **Projects:** „In Progress“ je na E-commerce kartici zelen, a na ostalima plav. Pravilo je da je In Progress uvek plav (primary).
 - **Resources:** Ana sa 100% je označena kao Overallocated. Po specifikaciji, preopterećen je samo onaj ko je iznad 100%, pa mock podaci treba da imaju npr. 120%.
+- **Resources:** kartice sa brojevima na dizajnu nemaju ikonice, a vrednost je obojena. Koristi se zajednički `StatCard` kao na Dashboard-u (ikonica u boji tona). Kartica Available je plava (`info`), kao bedž Available, iako je na dizajnu zelena.
 - **Team:** kolona Role meša sistemsku ulogu (Admin) i poziciju (Frontend Developer). Sistemska uloga ide kao bedž, a pozicija se prikazuje odvojeno.
 - **Detalji projekta i Kanban:** imaju različite tabove. Koristi se jedan zajednički set: Overview, Board, List, Timeline, Team, Files, Settings.
 - **Detalji projekta:** kartica sa progresom ima dva reda avatara, a drugi deluje kao duplikat. Prikazuje se samo jedan red članova.
@@ -196,7 +197,6 @@ Razbija se na korake kad dođemo do nje.
 ## Za kasnije
 
 - `DashboardGreeting` ponavlja HTML naslova; može da koristi `PageHeader`.
-- `StatCard` je u `features/dashboard`, a treba i drugim ekranima (korak 1.6/3).
 - Polja projekta `icon` i `color` ne postoje u modelu iz specifikacije. Treba ih dodati u Prisma šemu.
 - `NewProjectButton` još nema akciju. Treba ga povezati kad bude postojalo kreiranje projekta (dijalog ili strana).
 - Polje `createdAt` je dodato projektu zbog sortiranja „Newest“. Treba ga imati i u Prisma šemi.
