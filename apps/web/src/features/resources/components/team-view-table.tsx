@@ -47,15 +47,7 @@ export function TeamViewTable() {
   const { data, isPending, isError, refetch } = useResourceOverview(DEFAULT_RESOURCE_PERIOD);
 
   if (isPending) {
-    return (
-      <TableCard>
-        <TableBody aria-busy="true" aria-label="Loading team allocation">
-          {Array.from({ length: SKELETON_ROWS }, (_, index) => (
-            <MemberRowSkeleton key={index} />
-          ))}
-        </TableBody>
-      </TableCard>
-    );
+    return <TeamViewTableSkeleton />;
   }
 
   if (isError) {
@@ -79,6 +71,18 @@ export function TeamViewTable() {
       <TableBody>
         {data.members.map((member) => (
           <MemberRow key={member.member.id} utilization={member} />
+        ))}
+      </TableBody>
+    </TableCard>
+  );
+}
+
+export function TeamViewTableSkeleton() {
+  return (
+    <TableCard>
+      <TableBody aria-busy="true" aria-label="Loading team allocation">
+        {Array.from({ length: SKELETON_ROWS }, (_, index) => (
+          <MemberRowSkeleton key={index} />
         ))}
       </TableBody>
     </TableCard>

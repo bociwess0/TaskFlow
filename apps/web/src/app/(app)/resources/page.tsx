@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { PageHeader } from "@/components/shared/page-header";
 import { ResourceSummary } from "@/features/resources/components/resource-summary";
-import { TeamViewTable } from "@/features/resources/components/team-view-table";
+import {
+  ResourceViews,
+  ResourceViewsSkeleton,
+} from "@/features/resources/components/resource-views";
 
 export const metadata: Metadata = {
   title: "Resource Management",
@@ -15,7 +19,10 @@ export default function ResourcesPage() {
         description="Monitor team allocation and availability across projects."
       />
       <ResourceSummary />
-      <TeamViewTable />
+      {/* The tabs read search params, which are only known at request time. */}
+      <Suspense fallback={<ResourceViewsSkeleton />}>
+        <ResourceViews />
+      </Suspense>
     </div>
   );
 }

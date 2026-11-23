@@ -105,7 +105,7 @@ Grana `feature/resources` · dizajn `06-resources.png` · ruta `/resources` · n
 | 2 | Statusi zauzetosti u `StatusBadge`: Available, Active, Overallocated | ✓ | `feat(resources): add utilization status badges` |
 | 3 | `StatCard` iz Dashboard-a premestiti u `components/shared`; kartice Total, Utilization, Overallocated, Available | ✓ | `feat(resources): add resource summary cards` |
 | 4 | `TeamViewTable`: član, uloga, alokacija (progres bar), broj projekata, status | ✓ | `feat(resources): add team allocation table` |
-| 5 | `ProjectViewTable`: projekti i članovi sa procentima | ☐ | |
+| 5 | `ProjectViewTable`: projekti i članovi sa procentima; tabovi Team View / Project View (`?view=`) | ✓ | `feat(resources): add project allocation table and view tabs` |
 | 6 | `PeriodSelect`: ova nedelja, ovaj mesec, kvartal (u URL-u) | ☐ | |
 | 7 | `AllocationDialog`: dodela člana projektu sa procentom i preventivnim upozorenjem kad ukupno prelazi 100% | ☐ | |
 

@@ -1,3 +1,4 @@
+import type { Project } from "@/types/project";
 import type { User } from "@/types/user";
 
 /**
@@ -59,6 +60,22 @@ export interface MemberUtilization {
   allocations: ProjectAllocation[];
 }
 
+/** A member's share of one project in the overview. */
+export interface ProjectMemberAllocation {
+  member: Pick<User, "id" | "name" | "avatarUrl">;
+  /** Peak weekly allocation (%) on this project in the period; see getTotalAllocation. */
+  percent: number;
+}
+
+/** A project with allocations in the selected period (a Project View row). */
+export interface ProjectUtilization {
+  project: Pick<Project, "id" | "name" | "status">;
+  /** Active members allocated to the project in the period. */
+  members: ProjectMemberAllocation[];
+  /** Sum of the members' percents. */
+  totalPercent: number;
+}
+
 export interface ResourceSummary {
   totalMembers: number;
   /** Average of members' total allocation (%), rounded. */
@@ -72,6 +89,8 @@ export interface ResourceOverview {
   period: ResourcePeriod;
   range: DateRange;
   members: MemberUtilization[];
+  /** Only PLANNING and IN_PROGRESS projects with allocations in the period. */
+  projects: ProjectUtilization[];
   summary: ResourceSummary;
 }
 
