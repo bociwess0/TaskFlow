@@ -4,16 +4,15 @@ import { Gauge, TriangleAlert, UserCheck, Users } from "lucide-react";
 import { ErrorState } from "@/components/shared/error-state";
 import { StatCard, StatCardSkeleton } from "@/components/shared/stat-card";
 import { Card } from "@/components/ui/card";
-import { useResourceOverview } from "@/features/resources/hooks/use-resource-overview";
-import type { ResourcePeriod } from "@/types/resource";
+import {
+  DEFAULT_RESOURCE_PERIOD,
+  useResourceOverview,
+} from "@/features/resources/hooks/use-resource-overview";
 
 const GRID_CLASS = "grid gap-4 sm:grid-cols-2 xl:grid-cols-4";
 
-// Fixed until the period select is added (roadmap 1.6/6).
-const PERIOD: ResourcePeriod = "month";
-
 export function ResourceSummary() {
-  const { data, isPending, isError, refetch } = useResourceOverview(PERIOD);
+  const { data, isPending, isError, refetch } = useResourceOverview(DEFAULT_RESOURCE_PERIOD);
 
   if (isPending) {
     return (

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
 import { ResourceSummary } from "@/features/resources/components/resource-summary";
+import { TeamViewTable } from "@/features/resources/components/team-view-table";
 
 export const metadata: Metadata = {
   title: "Resource Management",
@@ -14,6 +15,7 @@ export default function ResourcesPage() {
         description="Monitor team allocation and availability across projects."
       />
       <ResourceSummary />
+      <TeamViewTable />
     </div>
   );
 }
