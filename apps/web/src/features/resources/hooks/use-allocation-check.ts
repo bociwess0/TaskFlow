@@ -2,8 +2,11 @@
 
 import { keepPreviousData, skipToken, useQuery } from "@tanstack/react-query";
 import { resourceKeys } from "@/features/resources/hooks/use-resource-overview";
+import { isClientError } from "@/services/api-error";
 import { checkAllocation } from "@/services/resources-service";
 import type { CreateAllocationInput } from "@/types/resource";
+
+const MAX_RETRIES = 3;
 
 /**
  * Overallocation check for a new allocation. Pass null while the form is incomplete or
@@ -15,5 +18,7 @@ export function useAllocationCheck(input: CreateAllocationInput | null) {
     queryFn: input ? () => checkAllocation(input) : skipToken,
     // Keep showing the previous result while the check for new values loads.
     placeholderData: keepPreviousData,
+    // A rejected input (409, 400, 404) gives the same answer again, so show it at once.
+    retry: (failureCount, error) => !isClientError(error) && failureCount < MAX_RETRIES,
   });
 }

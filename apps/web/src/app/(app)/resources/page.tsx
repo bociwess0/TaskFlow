@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PageHeader } from "@/components/shared/page-header";
+import { AllocationDialog } from "@/features/resources/components/allocation-dialog";
 import { PeriodSelect, PeriodSelectSkeleton } from "@/features/resources/components/period-select";
 import {
   ResourceSummary,
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   title: "Resource Management",
 };
 
-// Everything below the title reads search params (?period=, ?view=), which are only known
+// The period select and everything below the title read search params (?period=, ?view=), which are only known
 // at request time, so it renders behind Suspense with skeletons of the same size.
 export default function ResourcesPage() {
   return (
@@ -24,9 +25,13 @@ export default function ResourcesPage() {
         title="Resource Management"
         description="Monitor team allocation and availability across projects."
         actions={
-          <Suspense fallback={<PeriodSelectSkeleton />}>
-            <PeriodSelect />
-          </Suspense>
+          // Two columns on mobile, like the Team toolbar.
+          <div className="grid w-full grid-cols-2 gap-3 sm:flex sm:w-auto">
+            <Suspense fallback={<PeriodSelectSkeleton />}>
+              <PeriodSelect />
+            </Suspense>
+            <AllocationDialog />
+          </div>
         }
       />
       <Suspense

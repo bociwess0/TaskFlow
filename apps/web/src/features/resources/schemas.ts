@@ -36,6 +36,14 @@ export const allocationSchema = z
 
 export type AllocationFormValues = z.infer<typeof allocationSchema>;
 
+export const ALLOCATION_DEFAULTS: AllocationFormValues = {
+  userId: "",
+  projectId: "",
+  percent: "",
+  startDate: "",
+  endDate: "",
+};
+
 export function toAllocationInput(values: AllocationFormValues): CreateAllocationInput {
   return {
     userId: values.userId,
@@ -50,7 +58,9 @@ export function toAllocationInput(values: AllocationFormValues): CreateAllocatio
  * The API input when the form values are complete and valid, otherwise null.
  * For the live overallocation check while the user fills in the form.
  */
-export function parseAllocationInput(values: AllocationFormValues): CreateAllocationInput | null {
+export function parseAllocationInput(
+  values: Partial<AllocationFormValues>,
+): CreateAllocationInput | null {
   const result = allocationSchema.safeParse(values);
   return result.success ? toAllocationInput(result.data) : null;
 }

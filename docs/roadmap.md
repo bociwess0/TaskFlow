@@ -108,7 +108,7 @@ Grana `feature/resources` · dizajn `06-resources.png` · ruta `/resources` · n
 | 5 | `ProjectViewTable`: projekti i članovi sa procentima; tabovi Team View / Project View (`?view=`) | ✓ | `feat(resources): add project allocation table and view tabs` |
 | 6 | `PeriodSelect`: ova nedelja, ovaj mesec, kvartal (u URL-u) | ✓ | `feat(resources): add period select` |
 | 7 | Podaci za dodelu: `CreateAllocationInput`, `AllocationCheck`, `checkAllocation` i `createAllocation` u servisu, Zod šema, `useAllocationCheck` i `useCreateAllocation` | ✓ | `feat(resources): add allocation service and overallocation check` |
-| 8 | `AllocationDialog`: dodela člana projektu sa procentom i preventivnim upozorenjem kad ukupno prelazi 100% | ☐ | |
+| 8 | `AllocationDialog`: dodela člana projektu sa procentom i preventivnim upozorenjem kad ukupno prelazi 100% | ✓ | `feat(resources): add allocation dialog with overallocation warning` |
 | 9 | Završetak: pull request i merge u `main` | ☐ | |
 
 ### 1.7 Timesheets ☐
