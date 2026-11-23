@@ -94,6 +94,21 @@ export interface ResourceOverview {
   summary: ResourceSummary;
 }
 
+/** A new allocation (POST /allocations); the id is given when it is saved. */
+export type CreateAllocationInput = Omit<Allocation, "id">;
+
+/** Result of checking a new allocation before it is saved (POST /allocations/check). */
+export interface AllocationCheck {
+  /** The member's allocations in the new allocation's period (PLANNING or IN_PROGRESS only). */
+  currentAllocations: ProjectAllocation[];
+  /** Peak weekly allocation (%) in that period without the new allocation. */
+  currentTotal: number;
+  /** Peak weekly allocation (%) in that period with the new allocation. */
+  newTotal: number;
+  /** Utilization status for newTotal; OVERALLOCATED means the dialog shows a warning. */
+  newStatus: UtilizationStatus;
+}
+
 export interface ResourceOverviewParams {
   period: ResourcePeriod;
 }

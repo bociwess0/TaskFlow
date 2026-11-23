@@ -3,6 +3,7 @@ import { dateFromToday } from "@/services/mock/dates";
 import { mockUsers } from "@/services/mock/users";
 import { mockError, mockResponse } from "@/services/mock-response";
 import type { Project, ProjectDetails, ProjectListParams, ProjectSort } from "@/types/project";
+import type { UserSummary } from "@/types/user";
 
 const projects: Project[] = [
   {
@@ -200,6 +201,17 @@ const EMPTY_EXTRAS: ProjectExtras = { overview: "", technologies: [], milestones
  */
 export function findMockProject(id: string): Project | undefined {
   return projects.find((project) => project.id === id);
+}
+
+/**
+ * Adds a member to a project. In the database an allocation is the ProjectMember row, so a
+ * new allocation also makes the user a member (avatars, assignees, project counts).
+ */
+export function addMockProjectMember(projectId: string, member: UserSummary): void {
+  const index = projects.findIndex((project) => project.id === projectId);
+  if (index === -1) return;
+  const project = projects[index];
+  projects[index] = { ...project, members: [...project.members, member] };
 }
 
 /** For other mock services that count projects (e.g. projects per team member). */

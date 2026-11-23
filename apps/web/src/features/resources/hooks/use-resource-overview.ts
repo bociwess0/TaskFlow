@@ -2,12 +2,14 @@
 
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getResourceOverview } from "@/services/resources-service";
-import type { ResourcePeriod } from "@/types/resource";
+import type { CreateAllocationInput, ResourcePeriod } from "@/types/resource";
 
 export const resourceKeys = {
   all: ["resources"] as const,
   overviews: () => [...resourceKeys.all, "overview"] as const,
   overview: (period: ResourcePeriod) => [...resourceKeys.overviews(), { period }] as const,
+  checks: () => [...resourceKeys.all, "check"] as const,
+  check: (input: CreateAllocationInput) => [...resourceKeys.checks(), input] as const,
 };
 
 export function useResourceOverview(period: ResourcePeriod) {

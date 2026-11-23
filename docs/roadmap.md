@@ -107,7 +107,9 @@ Grana `feature/resources` · dizajn `06-resources.png` · ruta `/resources` · n
 | 4 | `TeamViewTable`: član, uloga, alokacija (progres bar), broj projekata, status | ✓ | `feat(resources): add team allocation table` |
 | 5 | `ProjectViewTable`: projekti i članovi sa procentima; tabovi Team View / Project View (`?view=`) | ✓ | `feat(resources): add project allocation table and view tabs` |
 | 6 | `PeriodSelect`: ova nedelja, ovaj mesec, kvartal (u URL-u) | ✓ | `feat(resources): add period select` |
-| 7 | `AllocationDialog`: dodela člana projektu sa procentom i preventivnim upozorenjem kad ukupno prelazi 100% | ☐ | |
+| 7 | Podaci za dodelu: `CreateAllocationInput`, `AllocationCheck`, `checkAllocation` i `createAllocation` u servisu, Zod šema, `useAllocationCheck` i `useCreateAllocation` | ✓ | `feat(resources): add allocation service and overallocation check` |
+| 8 | `AllocationDialog`: dodela člana projektu sa procentom i preventivnim upozorenjem kad ukupno prelazi 100% | ☐ | |
+| 9 | Završetak: pull request i merge u `main` | ☐ | |
 
 ### 1.7 Timesheets ☐
 Dizajn `07-timesheets.png` · ruta `/timesheets`
@@ -218,4 +220,6 @@ Razbija se na korake kad dođemo do nje.
 - Deaktivirani korisnici ne treba da se nude kao izvršioci zadataka (i članovi projekta).
 - Obračun zauzetosti na backendu radi ASP.NET Core servis. `lib/utilization.ts` ga samo oponaša (pragovi, nedeljni obračun sa vrhom opterećenja, samo projekti u statusu PLANNING i IN_PROGRESS) i dobar je kandidat za unit testove, i na frontendu i u .NET servisu.
 - Kartica Utilization Rate za sada prikazuje prosečnu planiranu alokaciju. Kad stignu Timesheets, treba da prikazuje stvarnu iskorišćenost (evidentirani sati ÷ kapacitet).
+- Dodela člana projektu: backend mora da proveri ista pravila kao mock `createAllocation` (409 ako je član već na projektu; 400 za neaktivnog člana, projekat koji nije PLANNING / IN_PROGRESS, procenat van 1–100, kraj pre početka i period van perioda projekta) i da sme samo Admin ili PM tog projekta. Preopterećenje se ne odbija, samo se upozorava.
+- Po specifikaciji je jedna alokacija po članu i projektu (ProjectMember). Ako zatreba više perioda na istom projektu (npr. 50% u oktobru, 30% u novembru), to traži poseban model (npr. `AllocationPeriod`). Project View već uzima vrh nedeljnog zbira, pa bi i tada bio tačan.
 - Pragovi statusa zauzetosti su zasad podrazumevani (50% i 100%). Treba ih čitati iz podešavanja organizacije (korak 1.8/4).
