@@ -4,8 +4,8 @@ import type { UserStatus } from "@/types/user";
 export const USER_STATUSES: UserStatus[] = ["ACTIVE", "INVITED", "DEACTIVATED"];
 
 /**
- * ACTIVE will share its label and tone with the "Active" utilization status from Resources,
- * so both groups show the same badge.
+ * ACTIVE shares its label and tone with the "Active" utilization status
+ * (lib/utilization-status.ts), so both groups show the same badge.
  */
 export const USER_STATUS_LABEL: Record<UserStatus, string> = {
   ACTIVE: "Active",

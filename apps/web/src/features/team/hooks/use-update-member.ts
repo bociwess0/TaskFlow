@@ -2,11 +2,15 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { resourceKeys } from "@/features/resources/hooks/use-resource-overview";
 import { teamKeys } from "@/features/team/hooks/use-team-members";
 import { updateMember } from "@/services/team-service";
 import type { UpdateMemberInput } from "@/types/team";
 
-/** Saves a member's role, job title and capacity; on success the member lists are refetched. */
+/**
+ * Saves a member's role, job title and capacity; on success the member lists and resources
+ * are refetched.
+ */
 export function useUpdateMember() {
   const queryClient = useQueryClient();
 
@@ -14,7 +18,11 @@ export function useUpdateMember() {
     mutationFn: (input: UpdateMemberInput) => updateMember(input),
     onSuccess: () => {
       toast.success("Member updated");
-      return queryClient.invalidateQueries({ queryKey: teamKeys.lists() });
+      // Capacity and account status also change the resources overview.
+      return Promise.all([
+        queryClient.invalidateQueries({ queryKey: teamKeys.lists() }),
+        queryClient.invalidateQueries({ queryKey: resourceKeys.all }),
+      ]);
     },
     onError: (error) => {
       toast.error("Could not save the member.", { description: error.message });

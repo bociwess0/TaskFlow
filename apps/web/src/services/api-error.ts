@@ -17,6 +17,11 @@ export function isNotFoundError(error: unknown): boolean {
   return error instanceof ApiError && error.status === 404;
 }
 
+/** 4xx: the request itself is wrong (400, 404, 409…), so sending it again won't help. */
+export function isClientError(error: unknown): boolean {
+  return error instanceof ApiError && error.status >= 400 && error.status < 500;
+}
+
 /** 409: the request conflicts with existing data (e.g. a duplicate e-mail). */
 export function isConflictError(error: unknown): boolean {
   return error instanceof ApiError && error.status === 409;

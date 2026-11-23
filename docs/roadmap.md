@@ -82,8 +82,8 @@ Grana `feature/kanban-board`, spojena u `main` (PR #3) · dizajn `04-kanban.png`
 | 11 | Prikazi List i Timeline (opciono), odloženo, posle osnovnih ekrana | ☐ | |
 | 12 | Završetak: pull request i merge u `main` | ✓ | PR #3 |
 
-### 1.5 Team Members ▶
-Grana `feature/team-members` · dizajn `08-team.png` · ruta `/team`
+### 1.5 Team Members ✓
+Grana `feature/team-members`, spojena u `main` (PR #4) · dizajn `08-team.png` · ruta `/team`
 
 | # | Korak | Status | Commit |
 |---|---|---|---|
@@ -93,20 +93,23 @@ Grana `feature/team-members` · dizajn `08-team.png` · ruta `/team`
 | 4 | `TeamToolbar`: pretraga, filter po ulozi, dugme Invite Member (stanje u URL-u) | ✓ | `feat(team): add team toolbar` |
 | 5 | `InviteMemberDialog`: forma za pozivnicu (React Hook Form + Zod), greška 409 ispod polja Email | ✓ | `feat(team): add invite member mutation`, `feat(team): add invite member dialog` |
 | 6 | `EditMemberDialog`: uloga, pozicija i kapacitet, deaktivacija uz potvrdu i ponovno aktiviranje (samo Admin) | ✓ | `feat(team): add update member mutations`, `feat(team): add edit member dialog` |
-| 7 | Timovi i vođe timova (`/team/teams`) | ☐ | |
+| 7 | Timovi i vođe timova (`/team/teams`), odloženo, posle osnovnih ekrana | ☐ | |
+| 8 | Završetak: pull request i merge u `main` | ✓ | PR #4 |
 
-### 1.6 Resources – upravljanje resursima ☐
-Dizajn `06-resources.png` · ruta `/resources` · najvažniji deo aplikacije
+### 1.6 Resources – upravljanje resursima ✓
+Grana `feature/resources`, spojena u `main` (PR #5) · dizajn `06-resources.png` · ruta `/resources` · najvažniji deo aplikacije
 
-| # | Korak | Status |
-|---|---|---|
-| 1 | Podaci: alokacije po članu i projektu (procenat, period), mock sa preopterećenim članovima, `useResources` | ☐ |
-| 2 | Statusi zauzetosti u `StatusBadge`: Available, Active, Overallocated | ☐ |
-| 3 | `StatCard` iz Dashboard-a premestiti u `components/shared`; kartice Total, Utilization, Overallocated, Available | ☐ |
-| 4 | `TeamViewTable`: član, uloga, alokacija (progres bar), broj projekata, status | ☐ |
-| 5 | `ProjectViewTable`: projekti i članovi sa procentima | ☐ |
-| 6 | `PeriodSelect`: ova nedelja, ovaj mesec, kvartal (u URL-u) | ☐ |
-| 7 | `AllocationDialog`: dodela člana projektu sa procentom i preventivnim upozorenjem kad ukupno prelazi 100% | ☐ |
+| # | Korak | Status | Commit |
+|---|---|---|---|
+| 1 | Podaci: tip `Allocation` i mock alokacije (svaki član projekta, bar jedan preopterećen i jedan dostupan), obračun zauzetosti po nedeljama u `lib/utilization.ts`; `getResourceOverview({ period })` i `useResourceOverview` | ✓ | `feat(resources): add allocation data and utilization logic`, `fix(resources): calculate allocation by weeks`, `feat(resources): add resource overview service` |
+| 2 | Statusi zauzetosti u `StatusBadge`: Available, Active, Overallocated | ✓ | `feat(resources): add utilization status badges` |
+| 3 | `StatCard` iz Dashboard-a premestiti u `components/shared`; kartice Total, Utilization, Overallocated, Available | ✓ | `feat(resources): add resource summary cards` |
+| 4 | `TeamViewTable`: član, uloga, alokacija (progres bar), broj projekata, status | ✓ | `feat(resources): add team allocation table` |
+| 5 | `ProjectViewTable`: projekti i članovi sa procentima; tabovi Team View / Project View (`?view=`) | ✓ | `feat(resources): add project allocation table and view tabs` |
+| 6 | `PeriodSelect`: ova nedelja, ovaj mesec, kvartal (u URL-u) | ✓ | `feat(resources): add period select` |
+| 7 | Podaci za dodelu: `CreateAllocationInput`, `AllocationCheck`, `checkAllocation` i `createAllocation` u servisu, Zod šema, `useAllocationCheck` i `useCreateAllocation` | ✓ | `feat(resources): add allocation service and overallocation check` |
+| 8 | `AllocationDialog`: dodela člana projektu sa procentom i preventivnim upozorenjem kad ukupno prelazi 100% | ✓ | `feat(resources): add allocation dialog with overallocation warning` |
+| 9 | Završetak: pull request i merge u `main` | ✓ | PR #5 |
 
 ### 1.7 Timesheets ☐
 Dizajn `07-timesheets.png` · ruta `/timesheets`
@@ -185,6 +188,7 @@ Razbija se na korake kad dođemo do nje.
 
 - **Projects:** „In Progress“ je na E-commerce kartici zelen, a na ostalima plav. Pravilo je da je In Progress uvek plav (primary).
 - **Resources:** Ana sa 100% je označena kao Overallocated. Po specifikaciji, preopterećen je samo onaj ko je iznad 100%, pa mock podaci treba da imaju npr. 120%.
+- **Resources:** kartice sa brojevima na dizajnu nemaju ikonice, a vrednost je obojena. Koristi se zajednički `StatCard` kao na Dashboard-u (ikonica u boji tona). Kartica Available je plava (`info`), kao bedž Available, iako je na dizajnu zelena.
 - **Team:** kolona Role meša sistemsku ulogu (Admin) i poziciju (Frontend Developer). Sistemska uloga ide kao bedž, a pozicija se prikazuje odvojeno.
 - **Detalji projekta i Kanban:** imaju različite tabove. Koristi se jedan zajednički set: Overview, Board, List, Timeline, Team, Files, Settings.
 - **Detalji projekta:** kartica sa progresom ima dva reda avatara, a drugi deluje kao duplikat. Prikazuje se samo jedan red članova.
@@ -195,7 +199,6 @@ Razbija se na korake kad dođemo do nje.
 ## Za kasnije
 
 - `DashboardGreeting` ponavlja HTML naslova; može da koristi `PageHeader`.
-- `StatCard` je u `features/dashboard`, a treba i drugim ekranima (korak 1.6/3).
 - Polja projekta `icon` i `color` ne postoje u modelu iz specifikacije. Treba ih dodati u Prisma šemu.
 - `NewProjectButton` još nema akciju. Treba ga povezati kad bude postojalo kreiranje projekta (dijalog ili strana).
 - Polje `createdAt` je dodato projektu zbog sortiranja „Newest“. Treba ga imati i u Prisma šemi.
@@ -215,3 +218,8 @@ Razbija se na korake kad dođemo do nje.
 - Pozivanje člana: mock samo dodaje korisnika sa statusom INVITED. Backend treba da pošalje e-mail sa jednokratnim tokenom (sa rokom važenja) za prihvatanje pozivnice, i da dozvoli pozivanje samo Admin-u. E-mail mora da bude jedinstven (409), bez obzira na velika i mala slova.
 - Izmenu članova (uloga, pozicija, kapacitet, deaktivacija) sme samo Admin. Kad stignu prava pristupa, dugme za izmenu u tabeli treba sakriti ostalim ulogama, a backend mora da proverava ulogu i pravila (ne menja se sopstvena uloga i ne deaktivira sopstveni nalog, ostaje bar jedan aktivan Admin, kapacitet 1–60 h).
 - Deaktivirani korisnici ne treba da se nude kao izvršioci zadataka (i članovi projekta).
+- Obračun zauzetosti na backendu radi ASP.NET Core servis. `lib/utilization.ts` ga samo oponaša (pragovi, nedeljni obračun sa vrhom opterećenja, samo projekti u statusu PLANNING i IN_PROGRESS) i dobar je kandidat za unit testove, i na frontendu i u .NET servisu.
+- Kartica Utilization Rate za sada prikazuje prosečnu planiranu alokaciju. Kad stignu Timesheets, treba da prikazuje stvarnu iskorišćenost (evidentirani sati ÷ kapacitet).
+- Dodela člana projektu: backend mora da proveri ista pravila kao mock `createAllocation` (409 ako je član već na projektu; 400 za neaktivnog člana, projekat koji nije PLANNING / IN_PROGRESS, procenat van 1–100, kraj pre početka i period van perioda projekta) i da sme samo Admin ili PM tog projekta. Preopterećenje se ne odbija, samo se upozorava.
+- Po specifikaciji je jedna alokacija po članu i projektu (ProjectMember). Ako zatreba više perioda na istom projektu (npr. 50% u oktobru, 30% u novembru), to traži poseban model (npr. `AllocationPeriod`). Project View već uzima vrh nedeljnog zbira, pa bi i tada bio tačan.
+- Pragovi statusa zauzetosti su zasad podrazumevani (50% i 100%). Treba ih čitati iz podešavanja organizacije (korak 1.8/4).
