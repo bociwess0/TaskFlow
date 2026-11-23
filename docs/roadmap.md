@@ -96,8 +96,8 @@ Grana `feature/team-members`, spojena u `main` (PR #4) · dizajn `08-team.png` �
 | 7 | Timovi i vođe timova (`/team/teams`), odloženo, posle osnovnih ekrana | ☐ | |
 | 8 | Završetak: pull request i merge u `main` | ✓ | PR #4 |
 
-### 1.6 Resources – upravljanje resursima ▶
-Grana `feature/resources` · dizajn `06-resources.png` · ruta `/resources` · najvažniji deo aplikacije
+### 1.6 Resources – upravljanje resursima ✓
+Grana `feature/resources`, spojena u `main` (PR #5) · dizajn `06-resources.png` · ruta `/resources` · najvažniji deo aplikacije
 
 | # | Korak | Status | Commit |
 |---|---|---|---|
@@ -109,7 +109,7 @@ Grana `feature/resources` · dizajn `06-resources.png` · ruta `/resources` · n
 | 6 | `PeriodSelect`: ova nedelja, ovaj mesec, kvartal (u URL-u) | ✓ | `feat(resources): add period select` |
 | 7 | Podaci za dodelu: `CreateAllocationInput`, `AllocationCheck`, `checkAllocation` i `createAllocation` u servisu, Zod šema, `useAllocationCheck` i `useCreateAllocation` | ✓ | `feat(resources): add allocation service and overallocation check` |
 | 8 | `AllocationDialog`: dodela člana projektu sa procentom i preventivnim upozorenjem kad ukupno prelazi 100% | ✓ | `feat(resources): add allocation dialog with overallocation warning` |
-| 9 | Završetak: pull request i merge u `main` | ☐ | |
+| 9 | Završetak: pull request i merge u `main` | ✓ | PR #5 |
 
 ### 1.7 Timesheets ☐
 Dizajn `07-timesheets.png` · ruta `/timesheets`
