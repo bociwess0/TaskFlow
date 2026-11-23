@@ -4,24 +4,17 @@ import { Gauge, TriangleAlert, UserCheck, Users } from "lucide-react";
 import { ErrorState } from "@/components/shared/error-state";
 import { StatCard, StatCardSkeleton } from "@/components/shared/stat-card";
 import { Card } from "@/components/ui/card";
-import {
-  DEFAULT_RESOURCE_PERIOD,
-  useResourceOverview,
-} from "@/features/resources/hooks/use-resource-overview";
+import { useResourceOverview } from "@/features/resources/hooks/use-resource-overview";
+import { useResourcePeriod } from "@/features/resources/hooks/use-resource-period";
 
 const GRID_CLASS = "grid gap-4 sm:grid-cols-2 xl:grid-cols-4";
 
 export function ResourceSummary() {
-  const { data, isPending, isError, refetch } = useResourceOverview(DEFAULT_RESOURCE_PERIOD);
+  const { period } = useResourcePeriod();
+  const { data, isPending, isError, refetch } = useResourceOverview(period);
 
   if (isPending) {
-    return (
-      <div className={GRID_CLASS}>
-        {Array.from({ length: 4 }, (_, index) => (
-          <StatCardSkeleton key={index} />
-        ))}
-      </div>
-    );
+    return <ResourceSummarySkeleton />;
   }
 
   if (isError) {
@@ -51,6 +44,16 @@ export function ResourceSummary() {
         tone="danger"
       />
       <StatCard label="Available" value={summary.availableCount} icon={UserCheck} tone="info" />
+    </div>
+  );
+}
+
+export function ResourceSummarySkeleton() {
+  return (
+    <div className={GRID_CLASS}>
+      {Array.from({ length: 4 }, (_, index) => (
+        <StatCardSkeleton key={index} />
+      ))}
     </div>
   );
 }

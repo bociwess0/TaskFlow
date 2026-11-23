@@ -17,10 +17,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  DEFAULT_RESOURCE_PERIOD,
-  useResourceOverview,
-} from "@/features/resources/hooks/use-resource-overview";
+import { useResourceOverview } from "@/features/resources/hooks/use-resource-overview";
+import { useResourcePeriod } from "@/features/resources/hooks/use-resource-period";
 import { UTILIZATION_STATUS_TONE } from "@/lib/utilization-status";
 import { cn } from "@/lib/utils";
 import type { MemberUtilization } from "@/types/resource";
@@ -44,7 +42,8 @@ const BAR_CLASS: Record<StatusTone, string> = {
 
 /** Team View: every active member's allocation in the period. */
 export function TeamViewTable() {
-  const { data, isPending, isError, refetch } = useResourceOverview(DEFAULT_RESOURCE_PERIOD);
+  const { period } = useResourcePeriod();
+  const { data, isPending, isError, refetch } = useResourceOverview(period);
 
   if (isPending) {
     return <TeamViewTableSkeleton />;
